@@ -3,9 +3,9 @@
 }
 
 .body-bg-img {
-  background-image: url('/svg/bg-blob.svg');
+  background-image: url("/svg/bg-blob.svg");
 }
 
 .main-layout-body {
-  @apply body-bg-img bg-fixed
+  @apply body-bg-img bg-fixed;
 }
