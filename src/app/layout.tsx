@@ -1,6 +1,7 @@
 import config from "@/config";
 import type { Metadata } from "next";
-import React from "react";
+import { Inter } from "next/font/google";
+import { ReactNode } from "react";
 import "./globals.css";
 
 const title = "MD Abir Mahmud - Full-Stack Web Developer";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     "Me, MD Abir Mahmud is an experienced full-stack web developer from Bangladesh, specializing in building scalable web applications using modern technologies like Next.js, TypeScript, and Node.js. With a strong foundation in JavaScript, I works across various tools and frameworks such as Redux, TailwindCSS, MongoDB, and PostgreSQL. Also has expertise in deploying and managing applications on AWS, VPS servers, and Nginx.",
   keywords: [
     "MD Abir Mahmud",
+    "abirm09",
     "Full-Stack Developer",
     "Web Developer",
     "React Developer",
@@ -61,14 +63,20 @@ export const generateViewport = () => ({
   initialScale: 1,
 });
 
+const inter = Inter({ subsets: ["latin"] });
+
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body
+        className={`${inter.className} antialiased main-layout-body text-accent`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
