@@ -1,3 +1,21 @@
 .container {
   @apply max-w-7xl mx-auto px-2 md:px-5;
 }
+
+.body-bg-img {
+  background-image: url("/svg/bg-blob.svg");
+}
+
+.main-layout-body {
+  @apply body-bg-img bg-fixed;
+}
+
+.card-bg {
+  position: relative;
+  background-image: url("/svg/bbblurry.svg");
+  background-repeat: no-repeat;
+  /* min-height: 10px; */
+  width: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+}

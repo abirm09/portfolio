@@ -1,26 +1,32 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import BannerImage from "./_components/heroArea/bannerHeft/BannerImage";
+import WelcomeMessage from "./_components/heroArea/bannerRight/WelcomeMessage";
 
 const page = () => {
   return (
-    <div className="container">
-      <div className="flex justify-center min-h-screen items-center">
-        <div>
-          <h2 className="text-center text-2xl pt-5 font-bold">
-            Welcome to my portfolio
-          </h2>
-          <div className="flex justify-center">
-            <Link href="http://facebook.com/abirm09" className="block py-2">
-              <Button>Click to visit facebook</Button>
-            </Link>
+    <section>
+      <div className="container">
+        <div className="grid grid-cols-2 gap-10 py-20">
+          <div className="w-full flex justify-end">
+            <BannerImage />
           </div>
-
-          <p className="text-center font-semibold">
-            This site is under development.
-          </p>
+          <div className="flex items-center">
+            <div className="space-y-4">
+              <WelcomeMessage />
+              <div>
+                <h2 className="font-inter text-3xl md:text-5xl font-black">
+                  I&apos;m Abir Mahmud
+                </h2>
+                <p>Full-stack Developer</p>
+              </div>
+              <p>
+                Experience in developing, deploying, and managing scalable
+                applications with over three years of development expertise.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
