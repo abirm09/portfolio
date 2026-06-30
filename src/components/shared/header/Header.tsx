@@ -1,56 +1,136 @@
-import logo from "@/assets/logo.png";
+"use client";
+
 import { Button, ContainerMax } from "@/components";
-import Image from "next/image";
+import { Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Permanent_Marker } from "next/font/google";
 import Link from "next/link";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+const navigationLinks = [
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Experience", href: "#experience" },
+  { name: "Contact", href: "#contact" },
+];
+
+const permanentMarker = Permanent_Marker({
+  variable: "--font-permanent-marker",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const Header = () => {
-  const navigationLinks = [
-    {
-      name: "Home",
-      href: "/",
-    },
-    {
-      name: "Portfolio",
-      href: "/portfolios",
-    },
-    {
-      name: "Bookmarks",
-      href: "/bookmarks",
-    },
-    {
-      name: "Contact",
-      href: "/contact",
-    },
-  ];
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+
+  const { setTheme, resolvedTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
+
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <ContainerMax asChild>
-      <header className="border-b-2 border-border">
-        <div className="flex justify-between items-center py-3 ">
-          <Link href={"/"} className="block">
-            <Image
-              src={logo}
-              priority
-              alt="logo"
-              width={400}
-              height={400}
-              className="w-[150px]"
-            />
+      <header
+        className={`sticky z-50 border-border bg-background/80 backdrop-blur-lg transition-all duration-300 ease-in-out ${scrolled ? "top-2 border rounded-full mx-2 md:mx-0" : "top-0 border-b"}`}
+      >
+        <div className="flex justify-between items-center py-3">
+          {/* Logo */}
+          <Link href="/" className={`block text-xl ${permanentMarker.className}`}>
+            ABIR MAHMUD
           </Link>
-          <nav className="flex items-center">
-            <ul className="flex items-center">
-              {navigationLinks?.map((link) => (
-                <li key={link.name}>
-                  <Button variant="ghost" asChild>
-                    <Link href={link.href}>{link.name}</Link>
-                  </Button>
-                </li>
-              ))}
-              <li className="ml-1">
-                <Button className="rounded-sm">Book a call</Button>
-              </li>
-            </ul>
-            {/* <ThemeSwitcher /> */}
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navigationLinks.map((link) => (
+              <Button key={link.name} variant="ghost" size="sm" asChild>
+                <Link href={link.href}>{link.name}</Link>
+              </Button>
+            ))}
+
+            {/* Theme toggle */}
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="ml-2"
+                aria-label="Toggle theme"
+              >
+                {resolvedTheme === "dark" ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </Button>
+            )}
+
+            <Button size="sm" className="ml-2" asChild>
+              <Link href="#contact">Hire Me</Link>
+            </Button>
           </nav>
+
+          {/* Mobile menu button */}
+          <div className="flex items-center gap-2 md:hidden">
+            {mounted && (
+              <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
+                {resolvedTheme === "dark" ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <nav className="md:hidden pb-4 border-t border-border pt-4">
+            <div className="flex flex-col gap-1">
+              {navigationLinks.map((link) => (
+                <Button
+                  key={link.name}
+                  variant="ghost"
+                  className="justify-start"
+                  asChild
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Link href={link.href}>{link.name}</Link>
+                </Button>
+              ))}
+              <Button className="mt-2" asChild onClick={() => setMobileMenuOpen(false)}>
+                <Link href="#contact">Hire Me</Link>
+              </Button>
+            </div>
+          </nav>
+        )}
       </header>
     </ContainerMax>
   );

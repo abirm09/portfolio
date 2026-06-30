@@ -1,4 +1,4 @@
-import { Header } from "@/components";
+import { Footer, Header } from "@/components";
 import { ReactNode } from "react";
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
@@ -6,6 +6,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
     <>
       <Header />
       {children}
+      <Footer />
     </>
   );
 };
