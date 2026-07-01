@@ -50,7 +50,7 @@ export const Header = () => {
   return (
     <ContainerMax asChild>
       <header
-        className={`sticky z-50 border-border bg-background/80 backdrop-blur-lg transition-all duration-300 ease-in-out ${scrolled ? "top-2 border rounded-full mx-2 md:mx-0" : "top-0 border-b"}`}
+        className={`sticky z-50 border-border bg-background/80 backdrop-blur-sm transition-all duration-300 ease-in-out ${scrolled ? "top-0 md:top-2 border rounded-none md:rounded-full" : "top-0 border-b"}`}
       >
         <div className="flex justify-between items-center py-3">
           {/* Logo */}

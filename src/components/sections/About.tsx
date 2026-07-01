@@ -1,71 +1,79 @@
+import meDark from "@/assets/me-dark.webp";
+import meWhite from "@/assets/me-white.webp";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { Briefcase, Code2, Layers } from "lucide-react";
+import Image from "next/image";
 
 export const About = () => {
-  const highlights = [
-    {
-      icon: Code2,
-      title: "3+ Years",
-      description: "Professional Experience",
-    },
-    {
-      icon: Layers,
-      title: "Full Stack",
-      description: "End-to-end Development",
-    },
-    {
-      icon: Briefcase,
-      title: "10+ Projects",
-      description: "Successfully Delivered",
-    },
+  const interests = [
+    "Full Stack Development",
+    "System Design",
+    "Backend Architecture",
+    "Authentication Systems",
+    "Fingerprint Authentication",
+    "AI Assistants",
+    "Automation",
+    "Open Source",
+    "Building Digital Products",
+    "Theme Development",
+    "SaaS Applications",
   ];
 
   return (
     <SectionWrapper id="about" className="bg-secondary/30">
       <SectionTitle
         title="About Me"
-        subtitle="Passionate developer dedicated to creating exceptional digital experiences"
+        subtitle="// Passionate developer dedicated to creating exceptional digital experiences"
       />
 
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Bio */}
         <div className="space-y-6">
           <p className="text-lg text-foreground/90 leading-relaxed">
-            I&apos;m a <strong>Full Stack Web Developer</strong> with over 3 years of experience
-            building modern, scalable web applications. My journey started with a curiosity for how
-            things work on the web, and it has evolved into a passion for creating seamless user
-            experiences.
+            I&apos;m a passionate <strong>Full Stack Developer</strong> who enjoys building scalable
+            web applications, APIs, SaaS products, and modern user experiences. I love learning new
+            technologies and continuously improving my development skills.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            I specialize in the <strong className="text-foreground">MERN stack</strong> (MongoDB,
-            Express, React, Node.js) and have expanded my expertise to include Next.js, PostgreSQL,
-            and modern DevOps practices. I believe in writing clean, maintainable code and staying
-            up-to-date with the latest industry trends.
+            I specialize in the <strong className="text-foreground">MERN stack</strong> and modern
+            backends with <strong className="text-foreground">Node.js, Express, FastAPI</strong> and
+            Python, working with PostgreSQL, MongoDB and Prisma. I&apos;m especially interested in
+            authentication systems, backend architecture, and AI-powered tools.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing
-            to open-source projects, or sharing knowledge with the developer community.
+            I enjoy solving real-world problems through software, contributing to open source, and
+            building digital products that make an impact.
           </p>
+
+          {/* Interests */}
+          <div className="flex flex-wrap gap-2 pt-2">
+            {interests.map((interest) => (
+              <span
+                key={interest}
+                className="text-xs font-medium px-3 py-1.5 rounded-lg bg-card border border-border text-muted-foreground hover:border-primary/30 transition-colors"
+              >
+                {interest}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Highlights */}
-        <div className="grid gap-4">
-          {highlights.map((item, index) => (
-            <div
-              key={item.title}
-              className="flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-md"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                <item.icon className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
-              </div>
-            </div>
-          ))}
+
+        {/* Profile Image Section */}
+        <div className="flex justify-center items-center gap-8">
+          <Image
+            src={meWhite}
+            alt="Profile"
+            className="dark:hidden rounded-lg size-96 object-cover border-4 border-border shadow-lg"
+            priority
+          />
+          <Image
+            src={meDark}
+            alt="Profile Dark"
+            className="hidden dark:block rounded-lg size-96 object-cover border-4 border-border shadow-lg"
+            priority
+          />
         </div>
       </div>
     </SectionWrapper>

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const Hero = () => {
   return (
-    <section className="min-h-[90vh] flex items-center justify-center relative overflow-hidden">
+    <section className="flex items-center justify-center relative overflow-hidden py-10 md:py-20">
       {/* Background gradient decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 -left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
@@ -17,24 +17,25 @@ export const Hero = () => {
         {/* Greeting badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border mb-8 animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-sm text-muted-foreground">Available for freelance work</span>
+          <span className="text-sm text-muted-foreground">Available for work</span>
         </div>
 
         {/* Main heading */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 animate-slide-up">
           Hi, I&apos;m <span className="gradient-text">Abir Mahmud</span>
         </h1>
 
         {/* Title */}
-        <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-slide-up delay-100">
+        <p className="text-md md:text-lg text-muted-foreground mb-4 animate-slide-up delay-100">
           Full Stack Web Developer
         </p>
 
         {/* Tagline */}
-        <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-10 animate-slide-up delay-200">
-          I build <span className="text-primary font-medium">scalable</span>,{" "}
-          <span className="text-primary font-medium">modern</span> web applications with 3 years of
-          experience in the MERN stack and beyond.
+        <p className="text-sm md:text-md text-foreground/80 max-w-3xl mx-auto mb-10 animate-slide-up delay-200">
+          I build responsive websites, scalable APIs,{" "}
+          <span className="text-primary font-medium">authentication systems</span>, and{" "}
+          <span className="text-primary font-medium">modern web applications</span> using
+          JavaScript, TypeScript, React, Next.js, Node.js, Python, and FastAPI.
         </p>
 
         {/* CTA Buttons */}
@@ -45,10 +46,16 @@ export const Hero = () => {
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
-          <Button size="lg" variant="outline" asChild>
+          {/* <Button size="lg" variant="outline" asChild>
             <Link href="#contact">
-              <Download className="size-4" />
+              <Mail className="size-4" />
               Contact Me
+            </Link>
+          </Button> */}
+          <Button size="lg" variant="outline" asChild>
+            <Link href="#" target="_blank">
+              <Download className="size-4" />
+              Download Resume
             </Link>
           </Button>
         </div>
@@ -57,7 +64,16 @@ export const Hero = () => {
         <div className="mt-16 animate-fade-in delay-500">
           <p className="text-sm text-muted-foreground mb-4">Tech Stack</p>
           <div className="flex flex-wrap items-center justify-center gap-6 text-muted-foreground">
-            {["React", "Next.js", "Node.js", "MongoDB", "PostgreSQL", "TypeScript"].map((tech) => (
+            {[
+              "React",
+              "Next.js",
+              "Node.js",
+              "FastAPI",
+              "MongoDB",
+              "PostgreSQL",
+              "TypeScript",
+              "Python",
+            ].map((tech) => (
               <span
                 key={tech}
                 className="text-sm font-medium px-3 py-1.5 rounded-lg bg-secondary/50 border border-border hover:border-primary/50 transition-colors"

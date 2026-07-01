@@ -1,10 +1,11 @@
-import { About, Contact, Experience, Hero, Projects, Skills } from "@/components";
+import { About, Contact, Experience, Hero, Journey, Projects, Skills } from "@/components";
 
 const HomePage = () => {
   return (
     <main>
       <Hero />
       <About />
+      <Journey />
       <Skills />
       <Projects />
       <Experience />

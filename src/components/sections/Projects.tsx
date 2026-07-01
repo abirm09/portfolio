@@ -2,44 +2,38 @@ import { Button } from "@/components";
 import { Badge } from "@/components/ui/Badge";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { ExternalLink, Github, Star } from "lucide-react";
+import { ExternalLink, FileText, Github, Star } from "lucide-react";
 import Link from "next/link";
 
 const projects = [
   {
-    title: "SkillOxygen",
+    title: "SkillOxgen",
     description:
-      "A comprehensive platform for professional interview simulations with integrated payment processing and intelligent scheduling system.",
-    techStack: ["Next.js", "Node.js", "MongoDB", "Stripe", "WebRTC"],
+      "A professional interview platform where experienced professionals can conduct mock interviews for fresh graduates and job seekers. Includes authentication, interview scheduling, online payments, feedback, secure dashboards, and a monetization system.",
+    techStack: ["React", "Node.js", "Express", "MongoDB", "PostgreSQL", "Prisma"],
     liveUrl: "#",
     githubUrl: "#",
+    caseStudyUrl: "#",
     featured: true,
   },
   {
-    title: "E-Commerce Platform",
+    title: "E-Commerce Management System",
     description:
-      "Full-featured online store with inventory management, order tracking, and real-time analytics dashboard.",
-    techStack: ["React", "Express", "PostgreSQL", "Prisma", "Redis"],
+      "A complete e-commerce platform with inventory management and accounting features, including product management, sales, customer management, dashboards, and reports.",
+    techStack: ["MERN", "PostgreSQL", "Prisma"],
     liveUrl: "#",
     githubUrl: "#",
+    caseStudyUrl: "#",
     featured: false,
   },
   {
-    title: "Task Management App",
+    title: "Fingerprint Authentication API",
     description:
-      "Collaborative project management tool with real-time updates, drag-and-drop interface, and team workspaces.",
-    techStack: ["Next.js", "tRPC", "PostgreSQL", "Tailwind CSS"],
+      "A backend authentication system integrating Futronic fingerprint devices with FastAPI. Provides biometric verification, SDK integration, secure APIs, and template matching.",
+    techStack: ["Python", "FastAPI"],
     liveUrl: "#",
     githubUrl: "#",
-    featured: false,
-  },
-  {
-    title: "Blog Platform",
-    description:
-      "Modern blogging platform with markdown support, SEO optimization, and comprehensive content management system.",
-    techStack: ["Next.js", "MongoDB", "Cloudinary", "MDX"],
-    liveUrl: "#",
-    githubUrl: "#",
+    caseStudyUrl: "#",
     featured: false,
   },
 ];
@@ -47,7 +41,10 @@ const projects = [
 export const Projects = () => {
   return (
     <SectionWrapper id="projects" className="bg-secondary/30">
-      <SectionTitle title="Featured Projects" subtitle="A selection of projects I've worked on" />
+      <SectionTitle
+        title="Featured Projects"
+        subtitle="// A selection of projects I've worked on"
+      />
 
       <div className="grid md:grid-cols-2 gap-6">
         {projects.map((project, index) => (
@@ -98,7 +95,7 @@ export const Projects = () => {
                 </div>
 
                 {/* Links */}
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <Button size="sm" variant="outline" asChild>
                     <Link href={project.liveUrl} target="_blank">
                       <ExternalLink className="w-4 h-4" />
@@ -109,6 +106,12 @@ export const Projects = () => {
                     <Link href={project.githubUrl} target="_blank">
                       <Github className="w-4 h-4" />
                       Code
+                    </Link>
+                  </Button>
+                  <Button size="sm" variant="ghost" asChild>
+                    <Link href={project.caseStudyUrl} target="_blank">
+                      <FileText className="w-4 h-4" />
+                      Case Study
                     </Link>
                   </Button>
                 </div>

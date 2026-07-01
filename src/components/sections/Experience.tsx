@@ -34,7 +34,10 @@ const experiences = [
 export const Experience = () => {
   return (
     <SectionWrapper id="experience">
-      <SectionTitle title="Work Experience" subtitle="My professional journey in web development" />
+      <SectionTitle
+        title="Work Experience"
+        subtitle="// My professional journey in web development"
+      />
 
       <div className="relative">
         {/* Timeline line */}
@@ -60,7 +63,9 @@ export const Experience = () => {
                 <div className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
                   {/* Header */}
                   <div
-                    className={`flex items-start gap-3 mb-3 ${index % 2 === 0 ? "md:flex-row-reverse" : ""}`}
+                    className={`flex items-start gap-3 mb-3 ${
+                      index % 2 === 0 ? "md:flex-row-reverse" : ""
+                    }`}
                   >
                     <div className="shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Briefcase className="w-5 h-5 text-primary" />
@@ -73,7 +78,9 @@ export const Experience = () => {
 
                   {/* Period */}
                   <div
-                    className={`flex items-center gap-2 text-muted-foreground text-sm mb-3 ${index % 2 === 0 ? "md:justify-end" : ""}`}
+                    className={`flex items-center gap-2 text-muted-foreground text-sm mb-3 ${
+                      index % 2 === 0 ? "md:justify-end" : ""
+                    }`}
                   >
                     <Calendar className="w-4 h-4" />
                     {exp.period}
@@ -89,11 +96,11 @@ export const Experience = () => {
                     {exp.achievements.map((achievement) => (
                       <li
                         key={achievement}
-                        className="text-sm text-foreground/80 flex items-center gap-2"
+                        className={`text-sm text-foreground/80 flex items-center gap-2 ${
+                          index % 2 === 0 ? "md:flex-row-reverse" : ""
+                        }`}
                       >
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full bg-accent ${index % 2 === 0 ? "md:order-last" : ""}`}
-                        />
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                         {achievement}
                       </li>
                     ))}

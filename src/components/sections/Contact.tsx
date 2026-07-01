@@ -12,19 +12,19 @@ const socialLinks = [
   {
     name: "GitHub",
     icon: Github,
-    url: "https://github.com/abirmahmud",
+    url: "https://github.com/abirm09",
     color: "hover:text-gray-900 dark:hover:text-white",
   },
   {
     name: "LinkedIn",
     icon: Linkedin,
-    url: "https://linkedin.com/in/abirmahmud",
+    url: "https://www.linkedin.com/in/abirm09",
     color: "hover:text-blue-600",
   },
   {
     name: "Twitter",
     icon: Twitter,
-    url: "https://twitter.com/abirmahmud",
+    url: "https://x.com/abirm09",
     color: "hover:text-sky-500",
   },
 ];
@@ -34,7 +34,7 @@ export const Contact = () => {
     <SectionWrapper id="contact" className="bg-secondary/30">
       <SectionTitle
         title="Get In Touch"
-        subtitle="Have a project in mind? Let's talk about how we can work together"
+        subtitle="// Have a project in mind? Let's talk about how we can work together"
       />
 
       <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
