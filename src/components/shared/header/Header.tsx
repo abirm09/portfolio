@@ -50,11 +50,14 @@ export const Header = () => {
   return (
     <ContainerMax asChild>
       <header
-        className={`sticky z-50 border-border bg-background/80 backdrop-blur-sm transition-all duration-300 ease-in-out ${scrolled ? "top-0 md:top-2 border rounded-none md:rounded-full" : "top-0 border-b"}`}
+        className={`sticky z-50 border-border bg-background/70 backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ease-in-out ${scrolled ? "top-0 md:top-3 border rounded-none md:rounded-full shadow-lg shadow-primary/5 md:px-6" : "top-0 border-b"}`}
       >
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
-          <Link href="/" className={`block text-xl ${permanentMarker.className}`}>
+          <Link
+            href="/"
+            className={`inline-block text-xl gradient-text ${permanentMarker.className}`}
+          >
             ABIR MAHMUD
           </Link>
 
@@ -83,7 +86,7 @@ export const Header = () => {
               </Button>
             )}
 
-            <Button size="sm" className="ml-2" asChild>
+            <Button size="sm" variant="gradient" className="ml-2" asChild>
               <Link href="#contact">Hire Me</Link>
             </Button>
           </nav>
@@ -125,7 +128,12 @@ export const Header = () => {
                   <Link href={link.href}>{link.name}</Link>
                 </Button>
               ))}
-              <Button className="mt-2" asChild onClick={() => setMobileMenuOpen(false)}>
+              <Button
+                variant="gradient"
+                className="mt-2"
+                asChild
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 <Link href="#contact">Hire Me</Link>
               </Button>
             </div>

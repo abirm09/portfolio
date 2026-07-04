@@ -13,6 +13,10 @@ export * from "./ui/SectionWrapper";
 export * from "./ui/select";
 export * from "./ui/Textarea";
 
+// Project components
+export * from "./projects/ProjectCard";
+export * from "./projects/ProjectImage";
+
 // Page sections
 export * from "./sections/About";
 export * from "./sections/Contact";

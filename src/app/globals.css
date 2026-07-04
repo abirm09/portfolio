@@ -47,73 +47,79 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
+/* ── Midnight Indigo + Violet premium palette ───────────────────────────────
+   --primary  : electric violet   (#7c5cff-ish)
+   --accent   : fuchsia           (#d946ef-ish)
+   Light mode: clean porcelain with violet accents.
+   Dark  mode: deep indigo-black with violet/fuchsia bloom (the hero look).
+   ──────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.148 0.004 228.8);
+  --background: oklch(0.985 0.004 285);
+  --foreground: oklch(0.17 0.028 285);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.148 0.004 228.8);
+  --card-foreground: oklch(0.17 0.028 285);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.148 0.004 228.8);
-  --primary: oklch(0.511 0.096 186.391);
-  --primary-foreground: oklch(0.984 0.014 180.72);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.963 0.002 197.1);
-  --muted-foreground: oklch(0.56 0.021 213.5);
-  --accent: oklch(0.963 0.002 197.1);
-  --accent-foreground: oklch(0.218 0.008 223.9);
+  --popover-foreground: oklch(0.17 0.028 285);
+  --primary: oklch(0.556 0.229 286);
+  --primary-foreground: oklch(0.99 0.005 285);
+  --secondary: oklch(0.965 0.008 286);
+  --secondary-foreground: oklch(0.24 0.03 286);
+  --muted: oklch(0.965 0.008 286);
+  --muted-foreground: oklch(0.52 0.03 286);
+  --accent: oklch(0.63 0.26 330);
+  --accent-foreground: oklch(0.99 0.005 330);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.925 0.005 214.3);
-  --input: oklch(0.925 0.005 214.3);
-  --ring: oklch(0.723 0.014 214.4);
-  --chart-1: oklch(0.872 0.007 219.6);
-  --chart-2: oklch(0.56 0.021 213.5);
-  --chart-3: oklch(0.45 0.017 213.2);
-  --chart-4: oklch(0.378 0.015 216);
-  --chart-5: oklch(0.275 0.011 216.9);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.987 0.002 197.1);
-  --sidebar-foreground: oklch(0.148 0.004 228.8);
-  --sidebar-primary: oklch(0.6 0.118 184.704);
-  --sidebar-primary-foreground: oklch(0.984 0.014 180.72);
-  --sidebar-accent: oklch(0.963 0.002 197.1);
-  --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
-  --sidebar-border: oklch(0.925 0.005 214.3);
-  --sidebar-ring: oklch(0.723 0.014 214.4);
+  --border: oklch(0.9 0.012 286);
+  --input: oklch(0.9 0.012 286);
+  --ring: oklch(0.556 0.229 286);
+  --chart-1: oklch(0.556 0.229 286);
+  --chart-2: oklch(0.63 0.26 330);
+  --chart-3: oklch(0.6 0.18 300);
+  --chart-4: oklch(0.5 0.2 275);
+  --chart-5: oklch(0.45 0.15 320);
+  --radius: 0.875rem;
+  --sidebar: oklch(0.985 0.004 285);
+  --sidebar-foreground: oklch(0.17 0.028 285);
+  --sidebar-primary: oklch(0.556 0.229 286);
+  --sidebar-primary-foreground: oklch(0.99 0.005 285);
+  --sidebar-accent: oklch(0.965 0.008 286);
+  --sidebar-accent-foreground: oklch(0.24 0.03 286);
+  --sidebar-border: oklch(0.9 0.012 286);
+  --sidebar-ring: oklch(0.556 0.229 286);
 }
 
 .dark {
-  --background: oklch(0.148 0.004 228.8);
-  --foreground: oklch(0.987 0.002 197.1);
-  --card: oklch(0.218 0.008 223.9);
-  --card-foreground: oklch(0.987 0.002 197.1);
-  --popover: oklch(0.218 0.008 223.9);
-  --popover-foreground: oklch(0.987 0.002 197.1);
-  --primary: oklch(0.437 0.078 188.216);
-  --primary-foreground: oklch(0.984 0.014 180.72);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.275 0.011 216.9);
-  --muted-foreground: oklch(0.723 0.014 214.4);
-  --accent: oklch(0.275 0.011 216.9);
-  --accent-foreground: oklch(0.987 0.002 197.1);
+  --background: oklch(0.135 0.018 284);
+  --foreground: oklch(0.96 0.006 286);
+  --card: oklch(0.185 0.024 285);
+  --card-foreground: oklch(0.96 0.006 286);
+  --popover: oklch(0.185 0.024 285);
+  --popover-foreground: oklch(0.96 0.006 286);
+  --primary: oklch(0.66 0.23 286);
+  --primary-foreground: oklch(0.145 0.02 285);
+  --secondary: oklch(0.26 0.03 286);
+  --secondary-foreground: oklch(0.96 0.006 286);
+  --muted: oklch(0.26 0.03 286);
+  --muted-foreground: oklch(0.72 0.03 286);
+  --accent: oklch(0.7 0.24 330);
+  --accent-foreground: oklch(0.15 0.02 330);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.56 0.021 213.5);
-  --chart-1: oklch(0.872 0.007 219.6);
-  --chart-2: oklch(0.56 0.021 213.5);
-  --chart-3: oklch(0.45 0.017 213.2);
-  --chart-4: oklch(0.378 0.015 216);
-  --chart-5: oklch(0.275 0.011 216.9);
-  --sidebar: oklch(0.218 0.008 223.9);
-  --sidebar-foreground: oklch(0.987 0.002 197.1);
-  --sidebar-primary: oklch(0.704 0.14 182.503);
-  --sidebar-primary-foreground: oklch(0.277 0.046 192.524);
-  --sidebar-accent: oklch(0.275 0.011 216.9);
-  --sidebar-accent-foreground: oklch(0.987 0.002 197.1);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.66 0.23 286);
+  --chart-1: oklch(0.66 0.23 286);
+  --chart-2: oklch(0.7 0.24 330);
+  --chart-3: oklch(0.62 0.2 300);
+  --chart-4: oklch(0.55 0.22 275);
+  --chart-5: oklch(0.5 0.18 320);
+  --sidebar: oklch(0.16 0.022 285);
+  --sidebar-foreground: oklch(0.96 0.006 286);
+  --sidebar-primary: oklch(0.66 0.23 286);
+  --sidebar-primary-foreground: oklch(0.145 0.02 285);
+  --sidebar-accent: oklch(0.26 0.03 286);
+  --sidebar-accent-foreground: oklch(0.96 0.006 286);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.56 0.021 213.5);
+  --sidebar-ring: oklch(0.66 0.23 286);
 }
 
 @layer base {
@@ -179,11 +185,46 @@
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(85, 155, 170, 0.3);
+    box-shadow: 0 0 24px oklch(0.66 0.23 286 / 0.35);
   }
 
   50% {
-    box-shadow: 0 0 40px rgba(85, 155, 170, 0.5);
+    box-shadow: 0 0 48px oklch(0.66 0.23 286 / 0.55);
+  }
+}
+
+/* Slow drifting aurora blobs */
+@keyframes aurora-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(4%, -3%, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-3%, 4%, 0) scale(0.96);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Animated conic/linear gradient sweep for text + borders */
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
   }
 }
 
@@ -229,12 +270,29 @@
   animation-delay: 500ms;
 }
 
-/* Gradient Text */
+/* Gradient Text — violet → fuchsia, gently animated.
+   display:inline-block + fit-content keeps the gradient box the size of the
+   glyphs so background-clip:text renders text (not a solid gradient block). */
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-image: linear-gradient(
+    100deg,
+    var(--primary) 0%,
+    oklch(0.68 0.24 312) 45%,
+    var(--accent) 100%
+  );
+  background-size: 200% auto;
   background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-pan 6s ease-in-out infinite;
+}
+
+.animate-aurora {
+  animation: aurora-drift 18s ease-in-out infinite;
 }
 
 /* Glassmorphism */
@@ -250,7 +308,209 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* ── Ambient backdrop layers ────────────────────────────────────────────────
+   .grid-bg    – faint blueprint grid, fades toward center
+   .aurora-*   – soft colored blobs used behind hero / page
+   ──────────────────────────────────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, oklch(0.556 0.229 286 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.556 0.229 286 / 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+.dark .grid-bg {
+  background-image:
+    linear-gradient(to right, oklch(0.66 0.23 286 / 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.66 0.23 286 / 0.1) 1px, transparent 1px);
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.dark .aurora-blob {
+  opacity: 0.5;
+}
+
+/* Glow ring used on primary CTAs / focal chips */
+.glow-primary {
+  box-shadow:
+    0 8px 30px oklch(0.556 0.229 286 / 0.35),
+    0 0 0 1px oklch(0.556 0.229 286 / 0.12);
+}
+.dark .glow-primary {
+  box-shadow:
+    0 8px 34px oklch(0.66 0.23 286 / 0.45),
+    0 0 0 1px oklch(0.66 0.23 286 / 0.2);
+}
+
+/* Gradient-bordered pill (e.g. the 'available' badge) */
+.gradient-border {
+  position: relative;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  margin: -1px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  opacity: 0.5;
+}
+
 /* Section scroll margin for fixed header */
 section[id] {
   scroll-margin-top: 30px;
+}
+
+/* ── Per-section gradient backgrounds ──────────────────────────────────────
+   Deep, rich gradients anchored to theme tokens.
+   Light mode: bold tinted washes. Dark mode: moody dark-gray bases with
+   vivid teal glows for a premium, atmospheric feel.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* About – sweeping top-left violet blast + fuchsia counter-glow */
+.section-bg-about {
+  background:
+    radial-gradient(ellipse 90% 60% at 0% 0%, oklch(0.556 0.229 286 / 0.16) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, oklch(0.63 0.26 330 / 0.12) 0%, transparent 60%),
+    oklch(0.975 0.006 285);
+}
+.dark .section-bg-about {
+  background:
+    radial-gradient(ellipse 90% 60% at 0% 0%, oklch(0.66 0.23 286 / 0.3) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, oklch(0.7 0.24 330 / 0.16) 0%, transparent 60%),
+    oklch(0.155 0.02 284);
+}
+
+/* Journey – deep center spotlight */
+.section-bg-journey {
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, oklch(0.556 0.229 286 / 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 10% 90%, oklch(0.63 0.26 330 / 0.1) 0%, transparent 60%),
+    oklch(0.99 0.004 285);
+}
+.dark .section-bg-journey {
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, oklch(0.66 0.23 286 / 0.26) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 10% 90%, oklch(0.7 0.24 330 / 0.18) 0%, transparent 60%),
+    oklch(0.135 0.018 284);
+}
+
+/* Skills – vivid bottom-right corner glow */
+.section-bg-skills {
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 100% 100%,
+      oklch(0.556 0.229 286 / 0.16) 0%,
+      transparent 65%
+    ),
+    radial-gradient(ellipse 40% 30% at 0% 0%, oklch(0.63 0.26 330 / 0.1) 0%, transparent 55%),
+    oklch(0.975 0.006 285);
+}
+.dark .section-bg-skills {
+  background:
+    radial-gradient(ellipse 80% 70% at 100% 100%, oklch(0.66 0.23 286 / 0.3) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 0% 0%, oklch(0.7 0.24 330 / 0.16) 0%, transparent 55%),
+    oklch(0.155 0.02 284);
+}
+
+/* Projects – bold diagonal sweep */
+.section-bg-projects {
+  background: linear-gradient(
+    220deg,
+    oklch(0.556 0.229 286 / 0.18) 0%,
+    oklch(0.99 0.004 285) 45%,
+    oklch(0.63 0.26 330 / 0.14) 100%
+  );
+}
+.dark .section-bg-projects {
+  background: linear-gradient(
+    220deg,
+    oklch(0.66 0.23 286 / 0.3) 0%,
+    oklch(0.135 0.018 284) 50%,
+    oklch(0.7 0.24 330 / 0.22) 100%
+  );
+}
+
+/* Experience – dramatic top-center beam */
+.section-bg-experience {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.556 0.229 286 / 0.16) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 90% 100%, oklch(0.63 0.26 330 / 0.1) 0%, transparent 55%),
+    oklch(0.99 0.004 285);
+}
+.dark .section-bg-experience {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.66 0.23 286 / 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 90% 100%, oklch(0.7 0.24 330 / 0.16) 0%, transparent 55%),
+    oklch(0.135 0.018 284);
+}
+
+/* Contact – rich bottom-left aurora */
+.section-bg-contact {
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 100%, oklch(0.556 0.229 286 / 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, oklch(0.63 0.26 330 / 0.12) 0%, transparent 60%),
+    oklch(0.975 0.006 285);
+}
+.dark .section-bg-contact {
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 100%, oklch(0.66 0.23 286 / 0.32) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, oklch(0.7 0.24 330 / 0.18) 0%, transparent 60%),
+    oklch(0.155 0.02 284);
+}
+
+/* ── Glassmorphism card ─────────────────────────────────────────────────────
+   Light: barely-there frosted white — gradient bleeds through strongly.
+   Dark:  very translucent dark slate — section glow shines through.
+   ──────────────────────────────────────────────────────────────────────── */
+.card-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 8px 30px oklch(0.2 0.03 285 / 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.dark .card-glass {
+  background: oklch(0.2 0.024 285 / 0.5);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.card-glass:hover {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: oklch(from var(--primary) l c h / 0.5);
+  box-shadow:
+    0 16px 44px oklch(from var(--primary) l c h / 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.dark .card-glass:hover {
+  background: oklch(0.22 0.028 285 / 0.62);
+  border-color: oklch(from var(--primary) l c h / 0.5);
+  box-shadow:
+    0 18px 50px oklch(from var(--primary) l c h / 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }

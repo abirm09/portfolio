@@ -6,22 +6,33 @@ import Link from "next/link";
 
 export const Hero = () => {
   return (
-    <section className="flex items-center justify-center relative overflow-hidden py-10 md:py-20">
-      {/* Background gradient decoration */}
+    <section className="flex items-center justify-center relative overflow-hidden py-16 md:py-28">
+      {/* Ambient backdrop: aurora blobs + blueprint grid */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        <div className="grid-bg absolute inset-0" />
+        <div className="aurora-blob animate-aurora top-[-10%] left-[-5%] w-[38rem] h-[38rem] bg-primary/40" />
+        <div
+          className="aurora-blob animate-aurora bottom-[-15%] right-[-8%] w-[42rem] h-[42rem] bg-accent/35"
+          style={{ animationDelay: "-6s" }}
+        />
+        <div
+          className="aurora-blob animate-aurora top-[30%] left-[45%] w-[26rem] h-[26rem] bg-primary/25"
+          style={{ animationDelay: "-11s" }}
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-3 md:px-5 text-center">
         {/* Greeting badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border mb-8 animate-fade-in">
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-sm text-muted-foreground">Available for work</span>
+        <div className="gradient-border inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/40 backdrop-blur-md mb-8 animate-fade-in">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+          </span>
+          <span className="text-sm text-foreground/80">Available for work</span>
         </div>
 
         {/* Main heading */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 animate-slide-up">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-slide-up">
           Hi, I&apos;m <span className="gradient-text">Abir Mahmud</span>
         </h1>
 
@@ -40,19 +51,13 @@ export const Hero = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up delay-300">
-          <Button size="lg" className="group" asChild>
+          <Button size="lg" variant="gradient" className="group" asChild>
             <Link href="#projects">
               View Projects
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
-          {/* <Button size="lg" variant="outline" asChild>
-            <Link href="#contact">
-              <Mail className="size-4" />
-              Contact Me
-            </Link>
-          </Button> */}
-          <Button size="lg" variant="outline" asChild>
+          <Button size="lg" variant="outline" className="backdrop-blur-md" asChild>
             <Link href="#" target="_blank">
               <Download className="size-4" />
               Download Resume
@@ -63,7 +68,7 @@ export const Hero = () => {
         {/* Tech stack preview */}
         <div className="mt-16 animate-fade-in delay-500">
           <p className="text-sm text-muted-foreground mb-4">Tech Stack</p>
-          <div className="flex flex-wrap items-center justify-center gap-6 text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-3 text-muted-foreground">
             {[
               "React",
               "Next.js",
@@ -76,7 +81,7 @@ export const Hero = () => {
             ].map((tech) => (
               <span
                 key={tech}
-                className="text-sm font-medium px-3 py-1.5 rounded-lg bg-secondary/50 border border-border hover:border-primary/50 transition-colors"
+                className="text-sm font-medium px-3 py-1.5 rounded-lg card-glass text-foreground/80 hover:text-primary hover:-translate-y-0.5"
               >
                 {tech}
               </span>

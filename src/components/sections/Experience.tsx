@@ -33,7 +33,7 @@ const experiences = [
 
 export const Experience = () => {
   return (
-    <SectionWrapper id="experience">
+    <SectionWrapper id="experience" className="section-bg-experience">
       <SectionTitle
         title="Work Experience"
         subtitle="// My professional journey in web development"
@@ -60,7 +60,7 @@ export const Experience = () => {
                   index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"
                 }`}
               >
-                <div className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
+                <div className="p-6 rounded-xl card-glass transition-all duration-300">
                   {/* Header */}
                   <div
                     className={`flex items-start gap-3 mb-3 ${

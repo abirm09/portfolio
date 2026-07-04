@@ -31,7 +31,7 @@ const socialLinks = [
 
 export const Contact = () => {
   return (
-    <SectionWrapper id="contact" className="bg-secondary/30">
+    <SectionWrapper id="contact" className="section-bg-contact">
       <SectionTitle
         title="Get In Touch"
         subtitle="// Have a project in mind? Let's talk about how we can work together"
@@ -85,7 +85,7 @@ export const Contact = () => {
                   key={social.name}
                   href={social.url}
                   target="_blank"
-                  className={`w-10 h-10 rounded-lg bg-card border border-border flex items-center justify-center text-muted-foreground transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 ${social.color}`}
+                  className={`w-10 h-10 rounded-lg card-glass flex items-center justify-center text-muted-foreground transition-all duration-300 hover:-translate-y-1 ${social.color}`}
                   aria-label={social.name}
                 >
                   <social.icon className="w-5 h-5" />
@@ -96,7 +96,7 @@ export const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="p-6 rounded-xl bg-card border border-border">
+        <div className="p-6 rounded-xl card-glass">
           <form className="space-y-5">
             <div className="grid sm:grid-cols-2 gap-4">
               <div>

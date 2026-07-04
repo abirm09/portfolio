@@ -44,7 +44,7 @@ const skillCategories = [
 
 export const Skills = () => {
   return (
-    <SectionWrapper id="skills">
+    <SectionWrapper id="skills" className="section-bg-skills">
       <SectionTitle
         title="Skills & Technologies"
         subtitle="// Technologies I work with to bring ideas to life"
@@ -54,7 +54,7 @@ export const Skills = () => {
         {skillCategories.map((category, index) => (
           <div
             key={category.title}
-            className="group p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            className="group p-6 rounded-xl card-glass transition-all duration-300 hover:-translate-y-1"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             {/* Icon */}
