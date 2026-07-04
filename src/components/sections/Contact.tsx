@@ -5,8 +5,19 @@ import { Input } from "@/components/ui/Input";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { Textarea } from "@/components/ui/Textarea";
-import { Github, Linkedin, Mail, MapPin, Send, Twitter } from "lucide-react";
+import {
+  CheckCircle2,
+  Github,
+  Linkedin,
+  Loader2,
+  Mail,
+  MapPin,
+  Send,
+  Twitter,
+  XCircle,
+} from "lucide-react";
 import Link from "next/link";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const socialLinks = [
   {
@@ -29,7 +40,46 @@ const socialLinks = [
   },
 ];
 
+const initialFormState = { name: "", email: "", subject: "", message: "" };
+
+type FormStatus = "idle" | "loading" | "success" | "error";
+
 export const Contact = () => {
+  const [formData, setFormData] = useState(initialFormState);
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(data?.error || "Failed to send your message. Please try again later.");
+      }
+
+      setStatus("success");
+      setFormData(initialFormState);
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong.");
+    }
+  };
+
   return (
     <SectionWrapper id="contact" className="section-bg-contact">
       <SectionTitle
@@ -97,19 +147,36 @@ export const Contact = () => {
 
         {/* Contact Form */}
         <div className="p-6 rounded-xl card-glass">
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                   Name
                 </label>
-                <Input id="name" name="name" placeholder="Your name" required />
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  disabled={status === "loading"}
+                />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                   Email
                 </label>
-                <Input id="email" name="email" type="email" placeholder="your@email.com" required />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  disabled={status === "loading"}
+                />
               </div>
             </div>
 
@@ -117,7 +184,15 @@ export const Contact = () => {
               <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
                 Subject
               </label>
-              <Input id="subject" name="subject" placeholder="What's this about?" required />
+              <Input
+                id="subject"
+                name="subject"
+                placeholder="What's this about?"
+                required
+                value={formData.subject}
+                onChange={handleChange}
+                disabled={status === "loading"}
+              />
             </div>
 
             <div>
@@ -130,12 +205,38 @@ export const Contact = () => {
                 placeholder="Tell me about your project..."
                 rows={5}
                 required
+                value={formData.message}
+                onChange={handleChange}
+                disabled={status === "loading"}
               />
             </div>
 
-            <Button type="submit" className="w-full">
-              <Send className="w-4 h-4" />
-              Send Message
+            {status === "success" && (
+              <div className="flex items-center gap-2 rounded-lg bg-green-500/10 px-4 py-3 text-sm text-green-600 dark:text-green-400">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                Thanks! Your message has been sent — I&apos;ll get back to you soon.
+              </div>
+            )}
+
+            {status === "error" && (
+              <div className="flex items-center gap-2 rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                <XCircle className="w-4 h-4 shrink-0" />
+                {errorMessage}
+              </div>
+            )}
+
+            <Button type="submit" className="w-full" disabled={status === "loading"}>
+              {status === "loading" ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Send Message
+                </>
+              )}
             </Button>
           </form>
         </div>
