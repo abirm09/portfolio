@@ -17,24 +17,42 @@ const ThemeSwitcher = () => {
     () => true,
     () => false,
   );
-  const { setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return (
+      <div className="ml-1">
+        <div className="h-9 w-14 rounded-md border border-input bg-background/50 animate-pulse" />
+      </div>
+    );
+  }
+
+  const currentTheme = theme || resolvedTheme || "system";
+
   return (
     <div className="ml-1">
-      <Select defaultValue={resolvedTheme} onValueChange={setTheme}>
-        <SelectTrigger className="rounded-sm">
+      <Select value={currentTheme} onValueChange={setTheme}>
+        <SelectTrigger className="rounded-md h-9 px-2.5" aria-label="Select theme">
           <SelectValue placeholder="Theme" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent align="end">
           <SelectItem value="light">
-            <SunMedium />
+            <span className="flex items-center gap-2">
+              <SunMedium className="w-4 h-4" />
+              <span>Light</span>
+            </span>
           </SelectItem>
           <SelectItem value="dark">
-            <Moon />
+            <span className="flex items-center gap-2">
+              <Moon className="w-4 h-4" />
+              <span>Dark</span>
+            </span>
           </SelectItem>
           <SelectItem value="system">
-            <SunMoon />
+            <span className="flex items-center gap-2">
+              <SunMoon className="w-4 h-4" />
+              <span>System</span>
+            </span>
           </SelectItem>
         </SelectContent>
       </Select>

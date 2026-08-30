@@ -23,8 +23,8 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
       )}
     >
       {project.featured && (
-        <div className="absolute top-3 left-3 z-10 flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
-          <Star className="w-3 h-3" />
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-1 rounded-full bg-brand-accent px-3 py-1 text-xs font-medium text-brand-accent-foreground shadow-sm">
+          <Star className="w-3 h-3 fill-current" />
           Featured
         </div>
       )}
@@ -37,13 +37,13 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
         </h3>
 
         <p className="mb-4 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-          {project.description}
+          {project.description.replace(/<[^>]*>?/gm, "")}
         </p>
 
         <div className="mb-4 flex flex-wrap gap-2">
           {visibleTech.map((tech) => (
             <Badge key={tech} variant="secondary" className="text-xs">
-              {TECH_STACK_LABELS[tech]}
+              {TECH_STACK_LABELS[tech as keyof typeof TECH_STACK_LABELS] || tech}
             </Badge>
           ))}
           {remainingTech > 0 && (

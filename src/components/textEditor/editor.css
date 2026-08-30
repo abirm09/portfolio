@@ -1,0 +1,462 @@
+/**
+ * Rich text editor (Tiptap) stylesheet.
+ *
+ * Deliberately plain CSS — no `@apply`, no Tailwind directives — so this file
+ * can be shipped in a package and consumed with a single import, whether or
+ * not the host app uses Tailwind.
+ *
+ * The only external contract is the shadcn theme tokens below. Any app that
+ * defines them (the standard shadcn `:root` / `.dark` blocks) gets correct
+ * light and dark rendering for free; every value falls back to a sensible
+ * default so the editor stays legible even with no theme at all.
+ *
+ *   --foreground  --muted           --border   --primary   --destructive
+ *   --background  --muted-foreground --input   --accent    --radius-md
+ *   --chart-1 … --chart-5  (syntax highlighting palette)
+ *
+ * Two class names matter to the host:
+ *   .tiptap-content     the writing surface, and any read-only view that
+ *                       renders saved editor HTML
+ *   .tiptap-html-block  the body of a custom HTML block
+ */
+
+/* -------------------------------------------------------------------------- */
+/*                                 Base text                                  */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content {
+  color: var(--foreground, #0a0a0a);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.tiptap-content :where(h1) {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+.tiptap-content :where(h2) {
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+.tiptap-content :where(h3) {
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+.tiptap-content :where(h4) {
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+}
+.tiptap-content :where(h5) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+.tiptap-content :where(h6) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted-foreground, #71717a);
+}
+
+.tiptap-content :where(p) {
+  margin-block: 0.5rem;
+  line-height: 1.625;
+}
+
+.tiptap-content :where(ul) {
+  margin-block: 0.5rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+.tiptap-content :where(ol) {
+  margin-block: 0.5rem;
+  padding-left: 1.5rem;
+  list-style-type: decimal;
+}
+.tiptap-content :where(li) {
+  margin-block: 0.25rem;
+}
+.tiptap-content :where(li p) {
+  margin-block: 0;
+}
+
+.tiptap-content :where(blockquote) {
+  margin-block: 0.75rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--border, #e4e4e7);
+  color: var(--muted-foreground, #71717a);
+  font-style: italic;
+}
+
+.tiptap-content :where(a) {
+  color: var(--primary, #2563eb);
+  text-decoration-line: underline;
+}
+
+.tiptap-content :where(mark) {
+  padding-inline: 0.125rem;
+  border-radius: 2px;
+  background-color: #fef08a;
+  color: inherit;
+}
+
+.tiptap-content :where(hr) {
+  margin-block: 1rem;
+  border: 0;
+  border-top: 1px solid var(--border, #e4e4e7);
+}
+
+/* Placeholder text on the empty document and on empty focused blocks. */
+.tiptap-content p.is-editor-empty:first-child::before,
+.tiptap-content .is-empty.has-focus::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--muted-foreground, #71717a);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Media                                    */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content :where(.tiptap-image),
+.tiptap-content :where(.tiptap-video) {
+  margin-block: 0.75rem;
+}
+
+.tiptap-content :where(img) {
+  height: auto;
+  max-width: 100%;
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Tables                                   */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content :where(table) {
+  margin-block: 0.75rem;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+.tiptap-content :where(th),
+.tiptap-content :where(td) {
+  position: relative;
+  padding: 0.5rem;
+  border: 1px solid var(--border, #e4e4e7);
+  vertical-align: top;
+}
+.tiptap-content :where(th) {
+  background-color: var(--muted, #f4f4f5);
+  text-align: left;
+  font-weight: 600;
+}
+.tiptap-content :where(.selectedCell)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background-color: color-mix(in oklab, var(--primary, #2563eb) 10%, transparent);
+}
+.tiptap-content :where(.column-resize-handle) {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -0.125rem;
+  width: 0.125rem;
+  pointer-events: none;
+  background-color: var(--primary, #2563eb);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Task lists                                 */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content :where(ul[data-type="taskList"]) {
+  margin-block: 0.5rem;
+  padding-left: 0;
+  list-style: none;
+}
+.tiptap-content :where(li[data-type="taskItem"]) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.tiptap-content :where(li[data-type="taskItem"]) > label {
+  flex: none;
+  margin-top: 0.25rem;
+  cursor: pointer;
+  user-select: none;
+}
+.tiptap-content :where(li[data-type="taskItem"]) > div {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+.tiptap-content :where(li[data-type="taskItem"]) input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  border-color: var(--input, #d4d4d8);
+  accent-color: var(--primary, #2563eb);
+}
+.tiptap-content :where(li[data-type="taskItem"][data-checked="true"]) > div {
+  color: var(--muted-foreground, #71717a);
+  text-decoration-line: line-through;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Details / toggle                              */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content :where([data-type="details"]) {
+  margin-block: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border, #e4e4e7);
+  border-radius: var(--radius-md, 0.375rem);
+}
+.tiptap-content :where([data-type="details"]) > summary,
+.tiptap-content :where([data-type="detailsSummary"]) {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 500;
+}
+.tiptap-content :where([data-type="details"]) > button {
+  margin-right: 0.25rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--muted-foreground, #71717a);
+}
+.tiptap-content :where([data-type="details"]) > button:hover {
+  color: var(--foreground, #0a0a0a);
+}
+.tiptap-content :where([data-type="detailsContent"]) {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border, #e4e4e7);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  Callouts                                  */
+/* -------------------------------------------------------------------------- */
+
+/* Callout markup carries light-mode inline styles so it renders standalone
+   wherever the saved HTML ends up. This only corrects it for dark mode, where
+   the hard-coded pastel backgrounds would be unreadable. */
+.dark .tiptap-content :where([data-callout]) {
+  background: color-mix(in oklab, var(--muted, #f4f4f5) 70%, transparent) !important;
+  color: var(--foreground, #fafafa);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Raw HTML block                                */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-html-block {
+  color: var(--foreground, #0a0a0a);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.tiptap-html-block :where(img, video, iframe) {
+  height: auto;
+  max-width: 100%;
+}
+.tiptap-content :where(.tiptap-html-block-shell) {
+  margin-block: 0.75rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Find & replace                                */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content .find-and-replace-result {
+  border-radius: 2px;
+  background-color: color-mix(in oklab, #fde047 60%, transparent);
+}
+.tiptap-content .find-and-replace-result-current {
+  background-color: color-mix(in oklab, var(--primary, #2563eb) 40%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary, #2563eb) 60%, transparent);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Drag handle                                 */
+/* -------------------------------------------------------------------------- */
+
+.drag-handle {
+  display: flex;
+  align-items: center;
+  z-index: 30;
+  padding: 0.125rem;
+  border: 1px solid var(--border, #e4e4e7);
+  border-radius: var(--radius-md, 0.375rem);
+  background-color: var(--background, #ffffff);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.drag-handle:not(.hide) {
+  opacity: 1;
+}
+.drag-handle.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                           Invisible characters                             */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-invisible-character {
+  color: color-mix(in oklab, var(--muted-foreground, #71717a) 60%, transparent);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                            Mathematics (KaTeX)                             */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content .tiptap-mathematics-render {
+  padding-inline: 0.125rem;
+  border-radius: 0.25rem;
+  color: var(--foreground, #0a0a0a);
+}
+.tiptap-content .tiptap-mathematics-render--editable {
+  cursor: pointer;
+}
+.tiptap-content .tiptap-mathematics-render--editable:hover {
+  background-color: var(--accent, #f4f4f5);
+}
+.tiptap-content [data-type="block-math"] {
+  display: block;
+  margin-block: 0.75rem;
+  text-align: center;
+}
+.tiptap-content .katex {
+  font-size: 1.05em;
+}
+.tiptap-content .katex-display {
+  margin-block: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Code blocks                                 */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content :where(code) {
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  background-color: var(--muted, #f4f4f5);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.85em;
+}
+.tiptap-content :where(pre) {
+  margin-block: 0.75rem;
+  padding: 0.75rem;
+  overflow-x: auto;
+  border-radius: var(--radius-md, 0.375rem);
+  background-color: var(--muted, #f4f4f5);
+  color: var(--foreground, #0a0a0a);
+}
+.tiptap-content :where(pre code) {
+  padding: 0;
+  background-color: transparent;
+}
+
+/* highlight.js ships one stylesheet per theme, none of which follow the host's
+   tokens. Mapping the token classes onto the chart palette instead means code
+   blocks switch with light/dark automatically and need no extra import. */
+.tiptap-content .hljs-comment,
+.tiptap-content .hljs-quote {
+  color: var(--muted-foreground, #71717a);
+  font-style: italic;
+}
+.tiptap-content .hljs-keyword,
+.tiptap-content .hljs-selector-tag,
+.tiptap-content .hljs-literal,
+.tiptap-content .hljs-section,
+.tiptap-content .hljs-doctag,
+.tiptap-content .hljs-type,
+.tiptap-content .hljs-name,
+.tiptap-content .hljs-strong {
+  color: var(--chart-1, #2563eb);
+  font-weight: 500;
+}
+.tiptap-content .hljs-string,
+.tiptap-content .hljs-title,
+.tiptap-content .hljs-addition,
+.tiptap-content .hljs-meta-string {
+  color: var(--chart-2, #16a34a);
+}
+.tiptap-content .hljs-number,
+.tiptap-content .hljs-symbol,
+.tiptap-content .hljs-bullet,
+.tiptap-content .hljs-link,
+.tiptap-content .hljs-regexp {
+  color: var(--chart-3, #ca8a04);
+}
+.tiptap-content .hljs-attribute,
+.tiptap-content .hljs-attr,
+.tiptap-content .hljs-variable,
+.tiptap-content .hljs-template-variable,
+.tiptap-content .hljs-selector-attr,
+.tiptap-content .hljs-selector-pseudo {
+  color: var(--chart-4, #9333ea);
+}
+.tiptap-content .hljs-built_in,
+.tiptap-content .hljs-class .hljs-title,
+.tiptap-content .hljs-function,
+.tiptap-content .hljs-title.function_ {
+  color: var(--chart-5, #c2410c);
+}
+.tiptap-content .hljs-deletion {
+  color: var(--destructive, #dc2626);
+}
+.tiptap-content .hljs-emphasis {
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                            Selection & cursors                             */
+/* -------------------------------------------------------------------------- */
+
+.tiptap-content .ProseMirror-gapcursor:after {
+  border-color: var(--foreground, #0a0a0a);
+}
+
+/* Images and video draw their own selection ring in the node view. */
+.tiptap-content .ProseMirror-selectednode {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.tiptap-content .ProseMirror-selectednode:not(.tiptap-image, .tiptap-video) {
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary, #2563eb) 50%, transparent);
+}
+
+.tiptap-content .selection,
+.tiptap-content ::selection {
+  background-color: color-mix(in oklab, var(--primary, #2563eb) 25%, transparent);
+}
