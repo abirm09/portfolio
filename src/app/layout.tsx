@@ -16,33 +16,125 @@ const permanentMarker = Permanent_Marker({
   weight: "400",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://abirmahmud.com");
+
 export const metadata: Metadata = {
-  title: "Abir Mahmud | Full Stack Web Developer",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: "Abir Mahmud | Full-Stack Web Developer",
+    template: "%s | Abir Mahmud",
+  },
+
   description:
-    "Full Stack Web Developer with 3+ years of experience building scalable, modern web applications with the MERN stack, Next.js, and more.",
+    "Abir Mahmud is a full-stack web developer building modern, scalable, and user-focused web applications using React, Next.js, Node.js, TypeScript, PostgreSQL, and MongoDB.",
+
+  applicationName: "Abir Mahmud Portfolio",
+
+  authors: [
+    {
+      name: "Abir Mahmud",
+      url: siteUrl,
+    },
+  ],
+
+  creator: "Abir Mahmud",
+  publisher: "Abir Mahmud",
+
   keywords: [
+    "Abir Mahmud",
+    "Abir Mahmud Developer",
+    "Abir Mahmud Portfolio",
     "Full Stack Developer",
     "Web Developer",
+    "Frontend Developer",
+    "Backend Developer",
     "React Developer",
     "Next.js Developer",
-    "MERN Stack",
-    "Node.js",
-    "MongoDB",
-    "PostgreSQL",
+    "Node.js Developer",
+    "TypeScript Developer",
+    "JavaScript Developer",
+    "MERN Stack Developer",
+    "PostgreSQL Developer",
+    "MongoDB Developer",
+    "Bangladesh Web Developer",
+    "Freelance Web Developer",
+    "Remote Web Developer",
+    "Full Stack Web Developer Bangladesh",
   ],
-  authors: [{ name: "Abir Mahmud" }],
+
+  category: "technology",
+
+  alternates: {
+    canonical: "/",
+  },
+
   openGraph: {
-    title: "Abir Mahmud | Full Stack Web Developer",
-    description:
-      "Full Stack Web Developer with 3+ years of experience building scalable, modern web applications.",
     type: "website",
     locale: "en_US",
+    url: siteUrl,
+    siteName: "Abir Mahmud",
+
+    title: "Abir Mahmud | Full-Stack Web Developer",
+
+    description:
+      "I build modern, scalable, and user-focused web applications that solve real problems.",
+
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Abir Mahmud - Full-Stack Web Developer",
+      },
+    ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Abir Mahmud | Full Stack Web Developer",
+
+    title: "Abir Mahmud | Full-Stack Web Developer",
+
     description:
-      "Full Stack Web Developer with 3+ years of experience building scalable, modern web applications.",
+      "I build modern, scalable, and user-focused web applications that solve real problems.",
+
+    images: ["/og.png"],
+
+    creator: "@abirm09",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+        sizes: "any",
+      },
+    ],
+  },
+
+  verification: {
+    google: "7uCtTaXnTKeycBIe2MVSTJPH3MMRhre9ACvpRt0JEdo",
+  },
+
+  other: {
+    "theme-color": "#050505",
+    "color-scheme": "dark",
   },
 };
 
