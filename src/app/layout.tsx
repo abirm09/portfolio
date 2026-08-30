@@ -16,9 +16,7 @@ const permanentMarker = Permanent_Marker({
   weight: "400",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://abirmahmud.com");
+const siteUrl = "https://abirmahmud.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -63,6 +61,25 @@ export const metadata: Metadata = {
     "Freelance Web Developer",
     "Remote Web Developer",
     "Full Stack Web Developer Bangladesh",
+    "SAAS Developer",
+    "Web Application Developer",
+    "Software Engineer",
+    "Software Developer",
+    "Web Development Services",
+    "Custom Web Development",
+    "Responsive Web Design",
+    "User Experience Design",
+    "UI/UX Design",
+    "Web Application Development",
+    "E-commerce Development",
+    "Content Management System (CMS) Development",
+    "Progressive Web App (PWA) Development",
+    "Single Page Application (SPA) Development",
+    "API Development and Integration",
+    "Database Design and Management",
+    "Cloud Computing Services",
+    "DevOps Services",
+    "Continuous Integration and Deployment (CI/CD) Services",
   ],
 
   category: "technology",
