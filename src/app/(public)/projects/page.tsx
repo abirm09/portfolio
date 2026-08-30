@@ -1,7 +1,7 @@
 import { ProjectCard } from "@/components";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { getAllProjects } from "@/data/projects";
+import { getProjects } from "@/lib/supabase/projects";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "A complete list of projects built by Abir Mahmud.",
 };
 
-const ProjectsPage = () => {
-  const projects = getAllProjects();
+const ProjectsPage = async () => {
+  const projects = await getProjects();
 
   return (
     <SectionWrapper className="section-bg-projects min-h-[70vh]">

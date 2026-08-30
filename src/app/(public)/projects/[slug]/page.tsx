@@ -1,6 +1,7 @@
 import { Button, ProjectImage, SectionTitle, SectionWrapper } from "@/components";
 import { Badge } from "@/components/ui/Badge";
-import { getAllProjects, getProjectBySlug, TECH_STACK_LABELS } from "@/data/projects";
+import { TECH_STACK_LABELS } from "@/data/projects";
+import { getProjectBySlug, getProjects } from "@/lib/supabase/projects";
 import { ArrowLeft, ExternalLink, FileText, Github, Star } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -10,13 +11,14 @@ type ProjectDetailsPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const generateStaticParams = () => {
-  return getAllProjects().map((project) => ({ slug: project.slug }));
+export const generateStaticParams = async () => {
+  const projects = await getProjects();
+  return projects.map((project) => ({ slug: project.slug }));
 };
 
 export const generateMetadata = async ({ params }: ProjectDetailsPageProps): Promise<Metadata> => {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return { title: "Project Not Found — Abir Mahmud" };
@@ -30,15 +32,15 @@ export const generateMetadata = async ({ params }: ProjectDetailsPageProps): Pro
 
 const ProjectDetailsPage = async ({ params }: ProjectDetailsPageProps) => {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
-  const liveUrl = project.live_url[0];
-  const githubUrl = project.github_url[0];
-  const caseStudyUrl = project.case_study_url[0];
+  const liveUrl = project.live_url?.[0];
+  const githubUrl = project.github_url?.[0];
+  const caseStudyUrl = project.case_study_url?.[0];
 
   return (
     <SectionWrapper className="section-bg-projects">
@@ -51,8 +53,8 @@ const ProjectDetailsPage = async ({ params }: ProjectDetailsPageProps) => {
 
       <div className="mb-10">
         {project.featured && (
-          <div className="mb-4 inline-flex items-center gap-1 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
-            <Star className="w-3 h-3" />
+          <div className="mb-4 inline-flex items-center gap-1 rounded-full bg-brand-accent px-3 py-1 text-xs font-medium text-brand-accent-foreground shadow-sm">
+            <Star className="w-3 h-3 fill-current" />
             Featured Project
           </div>
         )}
@@ -61,14 +63,15 @@ const ProjectDetailsPage = async ({ params }: ProjectDetailsPageProps) => {
           {project.title}
         </h1>
 
-        <p className="mb-6 max-w-3xl text-muted-foreground leading-relaxed">
-          {project.description}
-        </p>
+        <div
+          className="mb-8 max-w-3xl text-muted-foreground leading-relaxed space-y-3 text-base [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-foreground [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-foreground [&_h3]:mt-4 [&_h3]:mb-2 [&_a]:text-primary [&_a]:underline [&_code]:rounded [&_code]:bg-secondary [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:bg-secondary/70 [&_blockquote]:border-l-2 [&_blockquote]:border-primary [&_blockquote]:pl-4 [&_blockquote]:italic"
+          dangerouslySetInnerHTML={{ __html: project.description }}
+        />
 
         <div className="mb-6 flex flex-wrap gap-2">
-          {project.tech_stack.map((tech) => (
+          {project.tech_stack?.map((tech) => (
             <Badge key={tech} variant="secondary">
-              {TECH_STACK_LABELS[tech]}
+              {TECH_STACK_LABELS[tech as keyof typeof TECH_STACK_LABELS] || tech}
             </Badge>
           ))}
         </div>
@@ -102,29 +105,35 @@ const ProjectDetailsPage = async ({ params }: ProjectDetailsPageProps) => {
       </div>
 
       {/* Hero image */}
-      <ProjectImage
-        image={project.thumb}
-        className="mb-14 aspect-video w-full rounded-xl card-glass"
-      />
+      {project.thumb && (
+        <ProjectImage
+          image={project.thumb}
+          className="mb-14 aspect-video w-full rounded-xl card-glass"
+        />
+      )}
 
       {/* Gallery */}
-      <SectionTitle
-        title="Gallery"
-        subtitle="// A closer look at the interface"
-        align="left"
-        className="mb-8"
-      />
-
-      <div className="grid gap-6 sm:grid-cols-2">
-        {project.image_gallery.map((image) => (
-          <ProjectImage
-            key={image.id}
-            image={image}
-            showCaption
-            className="aspect-video w-full rounded-xl"
+      {project.image_gallery && project.image_gallery.length > 0 && (
+        <>
+          <SectionTitle
+            title="Gallery"
+            subtitle="// A closer look at the interface"
+            align="left"
+            className="mb-8"
           />
-        ))}
-      </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {project.image_gallery.map((image) => (
+              <ProjectImage
+                key={image.id}
+                image={image}
+                showCaption
+                className="aspect-video w-full rounded-xl"
+              />
+            ))}
+          </div>
+        </>
+      )}
     </SectionWrapper>
   );
 };

@@ -1,3 +1,4 @@
+import QueryProvider from "@/providers/QueryProvider";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter, Permanent_Marker } from "next/font/google";
@@ -55,9 +56,11 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${inter.variable} ${permanentMarker.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
