@@ -1,5 +1,6 @@
 import QueryProvider from "@/providers/QueryProvider";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 import { Inter, Permanent_Marker } from "next/font/google";
 import { ReactNode } from "react";
@@ -162,6 +163,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script src="/api/env.js" strategy="beforeInteractive" />
+      </head>
       <body
         className={`${inter.className} ${inter.variable} ${permanentMarker.variable} antialiased`}
       >
