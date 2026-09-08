@@ -1,0 +1,1 @@
+docker build -t ghcr.io/abirm09/portfolio:latest .
