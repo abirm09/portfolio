@@ -5,6 +5,7 @@ import { logoutAction } from "@/lib/supabase/actions";
 import { cn } from "@/lib/utils";
 import {
   ExternalLink,
+  FileText,
   FolderGit2,
   Image as ImageIcon,
   LayoutDashboard,
@@ -33,6 +34,18 @@ const navItems = [
   {
     label: "New Project",
     href: "/dashboard/projects/new",
+    icon: PlusCircle,
+    exact: true,
+  },
+  {
+    label: "Blog Posts",
+    href: "/dashboard/blogs",
+    icon: FileText,
+    exact: false,
+  },
+  {
+    label: "New Post",
+    href: "/dashboard/blogs/new",
     icon: PlusCircle,
     exact: true,
   },

@@ -1,16 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/Badge";
 import { getProjects } from "@/lib/supabase/projects";
-import {
-  Code2,
-  Database,
-  ExternalLink,
-  FolderGit2,
-  HardDrive,
-  Plus,
-  Sparkles,
-  Star,
-} from "lucide-react";
+import { getBlogPosts } from "@/lib/supabase/blogs";
+import { BookOpen, Code2, Database, FolderGit2, Plus, Star } from "lucide-react";
 import Link from "next/link";
 import { DashboardHeader } from "@/components/dashboard/Header";
 import { ProjectRowActions } from "@/components/dashboard/ProjectRowActions";
@@ -18,8 +10,12 @@ import { ProjectRowActions } from "@/components/dashboard/ProjectRowActions";
 export const dynamic = "force-dynamic";
 
 export default async function DashboardOverviewPage() {
-  const projects = await getProjects();
+  const [projects, blogs] = await Promise.all([
+    getProjects(),
+    getBlogPosts({ publishedOnly: false }),
+  ]);
   const featuredCount = projects.filter((p) => p.featured).length;
+  const publishedBlogCount = blogs.filter((b) => b.published).length;
 
   const uniqueTechs = Array.from(new Set(projects.flatMap((p) => p.tech_stack || [])));
 
@@ -102,15 +98,15 @@ export default async function DashboardOverviewPage() {
           </div>
         </div>
 
-        {/* Storage */}
+        {/* Blog Articles */}
         <div className="bg-card border-border flex items-center gap-4 rounded-2xl border p-5 shadow-xs">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500">
-            <HardDrive className="h-6 w-6" />
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500">
+            <BookOpen className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-muted-foreground text-xs font-medium">Storage Bucket</p>
-            <h3 className="text-foreground mt-0.5 text-base font-bold">
-              {process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "projects"}
+            <p className="text-muted-foreground text-xs font-medium">Published Articles</p>
+            <h3 className="text-foreground mt-0.5 text-2xl font-black">
+              {publishedBlogCount} / {blogs.length}
             </h3>
           </div>
         </div>
