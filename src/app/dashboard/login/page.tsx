@@ -5,15 +5,12 @@ import { Input } from "@/components/ui/Input";
 import { loginAction } from "@/lib/supabase/actions";
 import {
   ArrowLeft,
-  Database,
+  ArrowRight,
   Eye,
   EyeOff,
-  KeyRound,
   Loader2,
-  Lock,
-  Mail,
+  LockKeyhole,
   ShieldAlert,
-  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -22,139 +19,159 @@ import { Suspense, useActionState, useState } from "react";
 function LoginForm() {
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || "/dashboard";
-
-  const [state, formAction, isPending] = useActionState(loginAction, {
-    success: false,
-  });
-
+  const [state, formAction, isPending] = useActionState(loginAction, { success: false });
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="rounded-3xl border border-border bg-card/80 backdrop-blur-2xl p-8 shadow-2xl space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <div className="inline-flex size-12 rounded-2xl bg-linear-to-tr from-primary to-accent items-center justify-center text-primary-foreground font-black text-xl shadow-lg mb-1">
-          <Lock className="w-6 h-6" />
+    <div className="w-full max-w-md">
+      <div className="mb-9">
+        <div className="bg-brand-accent text-brand-accent-foreground mb-7 inline-flex size-12 items-center justify-center rounded-xl text-sm font-black tracking-tight lg:hidden">
+          AM
         </div>
-        <h1 className="text-2xl font-black tracking-tight text-foreground">
-          Dashboard Login
+        <p className="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
+          Portfolio workspace
+        </p>
+        <h1 className="text-foreground text-3xl font-semibold tracking-[-0.05em] sm:text-4xl">
+          Welcome back.
         </h1>
-        <p className="text-xs text-muted-foreground">
-          Authenticate via Supabase to manage your portfolio projects & assets.
+        <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+          Sign in to manage your projects and media.
         </p>
       </div>
 
-      {/* Error Message */}
       {state?.error && (
-        <div className="p-3.5 rounded-xl bg-destructive/10 border border-destructive/30 text-destructive text-xs flex items-start gap-2.5">
-          <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
+        <div
+          role="alert"
+          className="border-destructive/30 bg-destructive/10 text-destructive mb-6 flex items-start gap-3 rounded-xl border p-4 text-sm"
+        >
+          <ShieldAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
           <div>
-            <p className="font-semibold">Authentication failed</p>
-            <p className="mt-0.5">{state.error}</p>
+            <p className="font-semibold">Sign in failed</p>
+            <p className="mt-1">{state.error}</p>
           </div>
         </div>
       )}
 
-      {/* Form */}
-      <form action={formAction} className="space-y-4">
+      <form action={formAction} className="space-y-5">
         <input type="hidden" name="redirectTo" value={redirectTo} />
-
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-            <Mail className="w-3.5 h-3.5 text-primary" />
-            Email Address
+        <div className="space-y-2">
+          <label htmlFor="login-email" className="text-foreground block text-sm font-medium">
+            Email address
           </label>
           <Input
+            id="login-email"
             type="email"
             name="email"
-            placeholder="admin@example.com"
+            placeholder="you@example.com"
             required
             autoComplete="email"
-            className="h-11"
+            className="h-12 rounded-xl px-4"
           />
         </div>
 
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-            <KeyRound className="w-3.5 h-3.5 text-primary" />
+        <div className="space-y-2">
+          <label htmlFor="login-password" className="text-foreground block text-sm font-medium">
             Password
           </label>
           <div className="relative">
             <Input
+              id="login-password"
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="••••••••••••"
+              placeholder="Enter your password"
               required
               autoComplete="current-password"
-              className="h-11 pr-10"
+              className="h-12 rounded-xl px-4 pr-12"
             />
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1 transition-colors"
+              onClick={() => setShowPassword((current) => !current)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+              className="text-muted-foreground hover:text-foreground absolute top-0 right-0 flex size-12 items-center justify-center rounded-r-xl transition-colors"
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
             </button>
           </div>
         </div>
 
         <Button
           type="submit"
-          variant="gradient"
-          className="w-full h-11 text-sm font-semibold mt-2"
+          className="h-12 w-full rounded-xl text-sm font-semibold"
           disabled={isPending}
         >
-          {isPending ? "Authenticating..." : "Sign in to Dashboard"}
+          {isPending ? (
+            <>
+              <Loader2 className="size-4 animate-spin" aria-hidden="true" /> Signing in...
+            </>
+          ) : (
+            <>
+              Sign in <ArrowRight className="size-4" aria-hidden="true" />
+            </>
+          )}
         </Button>
       </form>
 
-      {/* Supabase Note */}
-      <div className="pt-4 border-t border-border/70 text-center space-y-1 text-xs text-muted-foreground">
-        <div className="flex items-center justify-center gap-1.5 font-medium text-foreground">
-          <Database className="w-3.5 h-3.5 text-emerald-500" />
-          Protected by Supabase Auth
-        </div>
-        <p className="text-[11px]">
-          Create an admin user in your Supabase dashboard or use SQL script to gain access.
-        </p>
-      </div>
+      <p className="text-muted-foreground mt-7 flex items-center justify-center gap-2 text-xs">
+        <LockKeyhole className="size-3.5" aria-hidden="true" /> Private admin access
+      </p>
     </div>
   );
 }
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-background text-foreground relative overflow-hidden">
-      {/* Background glowing aurora */}
-      <div className="absolute -top-40 -left-40 size-96 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 size-96 rounded-full bg-accent/20 blur-3xl pointer-events-none" />
-
-      <div className="w-full max-w-md space-y-6 relative z-10">
-        {/* Back Link */}
-        <div className="flex justify-between items-center">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Portfolio
-            </Link>
-          </Button>
-
-          <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 flex items-center gap-1">
-            <Sparkles className="w-3 h-3" /> Supabase Admin
-          </span>
-        </div>
-
-        {/* Suspense wrapper for useSearchParams */}
-        <Suspense
-          fallback={
-            <div className="rounded-3xl border border-border bg-card/80 p-8 text-center text-xs text-muted-foreground flex flex-col items-center gap-2">
-              <Loader2 className="w-6 h-6 animate-spin text-primary" />
-              Loading Login...
-            </div>
-          }
+    <div className="bg-background text-foreground grid min-h-screen lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+      <div className="relative hidden overflow-hidden bg-[#17291f] p-10 text-white lg:flex lg:flex-col lg:justify-between xl:p-14">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-3 text-lg font-black tracking-[-0.05em]"
         >
-          <LoginForm />
-        </Suspense>
+          <span className="flex size-10 items-center justify-center rounded-xl bg-[#c8ee73] text-sm text-[#17291f]">
+            AM
+          </span>
+          ABIR MAHMUD<span className="text-[#c8ee73]">.</span>
+        </Link>
+        <div className="relative z-10 max-w-lg">
+          <span className="text-xs font-semibold tracking-[0.2em] text-[#c8ee73] uppercase">
+            Admin dashboard
+          </span>
+          <h2 className="mt-5 text-5xl leading-[1.05] font-semibold tracking-[-0.06em] xl:text-6xl">
+            Your work,
+            <br />
+            all in one place.
+          </h2>
+          <p className="mt-6 max-w-sm text-base leading-relaxed text-white/65">
+            A focused space to keep your portfolio projects and media up to date.
+          </p>
+        </div>
+        <p className="relative z-10 text-xs text-white/45">
+          © {new Date().getFullYear()} Abir Mahmud
+        </p>
+        <div
+          className="pointer-events-none absolute right-[-15%] bottom-[-20%] size-[60%] rounded-full border-[70px] border-white/5"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="flex min-h-screen flex-col px-6 py-6 sm:px-10 lg:px-16 lg:py-10">
+        <Link
+          href="/"
+          className="text-muted-foreground hover:text-foreground inline-flex min-h-10 w-fit items-center gap-2 text-sm font-medium transition-colors"
+        >
+          <ArrowLeft className="size-4" aria-hidden="true" /> Back to portfolio
+        </Link>
+        <div className="flex flex-1 items-center justify-center py-10">
+          <Suspense
+            fallback={
+              <div className="text-muted-foreground flex items-center gap-2 text-sm">
+                <Loader2 className="size-4 animate-spin" /> Loading sign in...
+              </div>
+            }
+          >
+            <LoginForm />
+          </Suspense>
+        </div>
       </div>
     </div>
   );

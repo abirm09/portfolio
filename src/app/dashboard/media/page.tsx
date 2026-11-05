@@ -29,7 +29,13 @@ export default function MediaManagerPage() {
   const [copiedPath, setCopiedPath] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { data: files = [], isLoading, isRefetching, refetch, error: queryError } = useStorageFiles(folder);
+  const {
+    data: files = [],
+    isLoading,
+    isRefetching,
+    refetch,
+    error: queryError,
+  } = useStorageFiles(folder);
   const uploadMutation = useUploadFileMutation();
   const deleteMutation = useDeleteFileMutation();
 
@@ -82,8 +88,8 @@ export default function MediaManagerPage() {
 
       {/* Error Alert */}
       {activeError && (
-        <div className="p-4 rounded-2xl bg-destructive/10 border border-destructive/30 text-destructive text-xs flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+        <div className="bg-destructive/10 border-destructive/30 text-destructive flex items-start gap-3 rounded-2xl border p-4 text-xs">
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
           <div>
             <p className="font-bold">Storage Notice</p>
             <p className="mt-0.5">{activeError}</p>
@@ -92,29 +98,29 @@ export default function MediaManagerPage() {
       )}
 
       {/* Upload Drag & Drop Box */}
-      <div className="p-8 rounded-3xl bg-card border border-dashed border-primary/40 text-center space-y-4 shadow-xs relative overflow-hidden group">
-        <div className="size-14 rounded-2xl bg-primary/10 text-primary mx-auto flex items-center justify-center group-hover:scale-110 transition-transform">
+      <div className="bg-card border-primary/40 group relative space-y-4 overflow-hidden rounded-3xl border border-dashed p-8 text-center shadow-xs">
+        <div className="bg-primary/10 text-primary mx-auto flex size-14 items-center justify-center rounded-2xl transition-transform group-hover:scale-110">
           {uploadMutation.isPending ? (
-            <Loader2 className="w-7 h-7 animate-spin" />
+            <Loader2 className="h-7 w-7 animate-spin" />
           ) : (
-            <UploadCloud className="w-7 h-7" />
+            <UploadCloud className="h-7 w-7" />
           )}
         </div>
 
         <div className="space-y-1">
-          <h3 className="font-bold text-base text-foreground">
+          <h3 className="text-foreground text-base font-bold">
             {uploadMutation.isPending
               ? "Uploading files to Supabase..."
               : "Upload Assets to Supabase Bucket"}
           </h3>
-          <p className="text-xs text-muted-foreground max-w-md mx-auto">
+          <p className="text-muted-foreground mx-auto max-w-md text-xs">
             Upload images (PNG, JPG, WebP, SVG) directly to your Supabase storage bucket.
           </p>
         </div>
 
         <div>
-          <label className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-xs font-semibold cursor-pointer hover:bg-primary/90 shadow-md shadow-primary/20 transition-all">
-            <ImageIcon className="w-4 h-4" /> Select Files to Upload
+          <label className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-primary/20 inline-flex cursor-pointer items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-semibold shadow-md transition-all">
+            <ImageIcon className="h-4 w-4" /> Select Files to Upload
             <input
               type="file"
               multiple
@@ -128,11 +134,11 @@ export default function MediaManagerPage() {
       </div>
 
       {/* Files List & Toolbar */}
-      <div className="p-6 rounded-2xl bg-card border border-border space-y-6 shadow-xs">
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+      <div className="bg-card border-border space-y-6 rounded-2xl border p-6 shadow-xs">
+        <div className="flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-bold text-foreground">Bucket Files</h2>
-            <span className="text-xs text-muted-foreground">({files.length} items)</span>
+            <h2 className="text-foreground text-lg font-bold">Bucket Files</h2>
+            <span className="text-muted-foreground text-xs">({files.length} items)</span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -140,7 +146,7 @@ export default function MediaManagerPage() {
               placeholder="Search file name..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-9 text-xs w-48 sm:w-64"
+              className="h-9 w-48 text-xs sm:w-64"
             />
             <Button
               variant="outline"
@@ -149,73 +155,72 @@ export default function MediaManagerPage() {
               disabled={isLoading || isRefetching}
               title="Refresh files"
             >
-              <RefreshCw
-                className={`w-4 h-4 ${isLoading || isRefetching ? "animate-spin" : ""}`}
-              />
+              <RefreshCw className={`h-4 w-4 ${isLoading || isRefetching ? "animate-spin" : ""}`} />
             </Button>
           </div>
         </div>
 
         {isLoading ? (
-          <div className="py-16 text-center text-xs text-muted-foreground flex flex-col items-center gap-2">
-            <Loader2 className="w-6 h-6 animate-spin text-primary" />
+          <div className="text-muted-foreground flex flex-col items-center gap-2 py-16 text-center text-xs">
+            <Loader2 className="text-primary h-6 w-6 animate-spin" />
             Loading files from Supabase Storage...
           </div>
         ) : filteredFiles.length === 0 ? (
-          <div className="py-16 text-center space-y-3">
-            <HardDrive className="w-8 h-8 text-muted-foreground mx-auto" />
-            <p className="text-sm font-semibold text-foreground">No files in bucket</p>
-            <p className="text-xs text-muted-foreground max-w-sm mx-auto">
-              Upload images using the uploader above or when editing projects to store them in your Supabase bucket.
+          <div className="space-y-3 py-16 text-center">
+            <HardDrive className="text-muted-foreground mx-auto h-8 w-8" />
+            <p className="text-foreground text-sm font-semibold">No files in bucket</p>
+            <p className="text-muted-foreground mx-auto max-w-sm text-xs">
+              Upload images using the uploader above or when editing projects to store them in your
+              Supabase bucket.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {filteredFiles.map((file) => (
               <div
                 key={file.path || file.name}
-                className="group relative rounded-xl border border-border/80 bg-secondary/20 overflow-hidden flex flex-col justify-between"
+                className="group border-border/80 bg-secondary/20 relative flex flex-col justify-between overflow-hidden rounded-xl border"
               >
                 {/* Thumbnail / Image */}
-                <div className="aspect-video w-full bg-secondary/50 overflow-hidden relative">
+                <div className="bg-secondary/50 relative aspect-video w-full overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={file.publicUrl}
                     alt={file.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                  <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
                     <a
                       href={file.publicUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-card/80 text-foreground hover:text-primary transition-colors"
+                      className="bg-card/80 text-foreground hover:text-primary rounded-lg p-2 transition-colors"
                       title="Open in new tab"
                     >
-                      <ExternalLink className="w-4 h-4" />
+                      <ExternalLink className="h-4 w-4" />
                     </a>
                   </div>
                 </div>
 
                 {/* Info & Actions */}
-                <div className="p-3 space-y-2">
-                  <p className="text-xs font-semibold text-foreground truncate" title={file.name}>
+                <div className="space-y-2 p-3">
+                  <p className="text-foreground truncate text-xs font-semibold" title={file.name}>
                     {file.name}
                   </p>
 
-                  <div className="flex items-center justify-between pt-1 border-t border-border/50">
+                  <div className="border-border/50 flex items-center justify-between border-t pt-1">
                     <button
                       type="button"
                       onClick={() => handleCopy(file.publicUrl, file.path)}
-                      className="flex items-center gap-1 text-[11px] font-medium text-primary hover:underline cursor-pointer"
+                      className="text-primary flex cursor-pointer items-center gap-1 text-[11px] font-medium hover:underline"
                     >
                       {copiedPath === file.path ? (
                         <>
-                          <Check className="w-3 h-3 text-emerald-500" /> Copied!
+                          <Check className="h-3 w-3 text-emerald-500" /> Copied!
                         </>
                       ) : (
                         <>
-                          <Copy className="w-3 h-3" /> Copy URL
+                          <Copy className="h-3 w-3" /> Copy URL
                         </>
                       )}
                     </button>
@@ -224,10 +229,10 @@ export default function MediaManagerPage() {
                       type="button"
                       onClick={() => handleDelete(file.path)}
                       disabled={deleteMutation.isPending}
-                      className="text-muted-foreground hover:text-destructive p-1 rounded-md transition-colors"
+                      className="text-muted-foreground hover:text-destructive rounded-md p-1 transition-colors"
                       title="Delete file"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
+                      <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
                 </div>
@@ -238,16 +243,17 @@ export default function MediaManagerPage() {
       </div>
 
       {/* Supabase Bucket Setup Guide */}
-      <div className="p-6 rounded-2xl bg-card border border-border space-y-3">
-        <h3 className="font-bold text-sm text-foreground flex items-center gap-2">
-          <HardDrive className="w-4 h-4 text-primary" /> Supabase Storage Setup Reference
+      <div className="bg-card border-border space-y-3 rounded-2xl border p-6">
+        <h3 className="text-foreground flex items-center gap-2 text-sm font-bold">
+          <HardDrive className="text-primary h-4 w-4" /> Supabase Storage Setup Reference
         </h3>
-        <p className="text-xs text-muted-foreground leading-relaxed">
+        <p className="text-muted-foreground text-xs leading-relaxed">
           Ensure your Supabase project contains a bucket named{" "}
-          <code className="px-1 py-0.5 rounded bg-secondary font-mono text-foreground font-semibold">
+          <code className="bg-secondary text-foreground rounded px-1 py-0.5 font-mono font-semibold">
             {DEFAULT_BUCKET}
           </code>{" "}
-          with public read access. You can configure this directly in the Supabase Dashboard under <strong>Storage → Buckets</strong>, or run the provided SQL script in the SQL Editor.
+          with public read access. You can configure this directly in the Supabase Dashboard under{" "}
+          <strong>Storage → Buckets</strong>, or run the provided SQL script in the SQL Editor.
         </p>
       </div>
     </div>

@@ -27,9 +27,7 @@ export const LinkBubbleMenu = ({ editor }: { editor: Editor }) => {
       pluginKey="linkBubbleMenu"
       updateDelay={120}
       options={{ placement: "bottom", offset: 8 }}
-      shouldShow={({ editor: e, from, to }) =>
-        e.isEditable && from === to && e.isActive("link")
-      }
+      shouldShow={({ editor: e, from, to }) => e.isEditable && from === to && e.isActive("link")}
       className="bg-popover text-popover-foreground z-40 flex max-w-sm items-center gap-1 rounded-md border p-1 shadow-md"
     >
       <a

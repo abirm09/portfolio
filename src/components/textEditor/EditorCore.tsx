@@ -62,7 +62,8 @@ export const EditorCore = ({
   // extension list — and therefore the whole editor — on every render.
   const featureKey = features ? JSON.stringify(features) : "";
   const isEnabled = useMemo(
-    () => resolveFeatures(preset, featureKey ? (JSON.parse(featureKey) as typeof features) : undefined),
+    () =>
+      resolveFeatures(preset, featureKey ? (JSON.parse(featureKey) as typeof features) : undefined),
     [preset, featureKey],
   );
 
@@ -290,9 +291,7 @@ export const EditorCore = ({
       )}
 
       {/* Dialogs are mounted only while open so their state resets each time. */}
-      {dialog.name === "link" && (
-        <LinkDialog editor={editor} open onOpenChange={closeDialog} />
-      )}
+      {dialog.name === "link" && <LinkDialog editor={editor} open onOpenChange={closeDialog} />}
       {dialog.name === "image" && (
         <ImageDialog
           editor={editor}
@@ -302,9 +301,7 @@ export const EditorCore = ({
           maxDimension={maxImageDimension}
         />
       )}
-      {dialog.name === "video" && (
-        <VideoDialog editor={editor} open onOpenChange={closeDialog} />
-      )}
+      {dialog.name === "video" && <VideoDialog editor={editor} open onOpenChange={closeDialog} />}
       {dialog.name === "html" && (
         <HtmlDialog
           editor={editor}

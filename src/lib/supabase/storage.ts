@@ -1,7 +1,6 @@
 import { createClient as createBrowserClient } from "@/lib/supabase/client";
 
-export const DEFAULT_BUCKET =
-  process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "projects";
+export const DEFAULT_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "project-images";
 
 /**
  * Convert any raster image (PNG, JPEG, JPG, BMP, etc.) to optimized WebP format on the client.
@@ -97,11 +96,7 @@ export async function uploadProjectFile(
   // Convert to WebP if enabled (default: true for all raster images)
   let fileToUpload = file;
   const shouldConvert = options?.convertToWebp ?? true;
-  if (
-    shouldConvert &&
-    typeof window !== "undefined" &&
-    file.type.startsWith("image/")
-  ) {
+  if (shouldConvert && typeof window !== "undefined" && file.type.startsWith("image/")) {
     try {
       fileToUpload = await convertImageToWebP(
         file,
@@ -115,14 +110,14 @@ export async function uploadProjectFile(
 
   // Create clean, unique file path
   const sanitizedName = fileToUpload.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-  const timestamp = Date.now();
-  const filePath = `${folder}/${timestamp}-${sanitizedName}`;
+  const filePath = `${folder}/${crypto.randomUUID()}-${sanitizedName}`;
 
   const { error: uploadError } = await supabase.storage
     .from(bucket)
     .upload(filePath, fileToUpload, {
       cacheControl: "3600",
-      upsert: true,
+      // Each upload has a new path. Overwrite requests also require SELECT/UPDATE RLS policies.
+      upsert: false,
       contentType: fileToUpload.type,
     });
 
@@ -163,10 +158,7 @@ export async function deleteProjectFile(
 /**
  * List files in Supabase Storage bucket
  */
-export async function listStorageFiles(
-  folder: string = "",
-  bucket: string = DEFAULT_BUCKET,
-) {
+export async function listStorageFiles(folder: string = "", bucket: string = DEFAULT_BUCKET) {
   const supabase = createBrowserClient();
 
   if (!supabase) {
@@ -185,9 +177,7 @@ export async function listStorageFiles(
 
   const filesWithUrls = (data || []).map((file) => {
     const fullPath = folder ? `${folder}/${file.name}` : file.name;
-    const { data: urlData } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(fullPath);
+    const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(fullPath);
     return {
       ...file,
       path: fullPath,

@@ -17,7 +17,7 @@ function Label({ className, required, guideline, ...props }: LabelProps) {
     <LabelPrimitive.Root
       data-slot="label"
       className={cn(
-        "flex items-center leading-none select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-base font-normal data-[state=active]:text-gray-700 dark:data-[state=active]:text-white dark:text-white/80",
+        "flex items-center text-base leading-none font-normal select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 data-[state=active]:text-gray-700 dark:text-white/80 dark:data-[state=active]:text-white",
         className,
       )}
       {...props}
@@ -25,16 +25,14 @@ function Label({ className, required, guideline, ...props }: LabelProps) {
       {props.children}
       {required && <span className="text-destructive">*</span>}
       {guideline && (
-        <>
-          <Popover>
-            <PopoverTrigger asChild className="ms-2">
-              <button className="bg-primary text-primary-foreground w-4 h-4 rounded-full flex justify-center items-center text-xs cursor-pointer">
-                ?
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-fit">{guideline}</PopoverContent>
-          </Popover>
-        </>
+        <Popover>
+          <PopoverTrigger asChild className="ms-2">
+            <button className="bg-primary text-primary-foreground flex h-4 w-4 cursor-pointer items-center justify-center rounded-full text-xs">
+              ?
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-fit">{guideline}</PopoverContent>
+        </Popover>
       )}
     </LabelPrimitive.Root>
   );

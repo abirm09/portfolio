@@ -6,10 +6,26 @@ import { cn } from "@/lib/utils";
 
 /** Corner handles — each resizes width while the element keeps its ratio. */
 const HANDLES = [
-  { key: "tl", dir: -1, className: "top-0 left-0 -translate-x-1/2 -translate-y-1/2 cursor-nwse-resize" },
-  { key: "tr", dir: 1, className: "top-0 right-0 translate-x-1/2 -translate-y-1/2 cursor-nesw-resize" },
-  { key: "bl", dir: -1, className: "bottom-0 left-0 -translate-x-1/2 translate-y-1/2 cursor-nesw-resize" },
-  { key: "br", dir: 1, className: "bottom-0 right-0 translate-x-1/2 translate-y-1/2 cursor-nwse-resize" },
+  {
+    key: "tl",
+    dir: -1,
+    className: "top-0 left-0 -translate-x-1/2 -translate-y-1/2 cursor-nwse-resize",
+  },
+  {
+    key: "tr",
+    dir: 1,
+    className: "top-0 right-0 translate-x-1/2 -translate-y-1/2 cursor-nesw-resize",
+  },
+  {
+    key: "bl",
+    dir: -1,
+    className: "bottom-0 left-0 -translate-x-1/2 translate-y-1/2 cursor-nesw-resize",
+  },
+  {
+    key: "br",
+    dir: 1,
+    className: "bottom-0 right-0 translate-x-1/2 translate-y-1/2 cursor-nwse-resize",
+  },
 ] as const;
 
 type ResizeHandlesProps = {

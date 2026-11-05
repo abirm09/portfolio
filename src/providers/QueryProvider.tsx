@@ -33,9 +33,5 @@ export default function QueryProvider({ children }: { children: ReactNode }) {
   // Use state to preserve queryClient during client re-renders
   const [queryClient] = useState(() => getQueryClient());
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }

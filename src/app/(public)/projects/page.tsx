@@ -1,7 +1,7 @@
 import { ProjectCard } from "@/components";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { getProjects } from "@/lib/supabase/projects";
+import { getPortfolioProjects } from "@/lib/supabase/projects";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,15 +10,18 @@ export const metadata: Metadata = {
 };
 
 const ProjectsPage = async () => {
-  const projects = await getProjects();
+  const projects = await getPortfolioProjects();
 
   return (
     <SectionWrapper className="section-bg-projects min-h-[70vh]">
-      <SectionTitle title="All Projects" subtitle="// Everything I've built so far" />
+      <SectionTitle
+        title="All Projects"
+        subtitle="Selected work across commerce, SaaS, and platform engineering"
+      />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.slug} project={project} />
         ))}
       </div>
     </SectionWrapper>

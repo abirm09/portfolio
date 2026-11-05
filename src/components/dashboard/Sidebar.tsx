@@ -58,10 +58,10 @@ export const DashboardSidebar = () => {
       {/* Mobile menu button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 md:hidden flex items-center justify-center p-2 rounded-lg bg-card/80 border border-border text-foreground backdrop-blur-md shadow-md"
+        className="bg-card/80 border-border text-foreground fixed top-4 left-4 z-50 flex items-center justify-center rounded-lg border p-2 shadow-md backdrop-blur-md md:hidden"
         aria-label="Toggle navigation menu"
       >
-        {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
       {/* Mobile backdrop */}
@@ -75,18 +75,18 @@ export const DashboardSidebar = () => {
       {/* Sidebar container */}
       <aside
         className={cn(
-          "fixed top-0 bottom-0 left-0 z-40 w-64 flex flex-col justify-between border-r border-border bg-card/80 backdrop-blur-xl transition-transform duration-300 md:translate-x-0",
+          "border-border bg-card/80 fixed top-0 bottom-0 left-0 z-40 flex w-64 flex-col justify-between border-r backdrop-blur-xl transition-transform duration-300 md:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
         <div>
           {/* Logo & Brand */}
-          <div className="h-16 flex items-center justify-between px-6 border-b border-border">
+          <div className="border-border flex h-16 items-center justify-between border-b px-6">
             <Link
               href="/dashboard"
-              className="flex items-center gap-2.5 font-bold text-lg text-foreground tracking-tight"
+              className="text-foreground flex items-center gap-2.5 text-lg font-bold tracking-tight"
             >
-              <div className="size-8 rounded-lg bg-linear-to-tr from-primary to-accent flex items-center justify-center text-primary-foreground font-black text-sm shadow-md">
+              <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg text-sm font-black">
                 AM
               </div>
               <span>
@@ -96,8 +96,8 @@ export const DashboardSidebar = () => {
           </div>
 
           {/* Navigation Links */}
-          <div className="p-4 space-y-1">
-            <p className="px-3 py-2 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+          <div className="space-y-1 p-4">
+            <p className="text-muted-foreground px-3 py-2 text-[11px] font-semibold tracking-wider uppercase">
               Management
             </p>
             {navItems.map((item) => {
@@ -109,13 +109,13 @@ export const DashboardSidebar = () => {
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
+                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150",
                     active
-                      ? "bg-primary text-primary-foreground shadow-sm shadow-primary/25 font-semibold"
+                      ? "bg-primary text-primary-foreground shadow-primary/25 font-semibold shadow-sm"
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary/60",
                   )}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
+                  <Icon className="h-4 w-4 shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -124,34 +124,34 @@ export const DashboardSidebar = () => {
         </div>
 
         {/* Footer controls: Public Site, Theme switcher, Logout */}
-        <div className="p-4 border-t border-border space-y-3">
+        <div className="border-border space-y-3 border-t p-4">
           <Link
             href="/"
             target="_blank"
-            className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"
+            className="text-muted-foreground hover:text-foreground hover:bg-secondary/60 flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors"
           >
             <span className="flex items-center gap-2">
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="h-3.5 w-3.5" />
               View Live Portfolio
             </span>
-            <span className="text-[10px] bg-secondary px-1.5 py-0.5 rounded text-muted-foreground">
+            <span className="bg-secondary text-muted-foreground rounded px-1.5 py-0.5 text-[10px]">
               Tab
             </span>
           </Link>
 
-          <div className="flex items-center justify-between pt-2 border-t border-border/50">
+          <div className="border-border/50 flex items-center justify-between border-t pt-2">
             <div className="flex items-center gap-2">
               <ThemeSwitcher />
-              <span className="text-xs text-muted-foreground">Theme</span>
+              <span className="text-muted-foreground text-xs">Theme</span>
             </div>
 
             <form action={logoutAction}>
               <button
                 type="submit"
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                className="text-destructive hover:bg-destructive/10 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors"
                 title="Sign out"
               >
-                <LogOut className="w-3.5 h-3.5" />
+                <LogOut className="h-3.5 w-3.5" />
                 <span>Logout</span>
               </button>
             </form>

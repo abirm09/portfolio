@@ -1,43 +1,51 @@
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { Code2, Database, Server, Wrench } from "lucide-react";
+import { ArrowUpRight, Bot, Code2, Database, Server, Smartphone, Wrench } from "lucide-react";
+import Link from "next/link";
 
 const skillCategories = [
   {
     title: "Frontend",
     icon: Code2,
-    color: "text-blue-500",
-    bgColor: "bg-blue-500/10",
-    skills: ["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
+    description: "Fast, accessible interfaces built for real people.",
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux Toolkit", "TanStack Query"],
   },
   {
     title: "Backend",
     icon: Server,
-    color: "text-green-500",
-    bgColor: "bg-green-500/10",
-    skills: ["Node.js", "Express", "FastAPI", "Python", "REST API", "JWT Auth"],
+    description: "Reliable services and the logic behind complex products.",
+    skills: ["Node.js", "Express", "NestJS", "REST APIs", "Zod", "BullMQ"],
   },
   {
-    title: "Databases",
+    title: "Data & Cloud",
     icon: Database,
-    color: "text-purple-500",
-    bgColor: "bg-purple-500/10",
-    skills: ["MongoDB", "PostgreSQL", "MySQL", "Prisma"],
+    description: "Storage, caching, and connected data that scale.",
+    skills: ["PostgreSQL", "Prisma", "Redis", "MongoDB", "Supabase"],
   },
   {
-    title: "Tools & Platforms",
+    title: "Mobile Applications",
+    icon: Smartphone,
+    description: "Native mobile experiences with a shared product mindset.",
+    skills: ["React Native", "Expo", "React Navigation", "NativeWind"],
+  },
+  {
+    title: "AI Integrations",
+    icon: Bot,
+    description: "Practical AI features connected to useful workflows.",
+    skills: ["LangChain", "LLM API Integrations", "AI Assistants"],
+  },
+  {
+    title: "Platforms & Architecture",
     icon: Wrench,
-    color: "text-orange-500",
-    bgColor: "bg-orange-500/10",
+    description: "The delivery and architecture behind production systems.",
     skills: [
-      "Git",
-      "GitHub",
-      "Linux",
+      "Turborepo",
       "Docker",
       "AWS",
-      "Fingerprint Scanner",
-      "WordPress",
-      "Elementor",
+      "S3 Storage",
+      "Multi-tenant Systems",
+      "E-commerce & POS",
+      "GitHub Actions",
     ],
   },
 ];
@@ -45,39 +53,69 @@ const skillCategories = [
 export const Skills = () => {
   return (
     <SectionWrapper id="skills" className="section-bg-skills">
-      <SectionTitle
-        title="Skills & Technologies"
-        subtitle="// Technologies I work with to bring ideas to life"
-      />
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {skillCategories.map((category, index) => (
-          <div
-            key={category.title}
-            className="group p-6 rounded-xl card-glass transition-all duration-300 hover:-translate-y-1"
-            style={{ animationDelay: `${index * 100}ms` }}
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] lg:gap-16">
+        <div className="self-start lg:sticky lg:top-28">
+          <p className="text-primary mb-5 text-xs font-semibold tracking-[0.2em] uppercase">
+            01 / Capabilities
+          </p>
+          <SectionTitle
+            title="Skills & technologies"
+            subtitle="The tools and systems I use to turn ideas into dependable digital products."
+            align="left"
+            className="mb-6"
+          />
+          <Link
+            href="/projects"
+            className="text-foreground hover:text-primary inline-flex items-center gap-2 text-sm font-semibold transition-colors"
           >
-            {/* Icon */}
-            <div
-              className={`w-12 h-12 rounded-lg ${category.bgColor} flex items-center justify-center mb-4`}
+            See these skills in action <ArrowUpRight className="size-4" aria-hidden="true" />
+          </Link>
+        </div>
+
+        <ol className="border-border border-t">
+          {skillCategories.map((category, index) => (
+            <li
+              key={category.title}
+              className="group border-border hover:bg-card/70 grid grid-cols-[2rem_1fr] gap-3 border-b py-6 transition-colors sm:grid-cols-[2.5rem_3.5rem_1fr] sm:gap-4 sm:py-7"
             >
-              <category.icon className={`w-6 h-6 ${category.color}`} />
-            </div>
-
-            {/* Title */}
-            <h3 className="text-lg font-semibold text-foreground mb-4">{category.title}</h3>
-
-            {/* Skills list */}
-            <ul className="space-y-2">
-              {category.skills.map((skill) => (
-                <li key={skill} className="text-muted-foreground text-sm flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+              <span className="text-muted-foreground pt-2 font-mono text-xs tabular-nums">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span
+                className="bg-brand-accent/45 text-primary hidden size-12 items-center justify-center rounded-xl sm:flex"
+                aria-hidden="true"
+              >
+                <category.icon className="size-5" strokeWidth={1.8} />
+              </span>
+              <div>
+                <div className="mb-1 flex items-center gap-3">
+                  <span
+                    className="bg-brand-accent/45 text-primary flex size-9 items-center justify-center rounded-lg sm:hidden"
+                    aria-hidden="true"
+                  >
+                    <category.icon className="size-4" strokeWidth={1.8} />
+                  </span>
+                  <h3 className="text-foreground text-lg font-semibold tracking-tight sm:text-xl">
+                    {category.title}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground mb-4 max-w-lg text-sm leading-relaxed">
+                  {category.description}
+                </p>
+                <ul className="flex flex-wrap gap-2" aria-label={`${category.title} technologies`}>
+                  {category.skills.map((skill) => (
+                    <li
+                      key={skill}
+                      className="border-border bg-background text-foreground/80 rounded-full border px-3 py-1 text-xs font-medium"
+                    >
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </SectionWrapper>
   );

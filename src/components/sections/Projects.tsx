@@ -12,20 +12,20 @@ export const Projects = async () => {
     <SectionWrapper id="projects" className="section-bg-projects">
       <SectionTitle
         title="Featured Projects"
-        subtitle="// A selection of projects I've worked on"
+        subtitle="Commerce platforms, affiliate tools, and products built for real workflows"
       />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.slug} project={project} />
         ))}
       </div>
 
       <div className="mt-10 flex justify-center">
-        <Button variant="gradient" asChild>
+        <Button className="rounded-full px-6" asChild>
           <Link href="/projects">
             Show All Projects
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </Button>
       </div>

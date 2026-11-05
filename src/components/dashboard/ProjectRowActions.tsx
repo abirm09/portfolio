@@ -42,7 +42,7 @@ export const ProjectRowActions = ({ project }: ProjectRowActionsProps) => {
         type="button"
         onClick={handleToggleFeatured}
         disabled={toggleFeaturedMutation.isPending}
-        className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+        className={`cursor-pointer rounded-lg p-1.5 transition-colors ${
           project.featured
             ? "text-amber-500 hover:bg-amber-500/10"
             : "text-muted-foreground hover:text-foreground hover:bg-secondary"
@@ -50,23 +50,23 @@ export const ProjectRowActions = ({ project }: ProjectRowActionsProps) => {
         title={project.featured ? "Remove from Featured" : "Mark as Featured"}
       >
         {toggleFeaturedMutation.isPending ? (
-          <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+          <Loader2 className="text-muted-foreground h-4 w-4 animate-spin" />
         ) : (
-          <Star className={`w-4 h-4 ${project.featured ? "fill-amber-500" : ""}`} />
+          <Star className={`h-4 w-4 ${project.featured ? "fill-amber-500" : ""}`} />
         )}
       </button>
 
       {/* View Public page */}
       <Button variant="ghost" size="icon-sm" asChild title="View on site">
         <Link href={`/projects/${project.slug}`} target="_blank">
-          <ExternalLink className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+          <ExternalLink className="text-muted-foreground hover:text-foreground h-4 w-4" />
         </Link>
       </Button>
 
       {/* Edit project */}
       <Button variant="ghost" size="icon-sm" asChild title="Edit project">
         <Link href={`/dashboard/projects/${project.id}/edit`}>
-          <Edit className="w-4 h-4 text-primary" />
+          <Edit className="text-primary h-4 w-4" />
         </Link>
       </Button>
 
@@ -74,20 +74,21 @@ export const ProjectRowActions = ({ project }: ProjectRowActionsProps) => {
       <button
         type="button"
         onClick={() => setShowConfirm(true)}
-        className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors cursor-pointer"
+        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 cursor-pointer rounded-lg p-1.5 transition-colors"
         title="Delete project"
       >
-        <Trash2 className="w-4 h-4" />
+        <Trash2 className="h-4 w-4" />
       </button>
 
       {/* Confirmation Modal */}
       {showConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="w-full max-w-sm rounded-2xl bg-card border border-border p-6 space-y-4 shadow-2xl animate-fade-in text-left">
-            <h3 className="font-bold text-lg text-foreground">Delete Project?</h3>
-            <p className="text-xs text-muted-foreground leading-relaxed">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
+          <div className="bg-card border-border animate-fade-in w-full max-w-sm space-y-4 rounded-2xl border p-6 text-left shadow-2xl">
+            <h3 className="text-foreground text-lg font-bold">Delete Project?</h3>
+            <p className="text-muted-foreground text-xs leading-relaxed">
               Are you sure you want to permanently delete{" "}
-              <strong className="text-foreground">{project.title}</strong>? This action cannot be undone.
+              <strong className="text-foreground">{project.title}</strong>? This action cannot be
+              undone.
             </p>
             <div className="flex items-center justify-end gap-2 pt-2">
               <Button
@@ -106,7 +107,7 @@ export const ProjectRowActions = ({ project }: ProjectRowActionsProps) => {
               >
                 {deleteMutation.isPending ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" /> Deleting...
+                    <Loader2 className="h-4 w-4 animate-spin" /> Deleting...
                   </>
                 ) : (
                   "Delete Project"

@@ -9,40 +9,44 @@ export const About = () => {
     "Full Stack Development",
     "System Design",
     "Backend Architecture",
-    "Authentication Systems",
-    "Fingerprint Authentication",
-    "AI Assistants",
-    "Automation",
+    "Multi-tenant Platforms",
+    "E-commerce Systems",
+    "Point of Sale",
+    "Background Jobs",
     "Open Source",
     "Building Digital Products",
-    "Theme Development",
-    "SaaS Applications",
+    "Affiliate Platforms",
+    "Developer Tooling",
+    "Mobile Applications",
+    "AI Integrations",
   ];
 
   return (
     <SectionWrapper id="about" className="section-bg-about">
       <SectionTitle
         title="About Me"
-        subtitle="// Passionate developer dedicated to creating exceptional digital experiences"
+        subtitle="Building useful products across commerce, SaaS, and the modern web"
       />
 
-      <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="grid items-center gap-12 md:grid-cols-2">
         {/* Bio */}
         <div className="space-y-6">
-          <p className="text-lg text-foreground/90 leading-relaxed">
-            I&apos;m a passionate <strong>Full Stack Developer</strong> who enjoys building scalable
-            web applications, APIs, SaaS products, and modern user experiences. I love learning new
-            technologies and continuously improving my development skills.
+          <p className="text-foreground/90 text-lg leading-relaxed">
+            I&apos;m a <strong>Full Stack Developer</strong> building product experiences from the
+            storefront to the systems behind it. My recent work spans multi-tenant commerce,
+            affiliate platforms, dashboards, and scalable web applications.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            I specialize in the <strong className="text-foreground">MERN stack</strong> and modern
-            backends with <strong className="text-foreground">Node.js, Express, FastAPI</strong> and
-            Python, working with PostgreSQL, MongoDB and Prisma. I&apos;m especially interested in
-            authentication systems, backend architecture, and AI-powered tools.
+            I work with <strong className="text-foreground">Next.js, React, and TypeScript</strong>{" "}
+            on the frontend, and{" "}
+            <strong className="text-foreground">Node.js, Express, and NestJS</strong> on the
+            backend. PostgreSQL, Prisma, Redis, and Supabase help me build dependable product
+            workflows.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            I enjoy solving real-world problems through software, contributing to open source, and
-            building digital products that make an impact.
+            I also work with React Native and Expo for mobile applications, and explore AI
+            integrations with LangChain and LLM APIs. I enjoy solving real business problems,
+            especially in payments, inventory, reporting, and growing product systems.
           </p>
 
           {/* Interests */}
@@ -50,7 +54,7 @@ export const About = () => {
             {interests.map((interest) => (
               <span
                 key={interest}
-                className="text-xs font-medium px-3 py-1.5 rounded-lg card-glass text-muted-foreground transition-all duration-300"
+                className="border-border bg-card text-muted-foreground rounded-full border px-3 py-1.5 text-xs font-medium"
               >
                 {interest}
               </span>
@@ -61,19 +65,18 @@ export const About = () => {
         {/* Highlights */}
 
         {/* Profile Image Section */}
-        <div className="flex justify-center items-center">
-          <div className="relative rounded-2xl p-[2px] bg-[linear-gradient(135deg,var(--primary),var(--accent))] shadow-2xl shadow-primary/25">
-            <div className="absolute -inset-6 -z-10 rounded-full bg-primary/20 blur-3xl overflow-hidden" />
+        <div className="flex items-center justify-center">
+          <div className="border-brand-accent bg-brand-accent relative rounded-[1.5rem] border-[12px]">
             <Image
               src={meWhite}
               alt="Profile"
-              className="dark:hidden rounded-2xl size-96 object-cover"
+              className="size-96 rounded-2xl object-cover dark:hidden"
               priority
             />
             <Image
               src={meDark}
               alt="Profile Dark"
-              className="hidden dark:block rounded-2xl size-96 object-cover"
+              className="hidden size-96 rounded-2xl object-cover dark:block"
               priority
             />
           </div>

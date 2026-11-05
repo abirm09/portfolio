@@ -20,7 +20,7 @@ import {
   Check,
   ExternalLink,
   FileText,
-  Github,
+  GitBranch,
   Image as ImageIcon,
   Link2,
   Loader2,
@@ -36,12 +36,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const POPULAR_TECH_STACKS = Object.entries(TECH_STACK_LABELS).map(
-  ([key, label]) => ({
-    id: key,
-    label,
-  }),
-);
+const POPULAR_TECH_STACKS = Object.entries(TECH_STACK_LABELS).map(([key, label]) => ({
+  id: key,
+  label,
+}));
 
 // Additional suggestions
 const EXTRA_TECH_STACKS = [
@@ -67,9 +65,7 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
   const [title, setTitle] = useState(initialData?.title || "");
   const [slug, setSlug] = useState(initialData?.slug || "");
   const [slugModified, setSlugModified] = useState(Boolean(initialData?.slug));
-  const [description, setDescription] = useState(
-    initialData?.description || "",
-  );
+  const [description, setDescription] = useState(initialData?.description || "");
   const [featured, setFeatured] = useState(initialData?.featured || false);
   const [techStack, setTechStack] = useState<string[]>(
     initialData?.tech_stack || ["nextjs", "tailwindcss", "typescript"],
@@ -169,9 +165,7 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
   };
 
   // Gallery multi-upload
-  const handleGalleryUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
@@ -211,54 +205,30 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
     setLiveUrls(liveUrls.filter((item) => item.id !== id));
   };
   const updateLiveUrl = (id: number, field: "name" | "url", value: string) => {
-    setLiveUrls(
-      liveUrls.map((item) =>
-        item.id === id ? { ...item, [field]: value } : item,
-      ),
-    );
+    setLiveUrls(liveUrls.map((item) => (item.id === id ? { ...item, [field]: value } : item)));
   };
 
   // GitHub URLs Handlers
   const addGithubUrl = () => {
-    setGithubUrls([
-      ...githubUrls,
-      { id: Date.now(), title: "Source Code", url: "" },
-    ]);
+    setGithubUrls([...githubUrls, { id: Date.now(), title: "Source Code", url: "" }]);
   };
   const removeGithubUrl = (id: number) => {
     setGithubUrls(githubUrls.filter((item) => item.id !== id));
   };
-  const updateGithubUrl = (
-    id: number,
-    field: "title" | "url",
-    value: string,
-  ) => {
-    setGithubUrls(
-      githubUrls.map((item) =>
-        item.id === id ? { ...item, [field]: value } : item,
-      ),
-    );
+  const updateGithubUrl = (id: number, field: "title" | "url", value: string) => {
+    setGithubUrls(githubUrls.map((item) => (item.id === id ? { ...item, [field]: value } : item)));
   };
 
   // Case Study URLs Handlers
   const addCaseStudyUrl = () => {
-    setCaseStudyUrls([
-      ...caseStudyUrls,
-      { id: Date.now(), title: "Case Study", url: "" },
-    ]);
+    setCaseStudyUrls([...caseStudyUrls, { id: Date.now(), title: "Case Study", url: "" }]);
   };
   const removeCaseStudyUrl = (id: number) => {
     setCaseStudyUrls(caseStudyUrls.filter((item) => item.id !== id));
   };
-  const updateCaseStudyUrl = (
-    id: number,
-    field: "title" | "url",
-    value: string,
-  ) => {
+  const updateCaseStudyUrl = (id: number, field: "title" | "url", value: string) => {
     setCaseStudyUrls(
-      caseStudyUrls.map((item) =>
-        item.id === id ? { ...item, [field]: value } : item,
-      ),
+      caseStudyUrls.map((item) => (item.id === id ? { ...item, [field]: value } : item)),
     );
   };
 
@@ -279,9 +249,7 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
 
     const filteredLiveUrls = liveUrls.filter((u) => u.url.trim() !== "");
     const filteredGithubUrls = githubUrls.filter((u) => u.url.trim() !== "");
-    const filteredCaseStudyUrls = caseStudyUrls.filter(
-      (u) => u.url.trim() !== "",
-    );
+    const filteredCaseStudyUrls = caseStudyUrls.filter((u) => u.url.trim() !== "");
 
     const payload: Partial<TProject> = {
       id: initialData?.id,
@@ -316,27 +284,27 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-6xl">
+    <form onSubmit={handleSubmit} className="w-full max-w-6xl space-y-6">
       {/* Action Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-card border border-border shadow-xs">
+      <div className="bg-card border-border flex flex-col justify-between gap-4 rounded-2xl border p-4 shadow-xs sm:flex-row sm:items-center">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" asChild>
             <Link
               href="/dashboard/projects"
               className="flex items-center gap-1.5 text-xs font-semibold"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="h-4 w-4" />
               Back
             </Link>
           </Button>
-          <div className="h-4 w-px bg-border hidden sm:block" />
+          <div className="bg-border hidden h-4 w-px sm:block" />
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-foreground truncate max-w-xs sm:max-w-md">
+            <span className="text-foreground max-w-xs truncate text-sm font-bold sm:max-w-md">
               {title || "Untitled Project"}
             </span>
             {featured && (
-              <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20">
-                <Star className="w-3 h-3 fill-amber-500" /> Featured
+              <span className="flex items-center gap-1 rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-500">
+                <Star className="h-3 w-3 fill-amber-500" /> Featured
               </span>
             )}
           </div>
@@ -346,20 +314,15 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
           <Button type="button" variant="outline" size="sm" asChild>
             <Link href="/dashboard/projects">Cancel</Link>
           </Button>
-          <Button
-            type="submit"
-            variant="gradient"
-            size="sm"
-            disabled={saveMutation.isPending}
-          >
+          <Button type="submit" variant="default" size="sm" disabled={saveMutation.isPending}>
             {saveMutation.isPending ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 Saving...
               </>
             ) : (
               <>
-                <Save className="w-4 h-4" />
+                <Save className="h-4 w-4" />
                 {isEditing ? "Update Project" : "Create Project"}
               </>
             )}
@@ -369,8 +332,8 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
 
       {/* Error & Success Feedback Alerts */}
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/30 text-destructive flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+        <div className="bg-destructive/10 border-destructive/30 text-destructive flex items-start gap-3 rounded-xl border p-4">
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
           <div className="text-sm">
             <p className="font-semibold">Error saving project</p>
             <p className="mt-0.5">{errorMessage}</p>
@@ -379,18 +342,18 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
       )}
 
       {successMessage && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-start gap-3">
-          <Check className="w-5 h-5 shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-600 dark:text-emerald-400">
+          <Check className="mt-0.5 h-5 w-5 shrink-0" />
           <div className="text-sm font-medium">{successMessage}</div>
         </div>
       )}
 
       {/* Top Section: Project Metadata & Settings Card */}
-      <div className="p-6 rounded-2xl bg-card border border-border space-y-6 shadow-xs">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+      <div className="bg-card border-border space-y-6 rounded-2xl border p-6 shadow-xs">
+        <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
           {/* Project Title */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-foreground uppercase tracking-wider">
+            <label className="text-foreground text-xs font-bold tracking-wider uppercase">
               Project Title *
             </label>
             <Input
@@ -405,10 +368,10 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
           {/* URL Slug */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-foreground uppercase tracking-wider">
+              <label className="text-foreground text-xs font-bold tracking-wider uppercase">
                 URL Slug *
               </label>
-              <span className="text-[11px] text-muted-foreground font-mono">
+              <span className="text-muted-foreground font-mono text-[11px]">
                 /projects/{slug || "..."}
               </span>
             </div>
@@ -420,42 +383,42 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                 setSlugModified(true);
               }}
               required
-              className="h-10 text-xs font-mono"
+              className="h-10 font-mono text-xs"
             />
           </div>
 
           {/* Featured Project Switch */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-foreground uppercase tracking-wider">
+            <label className="text-foreground text-xs font-bold tracking-wider uppercase">
               Visibility & Feature
             </label>
-            <div className="flex items-center justify-between p-2 rounded-xl bg-secondary/30 border border-border h-10">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+            <div className="bg-secondary/30 border-border flex h-10 items-center justify-between rounded-xl border p-2">
+              <div className="text-foreground flex items-center gap-1.5 text-xs font-semibold">
                 <Star
-                  className={`w-3.5 h-3.5 ${featured ? "text-amber-500 fill-amber-500" : "text-muted-foreground"}`}
+                  className={`h-3.5 w-3.5 ${featured ? "fill-amber-500 text-amber-500" : "text-muted-foreground"}`}
                 />
                 <span>Featured on Home</span>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
+              <label className="relative inline-flex cursor-pointer items-center">
                 <input
                   type="checkbox"
                   checked={featured}
                   onChange={(e) => setFeatured(e.target.checked)}
-                  className="sr-only peer"
+                  className="peer sr-only"
                 />
-                <div className="w-9 h-5 bg-secondary peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-primary-foreground after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:border-border after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                <div className="bg-secondary peer peer-checked:after:border-primary-foreground after:bg-card after:border-border peer-checked:bg-primary h-5 w-9 rounded-full peer-focus:outline-hidden after:absolute after:top-[2px] after:left-[2px] after:h-4 after:w-4 after:rounded-full after:border after:transition-all after:content-[''] peer-checked:after:translate-x-full" />
               </label>
             </div>
           </div>
         </div>
 
         {/* Tech Stack Chips & Custom Input */}
-        <div className="space-y-3 pt-4 border-t border-border/70">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <label className="text-xs font-bold text-foreground uppercase tracking-wider">
+        <div className="border-border/70 space-y-3 border-t pt-4">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <label className="text-foreground text-xs font-bold tracking-wider uppercase">
               Technologies & Tech Stack ({techStack.length} selected)
             </label>
-            <p className="text-[11px] text-muted-foreground">
+            <p className="text-muted-foreground text-[11px]">
               Click tags to toggle or type below to add custom tags.
             </p>
           </div>
@@ -469,9 +432,9 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                   type="button"
                   onClick={() => toggleTech(tech.id)}
                   className={cn(
-                    "px-2.5 py-1 rounded-lg text-xs font-medium border transition-all cursor-pointer",
+                    "cursor-pointer rounded-lg border px-2.5 py-1 text-xs font-medium transition-all",
                     selected
-                      ? "bg-primary text-primary-foreground border-primary shadow-xs font-semibold"
+                      ? "bg-primary text-primary-foreground border-primary font-semibold shadow-xs"
                       : "bg-secondary/40 text-muted-foreground border-border hover:bg-secondary hover:text-foreground",
                   )}
                 >
@@ -488,16 +451,16 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                   key={custom}
                   type="button"
                   onClick={() => toggleTech(custom)}
-                  className="px-2.5 py-1 rounded-lg text-xs font-medium border bg-primary text-primary-foreground border-primary flex items-center gap-1 font-semibold"
+                  className="bg-primary text-primary-foreground border-primary flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-medium font-semibold"
                 >
                   {custom}
-                  <X className="w-3 h-3" />
+                  <X className="h-3 w-3" />
                 </button>
               ))}
           </div>
 
           {/* Add custom tech */}
-          <div className="flex items-center gap-2 max-w-md pt-1">
+          <div className="flex max-w-md items-center gap-2 pt-1">
             <Input
               placeholder="Add custom technology (e.g. AWS, WebSockets, Redis)..."
               value={customTechInput}
@@ -517,7 +480,7 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
               onClick={addCustomTech}
               className="h-8 text-xs"
             >
-              <Plus className="w-3.5 h-3.5" /> Add
+              <Plus className="h-3.5 w-3.5" /> Add
             </Button>
           </div>
         </div>
@@ -525,53 +488,42 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
 
       {/* Main Tabbed Area: Description (Full Width), Media, and Links */}
       <Tabs defaultValue="description" className="w-full space-y-4">
-        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex bg-secondary/50 p-1 rounded-xl h-11 border border-border/80">
-          <TabsTrigger
-            value="description"
-            className="rounded-lg gap-2 text-xs font-bold px-5 h-9"
-          >
-            <FileText className="w-4 h-4 text-primary" />
+        <TabsList className="bg-secondary/50 border-border/80 grid h-11 w-full grid-cols-3 rounded-xl border p-1 sm:inline-flex sm:w-auto">
+          <TabsTrigger value="description" className="h-9 gap-2 rounded-lg px-5 text-xs font-bold">
+            <FileText className="text-primary h-4 w-4" />
             <span>Description</span>
           </TabsTrigger>
-          <TabsTrigger
-            value="media"
-            className="rounded-lg gap-2 text-xs font-bold px-5 h-9"
-          >
-            <ImageIcon className="w-4 h-4 text-primary" />
+          <TabsTrigger value="media" className="h-9 gap-2 rounded-lg px-5 text-xs font-bold">
+            <ImageIcon className="text-primary h-4 w-4" />
             <span>Media & Assets</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-secondary text-muted-foreground">
+            <span className="py-0.2 bg-secondary text-muted-foreground rounded-full px-1.5 text-[10px]">
               {1 + imageGallery.length}
             </span>
           </TabsTrigger>
-          <TabsTrigger
-            value="links"
-            className="rounded-lg gap-2 text-xs font-bold px-5 h-9"
-          >
-            <Link2 className="w-4 h-4 text-primary" />
+          <TabsTrigger value="links" className="h-9 gap-2 rounded-lg px-5 text-xs font-bold">
+            <Link2 className="text-primary h-4 w-4" />
             <span>Links & Repos</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-secondary text-muted-foreground">
-              {liveUrls.filter((u) => u.url).length +
-                githubUrls.filter((u) => u.url).length}
+            <span className="py-0.2 bg-secondary text-muted-foreground rounded-full px-1.5 text-[10px]">
+              {liveUrls.filter((u) => u.url).length + githubUrls.filter((u) => u.url).length}
             </span>
           </TabsTrigger>
         </TabsList>
 
         {/* TAB 1: FULL-WIDTH DESCRIPTION (TIPTAP RICH TEXT EDITOR) */}
         <TabsContent value="description" className="space-y-4 outline-none">
-          <div className="p-6 rounded-2xl bg-card border border-border space-y-4 shadow-xs">
-            <div className="flex items-center justify-between pb-2 border-b border-border/70">
+          <div className="bg-card border-border space-y-4 rounded-2xl border p-6 shadow-xs">
+            <div className="border-border/70 flex items-center justify-between border-b pb-2">
               <div>
-                <h3 className="font-bold text-base text-foreground flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-primary" /> Project
-                  Description & Case Study
+                <h3 className="text-foreground flex items-center gap-2 text-base font-bold">
+                  <FileText className="text-primary h-4 w-4" /> Project Description & Case Study
                 </h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Write detailed case studies, highlight features, insert
-                  tables, format code blocks, and embed media.
+                <p className="text-muted-foreground mt-0.5 text-xs">
+                  Write detailed case studies, highlight features, insert tables, format code
+                  blocks, and embed media.
                 </p>
               </div>
-              <span className="text-xs text-primary font-medium flex items-center gap-1">
-                <Sparkles className="w-3 h-3" /> Full Width Editor
+              <span className="text-primary flex items-center gap-1 text-xs font-medium">
+                <Sparkles className="h-3 w-3" /> Full Width Editor
               </span>
             </div>
 
@@ -589,40 +541,39 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
 
         {/* TAB 2: MEDIA & ASSETS (THUMBNAIL & GALLERY) */}
         <TabsContent value="media" className="space-y-6 outline-none">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
             {/* Thumbnail Card */}
-            <div className="p-6 rounded-2xl bg-card border border-border space-y-4 shadow-xs">
+            <div className="bg-card border-border space-y-4 rounded-2xl border p-6 shadow-xs">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-bold text-base text-foreground flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4 text-primary" /> Project Cover
-                    Thumbnail
+                  <h3 className="text-foreground flex items-center gap-2 text-base font-bold">
+                    <ImageIcon className="text-primary h-4 w-4" /> Project Cover Thumbnail
                   </h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                  <p className="text-muted-foreground mt-0.5 text-xs">
                     Main image displayed on portfolio home and cards.
                   </p>
                 </div>
               </div>
 
               {/* Cover Preview */}
-              <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-border bg-secondary/30 flex items-center justify-center">
+              <div className="border-border bg-secondary/30 relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-xl border">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={thumb.url || "/images/projects/project-placeholder.svg"}
                   alt={thumb.title || "Thumbnail Preview"}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
                 {uploadingThumb && (
-                  <div className="absolute inset-0 bg-background/75 backdrop-blur-xs flex flex-col items-center justify-center gap-2 text-xs font-semibold text-primary">
-                    <Loader2 className="w-6 h-6 animate-spin" />
+                  <div className="bg-background/75 text-primary absolute inset-0 flex flex-col items-center justify-center gap-2 text-xs font-semibold backdrop-blur-xs">
+                    <Loader2 className="h-6 w-6 animate-spin" />
                     Uploading to Supabase...
                   </div>
                 )}
               </div>
 
               {/* Upload to Supabase Storage Button */}
-              <label className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-primary/40 bg-primary/5 hover:bg-primary/10 text-primary text-xs font-semibold cursor-pointer transition-colors">
-                <Upload className="w-4 h-4" />
+              <label className="border-primary/40 bg-primary/5 hover:bg-primary/10 text-primary flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed px-4 py-2.5 text-xs font-semibold transition-colors">
+                <Upload className="h-4 w-4" />
                 Upload New Cover to Supabase Bucket
                 <input
                   type="file"
@@ -635,7 +586,7 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
 
               {/* URL input */}
               <div className="space-y-2 pt-1">
-                <label className="text-xs font-semibold text-muted-foreground">
+                <label className="text-muted-foreground text-xs font-semibold">
                   Or Direct Image URL
                 </label>
                 <Input
@@ -648,47 +599,42 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
 
               {/* Thumbnail Title */}
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-muted-foreground">
+                <label className="text-muted-foreground text-xs font-semibold">
                   Thumbnail Alt / Title
                 </label>
                 <Input
                   placeholder="e.g. Dashboard view screenshot"
                   value={thumb.title}
-                  onChange={(e) =>
-                    setThumb({ ...thumb, title: e.target.value })
-                  }
+                  onChange={(e) => setThumb({ ...thumb, title: e.target.value })}
                   className="text-xs"
                 />
               </div>
             </div>
 
             {/* Gallery Screenshots Card */}
-            <div className="p-6 rounded-2xl bg-card border border-border space-y-4 shadow-xs">
+            <div className="bg-card border-border space-y-4 rounded-2xl border p-6 shadow-xs">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-bold text-base text-foreground flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4 text-primary" /> Gallery
-                    Screenshots
+                  <h3 className="text-foreground flex items-center gap-2 text-base font-bold">
+                    <ImageIcon className="text-primary h-4 w-4" /> Gallery Screenshots
                   </h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                  <p className="text-muted-foreground mt-0.5 text-xs">
                     Additional interface screenshots for project detail page.
                   </p>
                 </div>
-                <span className="text-xs text-muted-foreground">
-                  {imageGallery.length} items
-                </span>
+                <span className="text-muted-foreground text-xs">{imageGallery.length} items</span>
               </div>
 
               {/* Multi-upload to Supabase */}
-              <label className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-border hover:border-primary/50 bg-secondary/30 hover:bg-secondary text-foreground text-xs font-medium cursor-pointer transition-colors">
+              <label className="border-border hover:border-primary/50 bg-secondary/30 hover:bg-secondary text-foreground flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed px-4 py-2.5 text-xs font-medium transition-colors">
                 {uploadingGallery ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                    <Loader2 className="text-primary h-4 w-4 animate-spin" />
                     Uploading gallery images to Supabase...
                   </>
                 ) : (
                   <>
-                    <Upload className="w-4 h-4 text-primary" />
+                    <Upload className="text-primary h-4 w-4" />
                     Upload Multiple Screenshots to Supabase
                   </>
                 )}
@@ -703,24 +649,24 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
               </label>
 
               {/* Gallery list */}
-              <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+              <div className="max-h-[380px] space-y-3 overflow-y-auto pr-1">
                 {imageGallery.length === 0 ? (
-                  <p className="text-xs text-muted-foreground italic py-6 text-center">
+                  <p className="text-muted-foreground py-6 text-center text-xs italic">
                     No screenshots added to gallery yet.
                   </p>
                 ) : (
                   imageGallery.map((img, idx) => (
                     <div
                       key={img.id}
-                      className="p-3 rounded-xl border border-border/80 bg-secondary/20 flex gap-3 items-center"
+                      className="border-border/80 bg-secondary/20 flex items-center gap-3 rounded-xl border p-3"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={img.url}
                         alt={img.title}
-                        className="w-14 h-14 rounded-lg object-cover bg-secondary shrink-0 border border-border"
+                        className="bg-secondary border-border h-14 w-14 shrink-0 rounded-lg border object-cover"
                       />
-                      <div className="flex-1 min-w-0 space-y-1.5">
+                      <div className="min-w-0 flex-1 space-y-1.5">
                         <Input
                           placeholder="Image caption (e.g. Analytics view)"
                           value={img.title}
@@ -739,20 +685,16 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                             next[idx].url = e.target.value;
                             setImageGallery(next);
                           }}
-                          className="h-7 text-[11px] text-muted-foreground font-mono"
+                          className="text-muted-foreground h-7 font-mono text-[11px]"
                         />
                       </div>
                       <button
                         type="button"
-                        onClick={() =>
-                          setImageGallery(
-                            imageGallery.filter((_, i) => i !== idx),
-                          )
-                        }
-                        className="p-2 text-muted-foreground hover:text-destructive transition-colors shrink-0"
+                        onClick={() => setImageGallery(imageGallery.filter((_, i) => i !== idx))}
+                        className="text-muted-foreground hover:text-destructive shrink-0 p-2 transition-colors"
                         title="Remove image"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     </div>
                   ))
@@ -764,27 +706,20 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
 
         {/* TAB 3: LINKS & REPOSITORIES */}
         <TabsContent value="links" className="space-y-6 outline-none">
-          <div className="p-6 rounded-2xl bg-card border border-border space-y-6 shadow-xs">
+          <div className="bg-card border-border space-y-6 rounded-2xl border p-6 shadow-xs">
             {/* Live URLs */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-bold text-base text-foreground flex items-center gap-2">
-                    <ExternalLink className="w-4 h-4 text-primary" /> Live Demo
-                    URLs
+                  <h3 className="text-foreground flex items-center gap-2 text-base font-bold">
+                    <ExternalLink className="text-primary h-4 w-4" /> Live Demo URLs
                   </h3>
-                  <p className="text-xs text-muted-foreground">
-                    Public URLs where visitors can preview or test the live
-                    application.
+                  <p className="text-muted-foreground text-xs">
+                    Public URLs where visitors can preview or test the live application.
                   </p>
                 </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="xs"
-                  onClick={addLiveUrl}
-                >
-                  <Plus className="w-3 h-3" /> Add Live Link
+                <Button type="button" variant="outline" size="xs" onClick={addLiveUrl}>
+                  <Plus className="h-3 w-3" /> Add Live Link
                 </Button>
               </div>
 
@@ -793,49 +728,39 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                   <Input
                     placeholder="Link Label (e.g. skilloxygen.com)"
                     value={item.name}
-                    onChange={(e) =>
-                      updateLiveUrl(item.id, "name", e.target.value)
-                    }
+                    onChange={(e) => updateLiveUrl(item.id, "name", e.target.value)}
                     className="w-1/3 text-xs"
                   />
                   <Input
                     placeholder="https://..."
                     value={item.url}
-                    onChange={(e) =>
-                      updateLiveUrl(item.id, "url", e.target.value)
-                    }
-                    className="flex-1 text-xs font-mono"
+                    onChange={(e) => updateLiveUrl(item.id, "url", e.target.value)}
+                    className="flex-1 font-mono text-xs"
                   />
                   <button
                     type="button"
                     onClick={() => removeLiveUrl(item.id)}
-                    className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                    className="text-muted-foreground hover:text-destructive p-2 transition-colors"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
               ))}
             </div>
 
             {/* GitHub Repos */}
-            <div className="space-y-3 pt-6 border-t border-border/70">
+            <div className="border-border/70 space-y-3 border-t pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-bold text-base text-foreground flex items-center gap-2">
-                    <Github className="w-4 h-4 text-primary" /> GitHub / Source
-                    Code Repositories
+                  <h3 className="text-foreground flex items-center gap-2 text-base font-bold">
+                    <GitBranch className="text-primary h-4 w-4" /> GitHub / Source Code Repositories
                   </h3>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Links to frontend, backend, or full-stack repository code.
                   </p>
                 </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="xs"
-                  onClick={addGithubUrl}
-                >
-                  <Plus className="w-3 h-3" /> Add Repository
+                <Button type="button" variant="outline" size="xs" onClick={addGithubUrl}>
+                  <Plus className="h-3 w-3" /> Add Repository
                 </Button>
               </div>
 
@@ -844,54 +769,45 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                   <Input
                     placeholder="Repo Title (e.g. Frontend Repository)"
                     value={item.title}
-                    onChange={(e) =>
-                      updateGithubUrl(item.id, "title", e.target.value)
-                    }
+                    onChange={(e) => updateGithubUrl(item.id, "title", e.target.value)}
                     className="w-1/3 text-xs"
                   />
                   <Input
                     placeholder="https://github.com/..."
                     value={item.url}
-                    onChange={(e) =>
-                      updateGithubUrl(item.id, "url", e.target.value)
-                    }
-                    className="flex-1 text-xs font-mono"
+                    onChange={(e) => updateGithubUrl(item.id, "url", e.target.value)}
+                    className="flex-1 font-mono text-xs"
                   />
                   <button
                     type="button"
                     onClick={() => removeGithubUrl(item.id)}
-                    className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                    className="text-muted-foreground hover:text-destructive p-2 transition-colors"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
               ))}
             </div>
 
             {/* Case Studies */}
-            <div className="space-y-3 pt-6 border-t border-border/70">
+            <div className="border-border/70 space-y-3 border-t pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-bold text-base text-foreground flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-primary" /> External Case
-                    Study / Article Links
+                  <h3 className="text-foreground flex items-center gap-2 text-base font-bold">
+                    <FileText className="text-primary h-4 w-4" /> External Case Study / Article
+                    Links
                   </h3>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Links to Medium, Dev.to, or external architecture articles.
                   </p>
                 </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="xs"
-                  onClick={addCaseStudyUrl}
-                >
-                  <Plus className="w-3 h-3" /> Add Case Study Link
+                <Button type="button" variant="outline" size="xs" onClick={addCaseStudyUrl}>
+                  <Plus className="h-3 w-3" /> Add Case Study Link
                 </Button>
               </div>
 
               {caseStudyUrls.length === 0 ? (
-                <p className="text-xs text-muted-foreground italic">
+                <p className="text-muted-foreground text-xs italic">
                   No external case study links added yet.
                 </p>
               ) : (
@@ -900,25 +816,21 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                     <Input
                       placeholder="Title (e.g. Deep Dive Article)"
                       value={item.title}
-                      onChange={(e) =>
-                        updateCaseStudyUrl(item.id, "title", e.target.value)
-                      }
+                      onChange={(e) => updateCaseStudyUrl(item.id, "title", e.target.value)}
                       className="w-1/3 text-xs"
                     />
                     <Input
                       placeholder="https://..."
                       value={item.url}
-                      onChange={(e) =>
-                        updateCaseStudyUrl(item.id, "url", e.target.value)
-                      }
-                      className="flex-1 text-xs font-mono"
+                      onChange={(e) => updateCaseStudyUrl(item.id, "url", e.target.value)}
+                      className="flex-1 font-mono text-xs"
                     />
                     <button
                       type="button"
                       onClick={() => removeCaseStudyUrl(item.id)}
-                      className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                      className="text-muted-foreground hover:text-destructive p-2 transition-colors"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                 ))

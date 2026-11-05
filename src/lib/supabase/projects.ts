@@ -42,11 +42,32 @@ export async function getProjects(): Promise<TProject[]> {
   }
 }
 
+const retiredPortfolioSlugs = new Set([
+  "fingerprint-authentication-api",
+  "ecommerce-management-system",
+  "portfolio-website",
+  "task-management-app",
+  "blog-cms",
+]);
+
+/** Keep the public portfolio aligned with the curated local project work. */
+export async function getPortfolioProjects(): Promise<TProject[]> {
+  const storedProjects = await getProjects();
+  const curatedSlugs = new Set(staticProjects.map((project) => project.slug));
+
+  return [
+    ...staticProjects,
+    ...storedProjects.filter(
+      (project) => !curatedSlugs.has(project.slug) && !retiredPortfolioSlugs.has(project.slug),
+    ),
+  ];
+}
+
 /**
  * Fetch featured projects.
  */
 export async function getFeaturedProjects(limit = 3): Promise<TProject[]> {
-  const allProjects = await getProjects();
+  const allProjects = await getPortfolioProjects();
   const featured = allProjects.filter((p) => p.featured);
   const rest = allProjects.filter((p) => !p.featured);
   return [...featured, ...rest].slice(0, limit);
@@ -55,9 +76,11 @@ export async function getFeaturedProjects(limit = 3): Promise<TProject[]> {
 /**
  * Fetch a single project by slug.
  */
-export async function getProjectBySlug(
-  slug: string,
-): Promise<TProject | undefined> {
+export async function getProjectBySlug(slug: string): Promise<TProject | undefined> {
+  const curatedProject = staticProjects.find((project) => project.slug === slug);
+  if (curatedProject) return curatedProject;
+  if (retiredPortfolioSlugs.has(slug)) return undefined;
+
   try {
     const supabase = getPublicSupabase();
     if (!supabase) {
@@ -83,20 +106,14 @@ export async function getProjectBySlug(
 /**
  * Fetch a single project by ID.
  */
-export async function getProjectById(
-  id: number,
-): Promise<TProject | undefined> {
+export async function getProjectById(id: number): Promise<TProject | undefined> {
   try {
     const supabase = getPublicSupabase();
     if (!supabase) {
       return staticProjects.find((p) => p.id === id);
     }
 
-    const { data, error } = await supabase
-      .from("projects")
-      .select("*")
-      .eq("id", id)
-      .maybeSingle();
+    const { data, error } = await supabase.from("projects").select("*").eq("id", id).maybeSingle();
 
     if (error || !data) {
       return staticProjects.find((p) => p.id === id);

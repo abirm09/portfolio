@@ -20,8 +20,7 @@ export type ImageReadOptions = {
 };
 
 export type ImageReadResult =
-  | { ok: true; dataUrl: string; width: number; height: number }
-  | { ok: false; error: string };
+  { ok: true; dataUrl: string; width: number; height: number } | { ok: false; error: string };
 
 const DEFAULTS: Required<ImageReadOptions> = { maxSizeMB: 2, maxDimension: 1600 };
 
@@ -126,9 +125,7 @@ export async function readImageFile(
     if (file.type === "image/svg+xml") {
       const safe = sanitizeSvg(await readAsText(file));
       const encoded = `data:image/svg+xml;base64,${window.btoa(
-        new TextEncoder()
-          .encode(safe)
-          .reduce((acc, byte) => acc + String.fromCharCode(byte), ""),
+        new TextEncoder().encode(safe).reduce((acc, byte) => acc + String.fromCharCode(byte), ""),
       )}`;
       return { ok: true, dataUrl: encoded, width: 0, height: 0 };
     }

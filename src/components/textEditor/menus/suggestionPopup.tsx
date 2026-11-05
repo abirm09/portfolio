@@ -1,6 +1,10 @@
 "use client";
 
-import type { SuggestionKeyDownProps, SuggestionOptions, SuggestionProps } from "@tiptap/suggestion";
+import type {
+  SuggestionKeyDownProps,
+  SuggestionOptions,
+  SuggestionProps,
+} from "@tiptap/suggestion";
 import { ReactRenderer } from "@tiptap/react";
 import type { ComponentType } from "react";
 

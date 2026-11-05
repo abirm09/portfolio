@@ -75,7 +75,11 @@ export const Callout = Node.create({
     return [
       "div",
       mergeAttributes(HTMLAttributes, { "data-callout": "", style }),
-      ["span", { "aria-hidden": "true", style: `color: ${theme.border}; font-weight: 700` }, theme.icon],
+      [
+        "span",
+        { "aria-hidden": "true", style: `color: ${theme.border}; font-weight: 700` },
+        theme.icon,
+      ],
       ["div", { style: "flex: 1; min-width: 0" }, 0],
     ];
   },

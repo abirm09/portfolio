@@ -10,11 +10,7 @@ export const SeedDatabaseButton = () => {
   const seedMutation = useSeedProjectsMutation();
 
   const handleSeed = () => {
-    if (
-      !confirm(
-        "Do you want to sync/seed initial sample projects into your Supabase database?",
-      )
-    ) {
+    if (!confirm("Do you want to sync/seed initial sample projects into your Supabase database?")) {
       return;
     }
 
@@ -35,19 +31,19 @@ export const SeedDatabaseButton = () => {
       size="sm"
       onClick={handleSeed}
       disabled={seedMutation.isPending || done}
-      className="text-xs h-8 gap-1.5"
+      className="h-8 gap-1.5 text-xs"
     >
       {seedMutation.isPending ? (
         <>
-          <Loader2 className="w-3.5 h-3.5 animate-spin" /> Seeding DB...
+          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Seeding DB...
         </>
       ) : done ? (
         <>
-          <Check className="w-3.5 h-3.5 text-emerald-500" /> Seeded!
+          <Check className="h-3.5 w-3.5 text-emerald-500" /> Seeded!
         </>
       ) : (
         <>
-          <Database className="w-3.5 h-3.5" /> Sync/Seed Initial Data
+          <Database className="h-3.5 w-3.5" /> Sync/Seed Initial Data
         </>
       )}
     </Button>

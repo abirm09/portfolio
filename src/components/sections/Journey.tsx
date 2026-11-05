@@ -18,18 +18,18 @@ const journeyItems = [
     side: "left",
   },
   {
-    title: "Learning FastAPI",
-    description: "High-performance Python backends and APIs.",
+    title: "Building Multi-tenant Commerce",
+    description: "Storefronts, merchant dashboards, POS, and shared platform services.",
     side: "right",
   },
   {
-    title: "Building Authentication Systems",
-    description: "JWT, biometric & fingerprint authentication.",
+    title: "Designing Product Backends",
+    description: "NestJS, PostgreSQL, Redis, queues, and commerce workflows.",
     side: "left",
   },
   {
-    title: "AI & Automation",
-    description: "Exploring AI engineering and local AI assistants.",
+    title: "Shipping Platform Products",
+    description: "Affiliate tracking, reporting, and operational tools for real teams.",
     side: "right",
   },
 ];
@@ -41,7 +41,7 @@ export const Journey = () => {
 
       <div className="relative">
         {/* Central vertical line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2" />
+        <div className="bg-border absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2" />
 
         <div className="flex flex-col gap-12">
           {journeyItems.map((item) => {
@@ -49,11 +49,11 @@ export const Journey = () => {
             return (
               <div key={item.title} className="relative flex items-center">
                 {/* Left side */}
-                <div className="flex-1 pr-10 flex justify-end">
+                <div className="flex flex-1 justify-end pr-10">
                   {isLeft && (
-                    <div className="max-w-xs w-full p-5 rounded-xl card-glass transition-all duration-300 text-right animate-fade-in">
-                      <h3 className="text-base font-semibold text-primary mb-1">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                    <div className="card-glass animate-fade-in w-full max-w-xs rounded-xl p-5 text-right transition-all duration-300">
+                      <h3 className="text-primary mb-1 text-base font-semibold">{item.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -62,15 +62,15 @@ export const Journey = () => {
 
                 {/* Center dot */}
                 <div className="relative z-10 flex items-center justify-center">
-                  <div className="w-4 h-4 rounded-full bg-primary border-4 border-background shadow-md shadow-primary/40" />
+                  <div className="bg-primary border-background shadow-primary/40 h-4 w-4 rounded-full border-4 shadow-md" />
                 </div>
 
                 {/* Right side */}
-                <div className="flex-1 pl-10 flex justify-start">
+                <div className="flex flex-1 justify-start pl-10">
                   {!isLeft && (
-                    <div className="max-w-xs w-full p-5 rounded-xl card-glass transition-all duration-300 animate-fade-in">
-                      <h3 className="text-base font-semibold text-primary mb-1">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                    <div className="card-glass animate-fade-in w-full max-w-xs rounded-xl p-5 transition-all duration-300">
+                      <h3 className="text-primary mb-1 text-base font-semibold">{item.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
                         {item.description}
                       </p>
                     </div>

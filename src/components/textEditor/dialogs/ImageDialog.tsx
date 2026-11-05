@@ -115,9 +115,7 @@ export const ImageDialog = ({
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Insert image</DialogTitle>
-          <DialogDescription>
-            Link to an image or upload one from your device.
-          </DialogDescription>
+          <DialogDescription>Link to an image or upload one from your device.</DialogDescription>
         </DialogHeader>
 
         <Tabs value={tab} onValueChange={setTab}>

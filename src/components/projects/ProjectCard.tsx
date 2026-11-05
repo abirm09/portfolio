@@ -18,13 +18,13 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
     <Link
       href={`/projects/${project.slug}`}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-xl card-glass transition-all duration-300 hover:-translate-y-1",
+        "group card-glass relative flex flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl",
         className,
       )}
     >
       {project.featured && (
-        <div className="absolute top-3 left-3 z-10 flex items-center gap-1 rounded-full bg-brand-accent px-3 py-1 text-xs font-medium text-brand-accent-foreground shadow-sm">
-          <Star className="w-3 h-3 fill-current" />
+        <div className="bg-brand-accent text-brand-accent-foreground absolute top-3 left-3 z-10 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold">
+          <Star className="h-3 w-3 fill-current" />
           Featured
         </div>
       )}
@@ -32,11 +32,11 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
       <ProjectImage image={project.thumb} className="h-48 w-full" />
 
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="mb-2 text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+        <h3 className="text-foreground group-hover:text-primary mb-2 text-lg font-bold transition-colors">
           {project.title}
         </h3>
 
-        <p className="mb-4 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+        <p className="text-muted-foreground mb-4 line-clamp-3 flex-1 text-sm leading-relaxed">
           {project.description.replace(/<[^>]*>?/gm, "")}
         </p>
 
@@ -53,9 +53,9 @@ export const ProjectCard = ({ project, className }: ProjectCardProps) => {
           )}
         </div>
 
-        <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+        <span className="text-primary inline-flex items-center gap-1 text-sm font-medium">
           View Details
-          <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       </div>
     </Link>

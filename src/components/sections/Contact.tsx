@@ -5,36 +5,27 @@ import { Input } from "@/components/ui/Input";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { Textarea } from "@/components/ui/Textarea";
-import {
-  CheckCircle2,
-  Github,
-  Linkedin,
-  Loader2,
-  Mail,
-  MapPin,
-  Send,
-  Twitter,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle2, Loader2, Mail, MapPin, Send, XCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const socialLinks = [
   {
     name: "GitHub",
-    icon: Github,
+    icon: "/github.png",
     url: "https://github.com/abirm09",
     color: "hover:text-gray-900 dark:hover:text-white",
   },
   {
     name: "LinkedIn",
-    icon: Linkedin,
+    icon: "/linkedin.png",
     url: "https://www.linkedin.com/in/abirm09",
     color: "hover:text-blue-600",
   },
   {
     name: "Twitter",
-    icon: Twitter,
+    icon: "/twitter.png",
     url: "https://x.com/abirm09",
     color: "hover:text-sky-500",
   },
@@ -87,11 +78,11 @@ export const Contact = () => {
         subtitle="// Have a project in mind? Let's talk about how we can work together"
       />
 
-      <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+      <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
         {/* Contact Info */}
         <div className="space-y-8">
           <div>
-            <h3 className="text-xl font-bold text-foreground mb-4">Let&apos;s Connect</h3>
+            <h3 className="text-foreground mb-4 text-xl font-bold">Let&apos;s Connect</h3>
             <p className="text-muted-foreground leading-relaxed">
               I&apos;m always open to discussing new projects, creative ideas, or opportunities to
               be part of your vision. Feel free to reach out!
@@ -101,11 +92,11 @@ export const Contact = () => {
           {/* Contact details */}
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Mail className="w-5 h-5 text-primary" />
+              <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+                <Mail className="text-primary h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Email</p>
+                <p className="text-muted-foreground text-sm">Email</p>
                 <a
                   href="mailto:hello@abirmahmud.dev"
                   className="text-foreground hover:text-primary transition-colors"
@@ -116,11 +107,11 @@ export const Contact = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-primary" />
+              <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+                <MapPin className="text-primary h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Location</p>
+                <p className="text-muted-foreground text-sm">Location</p>
                 <p className="text-foreground">Bangladesh</p>
               </div>
             </div>
@@ -128,17 +119,17 @@ export const Contact = () => {
 
           {/* Social links */}
           <div>
-            <p className="text-sm text-muted-foreground mb-4">Follow me</p>
+            <p className="text-muted-foreground mb-4 text-sm">Follow me</p>
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
                 <Link
                   key={social.name}
                   href={social.url}
                   target="_blank"
-                  className={`w-10 h-10 rounded-lg card-glass flex items-center justify-center text-muted-foreground transition-all duration-300 hover:-translate-y-1 ${social.color}`}
+                  className={`card-glass text-muted-foreground flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 hover:-translate-y-1 ${social.color}`}
                   aria-label={social.name}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <Image src={social.icon} alt="" width={20} height={20} className="h-5 w-5" />
                 </Link>
               ))}
             </div>
@@ -146,11 +137,11 @@ export const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="p-6 rounded-xl card-glass">
+        <div className="card-glass rounded-xl p-6">
           <form className="space-y-5" onSubmit={handleSubmit}>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="name" className="text-foreground mb-2 block text-sm font-medium">
                   Name
                 </label>
                 <Input
@@ -164,7 +155,7 @@ export const Contact = () => {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="email" className="text-foreground mb-2 block text-sm font-medium">
                   Email
                 </label>
                 <Input
@@ -181,7 +172,7 @@ export const Contact = () => {
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="subject" className="text-foreground mb-2 block text-sm font-medium">
                 Subject
               </label>
               <Input
@@ -196,7 +187,7 @@ export const Contact = () => {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="message" className="text-foreground mb-2 block text-sm font-medium">
                 Message
               </label>
               <Textarea
@@ -213,14 +204,14 @@ export const Contact = () => {
 
             {status === "success" && (
               <div className="flex items-center gap-2 rounded-lg bg-green-500/10 px-4 py-3 text-sm text-green-600 dark:text-green-400">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 shrink-0" />
                 Thanks! Your message has been sent — I&apos;ll get back to you soon.
               </div>
             )}
 
             {status === "error" && (
-              <div className="flex items-center gap-2 rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
-                <XCircle className="w-4 h-4 shrink-0" />
+              <div className="bg-destructive/10 text-destructive flex items-center gap-2 rounded-lg px-4 py-3 text-sm">
+                <XCircle className="h-4 w-4 shrink-0" />
                 {errorMessage}
               </div>
             )}
@@ -228,12 +219,12 @@ export const Contact = () => {
             <Button type="submit" className="w-full" disabled={status === "loading"}>
               {status === "loading" ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                   Sending...
                 </>
               ) : (
                 <>
-                  <Send className="w-4 h-4" />
+                  <Send className="h-4 w-4" />
                   Send Message
                 </>
               )}

@@ -37,13 +37,7 @@ const PLACEHOLDER = `<div class="promo">
  * Editor for a raw HTML block, with the markup on the left and a live
  * sanitized preview of what will render on the right.
  */
-export const HtmlDialog = ({
-  editor,
-  open,
-  onOpenChange,
-  mode,
-  initialHtml,
-}: HtmlDialogProps) => {
+export const HtmlDialog = ({ editor, open, onOpenChange, mode, initialHtml }: HtmlDialogProps) => {
   const [html, setHtml] = useState("");
 
   useEffect(() => {
@@ -111,8 +105,8 @@ export const HtmlDialog = ({
           <p className="text-destructive bg-destructive/10 flex items-start gap-2 rounded-md p-2.5 text-xs">
             <ShieldAlert className="mt-px size-4 shrink-0" />
             <span>
-              This markup contains a script or inline event handler. It is stripped from the
-              preview and will not run inside the editor.
+              This markup contains a script or inline event handler. It is stripped from the preview
+              and will not run inside the editor.
             </span>
           </p>
         )}

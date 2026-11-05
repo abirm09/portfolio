@@ -15,8 +15,8 @@ export const SectionWrapper = ({
   containerClassName = "",
 }: SectionWrapperProps) => {
   return (
-    <section id={id} className={cn("py-16 md:py-24", className)}>
-      <div className={cn("max-w-7xl mx-auto px-3 md:px-5", containerClassName)}>{children}</div>
+    <section id={id} className={cn("border-border border-t py-20 md:py-28", className)}>
+      <div className={cn("mx-auto max-w-7xl px-5 md:px-8", containerClassName)}>{children}</div>
     </section>
   );
 };

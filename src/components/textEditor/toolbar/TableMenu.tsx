@@ -133,7 +133,10 @@ export const TableMenu = ({ editor, inTable }: { editor: Editor; inTable: boolea
 
       <DropdownMenuSeparator />
 
-      <DropdownMenuItem disabled={!inTable} onClick={() => editor.chain().focus().deleteRow().run()}>
+      <DropdownMenuItem
+        disabled={!inTable}
+        onClick={() => editor.chain().focus().deleteRow().run()}
+      >
         <Rows3 /> Delete row
       </DropdownMenuItem>
       <DropdownMenuItem

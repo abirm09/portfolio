@@ -63,7 +63,13 @@ import {
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
-import { COLOR_SWATCHES, FONT_FAMILIES, FONT_SIZES, HIGHLIGHT_SWATCHES, LINE_HEIGHTS } from "../config/fonts";
+import {
+  COLOR_SWATCHES,
+  FONT_FAMILIES,
+  FONT_SIZES,
+  HIGHLIGHT_SWATCHES,
+  LINE_HEIGHTS,
+} from "../config/fonts";
 import type { FeatureSet } from "../config/presets";
 import { CALLOUT_LABEL, CALLOUT_VARIANTS } from "../extensions/Callout";
 import { openEditorDialog } from "../utils/editorEvents";

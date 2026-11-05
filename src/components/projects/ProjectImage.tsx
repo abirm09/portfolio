@@ -9,12 +9,7 @@ type ProjectImageProps = {
 
 export const ProjectImage = ({ image, className, showCaption = false }: ProjectImageProps) => {
   return (
-    <div
-      className={cn(
-        "group/image relative overflow-hidden bg-linear-to-br from-primary/20 to-accent/20",
-        className,
-      )}
-    >
+    <div className={cn("group/image bg-secondary relative overflow-hidden", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={image.url}
@@ -25,7 +20,7 @@ export const ProjectImage = ({ image, className, showCaption = false }: ProjectI
       />
 
       {showCaption && (
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+        <div className="absolute inset-x-0 bottom-0 bg-black/75 p-3">
           <p className="text-xs font-medium text-white">{image.title}</p>
         </div>
       )}

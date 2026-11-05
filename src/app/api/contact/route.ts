@@ -56,7 +56,6 @@ export async function POST(request: Request) {
   try {
     await sendContactEmail(trimmed);
   } catch (error) {
-    // eslint-disable-next-line no-console -- surface SMTP failures in server logs for debugging
     console.error("Failed to send contact email:", error);
     return NextResponse.json(
       { error: "Failed to send your message. Please try again later." },

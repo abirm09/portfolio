@@ -122,7 +122,9 @@ export function buildExtensions({
   }
 
   if (isEnabled("table")) {
-    extensions.push(TableKit.configure({ table: { resizable: true, allowTableNodeSelection: true } }));
+    extensions.push(
+      TableKit.configure({ table: { resizable: true, allowTableNodeSelection: true } }),
+    );
   }
 
   if (isEnabled("details")) {

@@ -1,95 +1,106 @@
 import { ContainerMax } from "@/components";
-import { Heart } from "lucide-react";
-import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 const socialLinks = [
-  { name: "GitHub", icon: "/github.png", url: "https://github.com/abirm09" },
-  { name: "LinkedIn", icon: "/linkedin.png", url: "https://linkedin.com/in/abirm09" },
-  { name: "Twitter", icon: "/twitter.png", url: "https://twitter.com/abirm09" },
-  { name: "Whatsapp", icon: "/whatsapp.png", url: "https://wa.me/8801789699367" },
+  { name: "GitHub", url: "https://github.com/abirm09" },
+  { name: "LinkedIn", url: "https://linkedin.com/in/abirm09" },
+  { name: "X / Twitter", url: "https://x.com/abirm09" },
+  { name: "WhatsApp", url: "https://wa.me/8801789699367" },
 ];
 
 const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Contact", href: "#contact" },
+  { name: "About", href: "/#about" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Experience", href: "/#experience" },
+  { name: "Contact", href: "/#contact" },
 ];
 
-export const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  return (
-    <footer className="border-t border-border bg-card/50">
-      <ContainerMax asChild>
-        <div className="pt-10">
-          {/* Main footer content */}
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            {/* Brand */}
-            <div>
-              <h3 className="text-xl font-bold text-foreground mb-3">Abir Mahmud</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Full Stack Web Developer building modern, scalable web applications with the MERN
-                stack and beyond.
-              </p>
-            </div>
-
-            {/* Quick links */}
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                {navLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Social */}
-            <div>
-              <h4 className="font-semibold text-foreground mb-4">Connect</h4>
-              <div className="flex items-center gap-3">
-                {socialLinks.map((social) => (
-                  <Link
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-secondary/80 transition-all duration-300"
-                    aria-label={social.name}
-                  >
-                    <Image
-                      src={social.icon}
-                      alt={social.name}
-                      width={200}
-                      height={200}
-                      className="w-6 h-6"
-                    />
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t border-border py-5">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-muted-foreground text-sm flex items-center gap-1">
-                © {currentYear} Abir Mahmud. Made with{" "}
-                <Heart className="w-4 h-4 text-red-500 fill-red-500" /> in Bangladesh
-              </p>
-              <p className="text-muted-foreground text-sm">All rights reserved.</p>
-            </div>
-          </div>
+export const Footer = () => (
+  <footer className="bg-[#17291f] text-white">
+    <ContainerMax>
+      <div className="flex flex-col gap-7 border-b border-white/15 py-12 md:flex-row md:items-end md:justify-between md:py-16">
+        <div>
+          <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-[#c8ee73] uppercase">
+            Have something in mind?
+          </p>
+          <h2 className="max-w-2xl text-4xl leading-[1.05] font-semibold tracking-[-0.055em] sm:text-5xl md:text-6xl">
+            Let&apos;s build what comes next.
+          </h2>
         </div>
-      </ContainerMax>
-    </footer>
-  );
-};
+        <Link
+          href="/#contact"
+          className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 self-start rounded-full bg-[#c8ee73] px-6 text-sm font-semibold text-[#17291f] transition-colors hover:bg-[#dcfa9c] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c8ee73] md:self-auto"
+        >
+          Start a conversation <ArrowUpRight className="size-4" aria-hidden="true" />
+        </Link>
+      </div>
+
+      <div className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:gap-16">
+        <div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3 text-xl font-black tracking-[-0.06em]"
+          >
+            <span className="flex size-10 items-center justify-center rounded-xl bg-[#c8ee73] text-sm text-[#17291f]">
+              AM
+            </span>
+            ABIR MAHMUD<span className="text-[#c8ee73]">.</span>
+          </Link>
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
+            Full Stack Developer building commerce platforms, SaaS products, and dependable web
+            applications.
+          </p>
+          <p className="mt-5 text-xs font-medium tracking-[0.14em] text-[#c8ee73] uppercase">
+            Based in Bangladesh · Working worldwide
+          </p>
+        </div>
+
+        <div>
+          <h3 className="mb-5 text-xs font-semibold tracking-[0.18em] text-white/45 uppercase">
+            Explore
+          </h3>
+          <ul className="space-y-3">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <Link
+                  href={link.href}
+                  className="text-sm text-white/80 transition-colors hover:text-[#c8ee73] focus-visible:text-[#c8ee73]"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="mb-5 text-xs font-semibold tracking-[0.18em] text-white/45 uppercase">
+            Elsewhere
+          </h3>
+          <ul className="space-y-3">
+            {socialLinks.map((social) => (
+              <li key={social.name}>
+                <a
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-white/80 transition-colors hover:text-[#c8ee73] focus-visible:text-[#c8ee73]"
+                >
+                  {social.name}
+                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2 border-t border-white/15 py-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+        <p>© {new Date().getFullYear()} Abir Mahmud. All rights reserved.</p>
+        <p>Built with care in Bangladesh.</p>
+      </div>
+    </ContainerMax>
+  </footer>
+);

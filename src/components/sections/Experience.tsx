@@ -6,125 +6,96 @@ import { Briefcase, Calendar } from "lucide-react";
 const experiences = [
   {
     title: "Full-Stack Developer",
-    company: "BrTech",
-    period: "June 2025 – February 2026",
-    description: "Full-time role working on scalable full-stack applications.",
-    achievements: [
-      "Built modern UI using Next.js",
-      "Designed backend services with Node.js and Express.js",
-      "Managed relational data with PostgreSQL",
-      "Implemented caching and performance optimization using Redis",
+    company: "Zenpixl",
+    period: "June 2025 – Present",
+    description: "Building commerce, affiliate, and healthcare products across web and mobile.",
+    projects: [
+      {
+        name: "Pixlcart",
+        detail: "Multi-tenant commerce storefront, merchant dashboard, and POS.",
+        technologies: ["Next.js", "Express", "PostgreSQL", "Redux Toolkit"],
+      },
+      {
+        name: "Zenpixl CPA",
+        detail: "Affiliate offers, tracking, conversions, and reporting.",
+        technologies: ["Next.js", "TypeScript", "Prisma", "Redis"],
+      },
+      {
+        name: "Nirnoy",
+        detail: "Healthcare web dashboards and an Expo provider app.",
+        technologies: ["Next.js", "React Native", "Expo"],
+      },
     ],
-    technologies: ["Next.js", "PostgreSQL", "Redis", "Node.js", "Express.js"],
   },
   {
     title: "Full-Stack Developer",
     company: "Flex-Softr (Freelance)",
     period: "October 2023 – Present",
-    description: "Developed full-stack web applications for various clients.",
-    achievements: [
-      "Built responsive frontends using Next.js",
-      "Created RESTful APIs with Node.js and Express.js",
-      "Implemented authentication, database integration, and deployment",
+    description: "Developing e-commerce storefronts, dashboards, and APIs for clients.",
+    projects: [
+      {
+        name: "Oneself / Electro-Commerce",
+        detail: "Storefront, admin tools, and product and order APIs.",
+        technologies: ["Next.js", "Node.js", "MongoDB", "Redux Toolkit"],
+      },
     ],
-    technologies: ["Next.js", "Node.js", "Express.js"],
   },
 ];
 
-export const Experience = () => {
-  return (
-    <SectionWrapper id="experience" className="section-bg-experience">
-      <SectionTitle
-        title="Work Experience"
-        subtitle="// My professional journey in web development"
-      />
+export const Experience = () => (
+  <SectionWrapper id="experience" className="section-bg-experience">
+    <SectionTitle
+      title="Work Experience"
+      subtitle="Selected work across commerce, affiliate platforms, and healthcare"
+    />
 
-      <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
+    <div className="space-y-5">
+      {experiences.map((experience) => (
+        <article
+          key={experience.company}
+          className="card-glass grid gap-8 rounded-2xl p-6 md:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)] md:p-8"
+        >
+          <div>
+            <div className="bg-brand-accent/50 text-primary mb-5 flex size-11 items-center justify-center rounded-xl">
+              <Briefcase className="size-5" aria-hidden="true" />
+            </div>
+            <h3 className="text-foreground text-xl font-semibold tracking-tight">
+              {experience.title}
+            </h3>
+            <p className="text-primary mt-1 font-medium">{experience.company}</p>
+            <p className="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
+              <Calendar className="size-4" aria-hidden="true" />
+              {experience.period}
+            </p>
+            <p className="text-muted-foreground mt-4 max-w-sm text-sm leading-relaxed">
+              {experience.description}
+            </p>
+          </div>
 
-        <div className="space-y-12">
-          {experiences.map((exp, index) => (
-            <div
-              key={exp.title + exp.company}
-              className={`relative flex flex-col md:flex-row gap-8 ${
-                index % 2 === 0 ? "md:flex-row-reverse" : ""
-              }`}
-            >
-              {/* Timeline dot */}
-              <div className="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background md:-translate-x-1/2 -translate-y-0.5" />
-
-              {/* Content */}
-              <div
-                className={`flex-1 ml-8 md:ml-0 ${
-                  index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"
-                }`}
-              >
-                <div className="p-6 rounded-xl card-glass transition-all duration-300">
-                  {/* Header */}
-                  <div
-                    className={`flex items-start gap-3 mb-3 ${
-                      index % 2 === 0 ? "md:flex-row-reverse" : ""
-                    }`}
-                  >
-                    <div className="shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Briefcase className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className={index % 2 === 0 ? "md:text-right" : ""}>
-                      <h3 className="text-lg font-bold text-foreground">{exp.title}</h3>
-                      <p className="text-primary font-medium">{exp.company}</p>
-                    </div>
-                  </div>
-
-                  {/* Period */}
-                  <div
-                    className={`flex items-center gap-2 text-muted-foreground text-sm mb-3 ${
-                      index % 2 === 0 ? "md:justify-end" : ""
-                    }`}
-                  >
-                    <Calendar className="w-4 h-4" />
-                    {exp.period}
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {exp.description}
+          <div>
+            <h4 className="text-muted-foreground mb-1 text-xs font-semibold tracking-[0.16em] uppercase">
+              Selected projects
+            </h4>
+            <ul className="divide-border divide-y">
+              {experience.projects.map((project) => (
+                <li key={project.name} className="py-4 first:pt-3 last:pb-0">
+                  <h5 className="text-foreground font-semibold">{project.name}</h5>
+                  <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
+                    {project.detail}
                   </p>
-
-                  {/* Achievements */}
-                  <ul className={`space-y-1 mb-4 ${index % 2 === 0 ? "md:text-right" : ""}`}>
-                    {exp.achievements.map((achievement) => (
-                      <li
-                        key={achievement}
-                        className={`text-sm text-foreground/80 flex items-center gap-2 ${
-                          index % 2 === 0 ? "md:flex-row-reverse" : ""
-                        }`}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-                        {achievement}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Technologies */}
-                  <div
-                    className={`flex flex-wrap gap-2 ${index % 2 === 0 ? "md:justify-end" : ""}`}
-                  >
-                    {exp.technologies.map((tech) => (
-                      <Badge key={tech} variant="outline" className="text-xs">
-                        {tech}
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.technologies.map((technology) => (
+                      <Badge key={technology} variant="outline" className="text-xs">
+                        {technology}
                       </Badge>
                     ))}
                   </div>
-                </div>
-              </div>
-
-              {/* Empty space for alternating layout */}
-              <div className="hidden md:block flex-1" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </SectionWrapper>
-  );
-};
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </SectionWrapper>
+);

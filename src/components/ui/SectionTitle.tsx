@@ -14,19 +14,22 @@ export const SectionTitle = ({
   align = "center",
 }: SectionTitleProps) => {
   return (
-    <div className={cn("mb-12 md:mb-16", align === "center" && "text-center", className)}>
-      <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
+    <div className={cn("mb-9 md:mb-12", align === "center" && "text-center", className)}>
+      <h2 className="text-foreground mb-3 text-3xl font-semibold tracking-[-0.045em] md:text-4xl">
         {title}
       </h2>
       <div
         className={cn(
-          "h-1 w-16 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--accent))] mb-4",
+          "bg-brand-accent mb-4 h-1 w-12 rounded-full",
           align === "center" && "mx-auto",
         )}
       />
       {subtitle && (
         <p
-          className={cn("text-muted-foreground text-sm max-w-2xl", align === "center" && "mx-auto")}
+          className={cn(
+            "text-muted-foreground max-w-2xl text-base leading-relaxed",
+            align === "center" && "mx-auto",
+          )}
         >
           {subtitle}
         </p>

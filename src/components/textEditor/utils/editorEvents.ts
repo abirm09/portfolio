@@ -1,13 +1,7 @@
 import type { Editor } from "@tiptap/core";
 
 export type EditorDialogName =
-  | "link"
-  | "image"
-  | "video"
-  | "html"
-  | "table"
-  | "markdown"
-  | "shortcuts";
+  "link" | "image" | "video" | "html" | "table" | "markdown" | "shortcuts";
 
 export type EditorDialogDetail = {
   dialog: EditorDialogName;

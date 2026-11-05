@@ -15,10 +15,7 @@ export type ActionResponse = {
 /**
  * Admin Login action
  */
-export async function loginAction(
-  prevState: any,
-  formData: FormData,
-): Promise<ActionResponse> {
+export async function loginAction(prevState: any, formData: FormData): Promise<ActionResponse> {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const redirectTo = (formData.get("redirectTo") as string) || "/dashboard";
@@ -62,16 +59,13 @@ export async function logoutAction() {
 /**
  * Create or Update project
  */
-export async function saveProjectAction(
-  projectData: Partial<TProject>,
-): Promise<ActionResponse> {
+export async function saveProjectAction(projectData: Partial<TProject>): Promise<ActionResponse> {
   const supabase = await createClient();
 
   if (!supabase) {
     return {
       success: false,
-      error:
-        "Supabase is not configured. Set environment variables to enable saving to database.",
+      error: "Supabase is not configured. Set environment variables to enable saving to database.",
     };
   }
 
@@ -208,10 +202,7 @@ export async function deleteProjectAction(id: number): Promise<ActionResponse> {
 /**
  * Toggle featured status
  */
-export async function toggleFeaturedAction(
-  id: number,
-  featured: boolean,
-): Promise<ActionResponse> {
+export async function toggleFeaturedAction(id: number, featured: boolean): Promise<ActionResponse> {
   const supabase = await createClient();
 
   if (!supabase) {

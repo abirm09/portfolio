@@ -1,94 +1,91 @@
-"use client";
-
-import { Button } from "@/components";
-import { ArrowRight, Download } from "lucide-react";
+import meDark from "@/assets/me-dark.webp";
+import meWhite from "@/assets/me-white.webp";
+import { Button } from "@/components/ui/button";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
-export const Hero = () => {
-  return (
-    <section className="flex items-center justify-center relative overflow-hidden py-16 md:py-28">
-      {/* Ambient backdrop: aurora blobs + blueprint grid */}
-      <div className="absolute inset-0 -z-10">
-        <div className="grid-bg absolute inset-0" />
-        <div className="aurora-blob animate-aurora top-[-10%] left-[-5%] w-[38rem] h-[38rem] bg-primary/40" />
-        <div
-          className="aurora-blob animate-aurora bottom-[-15%] right-[-8%] w-[42rem] h-[42rem] bg-accent/35"
-          style={{ animationDelay: "-6s" }}
-        />
-        <div
-          className="aurora-blob animate-aurora top-[30%] left-[45%] w-[26rem] h-[26rem] bg-primary/25"
-          style={{ animationDelay: "-11s" }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-3 md:px-5 text-center">
-        {/* Greeting badge */}
-        <div className="gradient-border inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/40 backdrop-blur-md mb-8 animate-fade-in">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-          </span>
-          <span className="text-sm text-foreground/80">Available for work</span>
-        </div>
-
-        {/* Main heading */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-slide-up">
-          Hi, I&apos;m <span className="gradient-text">Abir Mahmud</span>
-        </h1>
-
-        {/* Title */}
-        <p className="text-md md:text-lg text-muted-foreground mb-4 animate-slide-up delay-100">
-          Full Stack Web Developer
-        </p>
-
-        {/* Tagline */}
-        <p className="text-sm md:text-md text-foreground/80 max-w-3xl mx-auto mb-10 animate-slide-up delay-200">
-          I build responsive websites, scalable APIs,{" "}
-          <span className="text-primary font-medium">authentication systems</span>, and{" "}
-          <span className="text-primary font-medium">modern web applications</span> using
-          JavaScript, TypeScript, React, Next.js, Node.js, Python, and FastAPI.
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up delay-300">
-          <Button size="lg" variant="gradient" className="group" asChild>
-            <Link href="#projects">
-              View Projects
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Button>
-          <Button size="lg" variant="outline" className="backdrop-blur-md" asChild>
-            <Link href="#" target="_blank">
-              <Download className="size-4" />
-              Download Resume
-            </Link>
-          </Button>
-        </div>
-
-        {/* Tech stack preview */}
-        <div className="mt-16 animate-fade-in delay-500">
-          <p className="text-sm text-muted-foreground mb-4">Tech Stack</p>
-          <div className="flex flex-wrap items-center justify-center gap-3 text-muted-foreground">
-            {[
-              "React",
-              "Next.js",
-              "Node.js",
-              "FastAPI",
-              "MongoDB",
-              "PostgreSQL",
-              "TypeScript",
-              "Python",
-            ].map((tech) => (
-              <span
-                key={tech}
-                className="text-sm font-medium px-3 py-1.5 rounded-lg card-glass text-foreground/80 hover:text-primary hover:-translate-y-0.5"
+export const Hero = () => (
+  <section className="h-[calc(100svh-68px)] min-h-0 px-4 py-4 md:h-[calc(100svh-73px)] md:px-6 md:py-5">
+    <div className="hero-panel mx-auto h-full max-w-7xl overflow-hidden rounded-[1.75rem]">
+      <div className="grid h-full lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative z-10 flex min-h-0 flex-col justify-between p-6 sm:p-8 lg:px-10 lg:py-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-xs font-semibold tracking-[0.12em] text-white uppercase">
+              <span className="size-2 rounded-full bg-[#c8ee73]" /> Available for projects
+            </span>
+            <span className="hero-meta text-xs font-medium tracking-[0.18em] text-white/65 uppercase">
+              Based in Bangladesh · Working worldwide
+            </span>
+          </div>
+          <div className="py-4 lg:py-5">
+            <p className="mb-4 text-xs font-semibold tracking-[0.18em] text-[#c8ee73] uppercase sm:text-sm">
+              Full stack developer / creative problem solver
+            </p>
+            <h1 className="max-w-[850px] text-[clamp(2.8rem,5.5vw,5.75rem)] leading-[0.94] font-semibold tracking-[-0.065em] text-white">
+              Digital ideas,
+              <br />
+              <span className="text-[#c8ee73]">built to work.</span>
+            </h1>
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/72 sm:text-base">
+              I&apos;m Abir Mahmud. I build thoughtful web experiences and dependable systems that
+              turn ambitious ideas into products people enjoy using.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button
+                size="lg"
+                className="h-12 rounded-full bg-[#c8ee73] px-6 font-semibold text-[#152219] shadow-none hover:bg-[#d9fa96]"
+                asChild
               >
-                {tech}
-              </span>
-            ))}
+                <Link href="#projects">
+                  Explore my work <ArrowUpRight className="size-4" />
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                className="h-12 rounded-full border border-white/30 bg-transparent px-6 text-white shadow-none hover:bg-white/10"
+                asChild
+              >
+                <Link href="#contact">
+                  Let&apos;s talk <ArrowUpRight className="size-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+          <div className="hero-footer flex flex-wrap items-center justify-between gap-4 border-t border-white/20 pt-4 text-xs text-white/65 sm:text-sm">
+            <span className="hidden sm:inline">Next.js · TypeScript · NestJS · PostgreSQL</span>
+            <Link
+              href="#about"
+              className="inline-flex items-center gap-2 font-medium text-white hover:text-[#c8ee73]"
+            >
+              Scroll to discover <ArrowDownRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+        <div className="relative hidden min-h-0 overflow-hidden bg-white lg:block dark:bg-[#0d1111]">
+          <div className="absolute top-7 right-7 z-10 rounded-full bg-[#c8ee73] px-4 py-2 text-xs font-semibold tracking-widest text-[#17291f] uppercase">
+            Portfolio / 2026
+          </div>
+          <Image
+            src={meWhite}
+            alt="Abir Mahmud"
+            priority
+            className="absolute inset-0 h-full w-full object-cover object-center dark:hidden"
+          />
+          <Image
+            src={meDark}
+            alt=""
+            priority
+            className="absolute inset-0 hidden h-full w-full object-cover object-center dark:block"
+          />
+          <div className="absolute bottom-6 left-6 z-10 rounded-2xl bg-[#17291f] px-5 py-4 text-white shadow-xl sm:bottom-9 sm:left-9">
+            <span className="block text-xs tracking-widest text-[#c8ee73] uppercase">
+              Currently focused on
+            </span>
+            <span className="mt-1 block text-lg font-semibold">Useful digital products.</span>
           </div>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);

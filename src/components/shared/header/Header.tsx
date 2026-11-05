@@ -3,26 +3,27 @@
 import { Button, ContainerMax } from "@/components";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Permanent_Marker } from "next/font/google";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
 const navigationLinks = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Contact", href: "#contact" },
+  { name: "About", href: "/#about" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Experience", href: "/#experience" },
+  { name: "Contact", href: "/#contact" },
 ];
-
-const permanentMarker = Permanent_Marker({
-  variable: "--font-permanent-marker",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const updateScrollState = () => setScrolled(window.scrollY > 16);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
 
   const mounted = useSyncExternalStore(
     () => () => {},
@@ -36,33 +37,31 @@ export const Header = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <ContainerMax asChild>
       <header
-        className={`sticky z-50 border-border bg-background/70 backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ease-in-out ${scrolled ? "top-0 md:top-3 border rounded-none md:rounded-full shadow-lg shadow-primary/5 md:px-6" : "top-0 border-b"}`}
+        className={`border-border sticky top-0 z-50 border-b backdrop-blur-md transition-[background-color,box-shadow,border-color] duration-300 motion-reduce:transition-none ${
+          scrolled
+            ? "bg-background/98 shadow-[0_18px_40px_-20px_rgba(15,35,20,0.45)] dark:shadow-[0_18px_40px_-20px_rgba(0,0,0,0.8)]"
+            : "bg-background/95 shadow-[0_8px_24px_-18px_rgba(15,35,20,0.35)]"
+        }`}
       >
-        <div className="flex justify-between items-center py-3">
+        <div
+          className={`flex items-center justify-between transition-[padding] duration-300 motion-reduce:transition-none ${scrolled ? "py-2.5" : "py-4"}`}
+        >
           {/* Logo */}
           <Link
             href="/"
-            className={`inline-block text-xl gradient-text ${permanentMarker.className}`}
+            className="text-foreground inline-flex items-center gap-2 text-lg font-black tracking-[-0.07em]"
           >
-            ABIR MAHMUD
+            <span className="bg-brand-accent text-brand-accent-foreground flex size-9 items-center justify-center rounded-lg text-sm tracking-[-0.08em]">
+              AM
+            </span>
+            ABIR MAHMUD<span className="text-primary">.</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden items-center gap-1 md:flex">
             {navigationLinks.map((link) => (
               <Button key={link.name} variant="ghost" size="sm" asChild>
                 <Link href={link.href}>{link.name}</Link>
@@ -79,15 +78,15 @@ export const Header = () => {
                 aria-label="Toggle theme"
               >
                 {resolvedTheme === "dark" ? (
-                  <Sun className="w-5 h-5" />
+                  <Sun className="h-5 w-5" />
                 ) : (
-                  <Moon className="w-5 h-5" />
+                  <Moon className="h-5 w-5" />
                 )}
               </Button>
             )}
 
-            <Button size="sm" variant="gradient" className="ml-2" asChild>
-              <Link href="#contact">Hire Me</Link>
+            <Button size="sm" className="ml-2 h-10 rounded-full px-5" asChild>
+              <Link href="/#contact">Hire Me</Link>
             </Button>
           </nav>
 
@@ -96,9 +95,9 @@ export const Header = () => {
             {mounted && (
               <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
                 {resolvedTheme === "dark" ? (
-                  <Sun className="w-5 h-5" />
+                  <Sun className="h-5 w-5" />
                 ) : (
-                  <Moon className="w-5 h-5" />
+                  <Moon className="h-5 w-5" />
                 )}
               </Button>
             )}
@@ -106,16 +105,17 @@ export const Header = () => {
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <nav className="md:hidden pb-4 border-t border-border pt-4">
+          <nav id="mobile-navigation" className="border-border border-t pt-4 pb-4 md:hidden">
             <div className="flex flex-col gap-1">
               {navigationLinks.map((link) => (
                 <Button
@@ -129,12 +129,11 @@ export const Header = () => {
                 </Button>
               ))}
               <Button
-                variant="gradient"
-                className="mt-2"
+                className="mt-2 rounded-full"
                 asChild
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <Link href="#contact">Hire Me</Link>
+                <Link href="/#contact">Hire Me</Link>
               </Button>
             </div>
           </nav>

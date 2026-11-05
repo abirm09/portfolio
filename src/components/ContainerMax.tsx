@@ -8,13 +8,9 @@ type ContainerMaxProps = {
   className?: string;
 };
 
-export const ContainerMax = ({
-  children,
-  asChild = false,
-  className = "",
-}: ContainerMaxProps) => {
+export const ContainerMax = ({ children, asChild = false, className = "" }: ContainerMaxProps) => {
   const Comp = asChild ? Slot : "div";
-  const baseClasses = "max-w-7xl mx-auto px-3 md:px-5";
+  const baseClasses = "max-w-7xl mx-auto px-5 md:px-8";
   const combinedClasses = className ? cn(baseClasses, className) : baseClasses;
 
   return <Comp className={combinedClasses}>{children}</Comp>;
