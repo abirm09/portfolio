@@ -104,6 +104,9 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
   const [uploadingThumb, setUploadingThumb] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
 
+  // Add-by-link state for gallery
+  const [galleryLinkInput, setGalleryLinkInput] = useState("");
+
   // Submission States
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -196,6 +199,34 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
     } finally {
       setUploadingGallery(false);
     }
+  };
+
+  // Gallery add-by-link
+  const handleAddGalleryLink = () => {
+    const url = galleryLinkInput.trim();
+    if (!url) return;
+
+    let title = "";
+    try {
+      const { pathname } = new URL(url, "https://placeholder.local");
+      const fileName = pathname.split("/").filter(Boolean).pop() || "";
+      title = decodeURIComponent(fileName)
+        .replace(/\.[^/.]+$/, "")
+        .replace(/[-_]/g, " ");
+    } catch {
+      title = "";
+    }
+
+    setImageGallery((current) => [
+      ...current,
+      {
+        id: Date.now(),
+        url,
+        title,
+      },
+    ]);
+    setGalleryLinkInput("");
+    setErrorMessage(null);
   };
 
   // Live URLs Handlers
@@ -620,7 +651,7 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                     <ImageIcon className="text-primary h-4 w-4" /> Gallery Screenshots
                   </h3>
                   <p className="text-muted-foreground mt-0.5 text-xs">
-                    Additional interface screenshots for project detail page.
+                    Upload screenshots or add them via direct image URL.
                   </p>
                 </div>
                 <span className="text-muted-foreground text-xs">{imageGallery.length} items</span>
@@ -648,6 +679,32 @@ export const ProjectForm = ({ initialData }: ProjectFormProps) => {
                   className="hidden"
                 />
               </label>
+
+              {/* Add image by direct URL */}
+              <div className="flex items-center gap-2">
+                <Input
+                  placeholder="Paste image URL (https://... or /images/...)"
+                  value={galleryLinkInput}
+                  onChange={(e) => setGalleryLinkInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleAddGalleryLink();
+                    }
+                  }}
+                  className="flex-1 font-mono text-xs"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleAddGalleryLink}
+                  disabled={!galleryLinkInput.trim() || uploadingGallery}
+                  className="h-9 shrink-0 text-xs"
+                >
+                  <Link2 className="h-3.5 w-3.5" /> Add Link
+                </Button>
+              </div>
 
               {/* Gallery list */}
               <div className="max-h-[380px] space-y-3 overflow-y-auto pr-1">
