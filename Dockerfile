@@ -4,10 +4,15 @@
 # Stage 1: Dependencies
 # ==========================================
 FROM node:24-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm ci --ignore-scripts
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml* ./
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # ==========================================
 # Stage 2: Builder
@@ -15,11 +20,15 @@ RUN npm ci --ignore-scripts
 FROM node:24-alpine AS builder
 WORKDIR /app
 
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build without env vars - they will be injected at runtime
-RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
+RUN NODE_OPTIONS="--max-old-space-size=4096" pnpm run build
 
 # ==========================================
 # Stage 3: Runner (Production)
