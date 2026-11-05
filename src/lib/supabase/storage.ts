@@ -2,6 +2,13 @@ import { createClient as createBrowserClient } from "@/lib/supabase/client";
 
 export const DEFAULT_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "project-images";
 
+export type StorageMediaFile = {
+  name: string;
+  path: string;
+  publicUrl: string;
+  mimeType?: string;
+};
+
 /**
  * Convert any raster image (PNG, JPEG, JPG, BMP, etc.) to optimized WebP format on the client.
  */
@@ -158,32 +165,56 @@ export async function deleteProjectFile(
 /**
  * List files in Supabase Storage bucket
  */
-export async function listStorageFiles(folder: string = "", bucket: string = DEFAULT_BUCKET) {
+export async function listStorageFiles(
+  folder: string = "",
+  bucket: string = DEFAULT_BUCKET,
+): Promise<{ files: StorageMediaFile[]; error: string | null }> {
   const supabase = createBrowserClient();
 
   if (!supabase) {
     return { files: [], error: "Supabase client is not configured." };
   }
 
-  const { data, error } = await supabase.storage.from(bucket).list(folder, {
-    limit: 100,
-    offset: 0,
-    sortBy: { column: "created_at", order: "desc" },
-  });
+  const storage = supabase.storage.from(bucket);
+  const files: StorageMediaFile[] = [];
 
-  if (error) {
-    return { files: [], error: error.message };
+  async function collectFiles(path: string): Promise<string | null> {
+    const pageSize = 100;
+
+    for (let offset = 0; ; offset += pageSize) {
+      const { data, error } = await storage.list(path, {
+        limit: pageSize,
+        offset,
+        sortBy: { column: "name", order: "asc" },
+      });
+
+      if (error) return error.message;
+
+      for (const entry of data || []) {
+        const fullPath = path ? `${path}/${entry.name}` : entry.name;
+
+        // Supabase returns folders as entries with a null id and no object metadata.
+        if (!entry.id) {
+          const nestedError = await collectFiles(fullPath);
+          if (nestedError) return nestedError;
+          continue;
+        }
+
+        const { data: urlData } = storage.getPublicUrl(fullPath);
+        files.push({
+          name: entry.name,
+          path: fullPath,
+          publicUrl: urlData.publicUrl,
+          mimeType: entry.metadata?.mimetype,
+        });
+      }
+
+      if (!data || data.length < pageSize) break;
+    }
+
+    return null;
   }
 
-  const filesWithUrls = (data || []).map((file) => {
-    const fullPath = folder ? `${folder}/${file.name}` : file.name;
-    const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(fullPath);
-    return {
-      ...file,
-      path: fullPath,
-      publicUrl: urlData.publicUrl,
-    };
-  });
-
-  return { files: filesWithUrls, error: null };
+  const error = await collectFiles(folder);
+  return { files, error };
 }

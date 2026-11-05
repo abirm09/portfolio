@@ -4,11 +4,18 @@ import { DashboardHeader } from "@/components/dashboard/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/Input";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   useDeleteFileMutation,
   useStorageFiles,
   useUploadFileMutation,
 } from "@/hooks/useStorageQuery";
-import { DEFAULT_BUCKET } from "@/lib/supabase/storage";
+import { DEFAULT_BUCKET, type StorageMediaFile } from "@/lib/supabase/storage";
 import {
   AlertCircle,
   Check,
@@ -17,6 +24,7 @@ import {
   HardDrive,
   Image as ImageIcon,
   Loader2,
+  Eye,
   RefreshCw,
   Trash2,
   UploadCloud,
@@ -28,6 +36,7 @@ export default function MediaManagerPage() {
   const [search, setSearch] = useState("");
   const [copiedPath, setCopiedPath] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [previewFile, setPreviewFile] = useState<StorageMediaFile | null>(null);
 
   const {
     data: files = [],
@@ -74,7 +83,7 @@ export default function MediaManagerPage() {
   };
 
   const filteredFiles = files.filter((f) =>
-    f.name?.toLowerCase().includes(search.toLowerCase().trim()),
+    f.path.toLowerCase().includes(search.toLowerCase().trim()),
   );
 
   const activeError = errorMessage || (queryError ? queryError.message : null);
@@ -182,30 +191,36 @@ export default function MediaManagerPage() {
                 className="group border-border/80 bg-secondary/20 relative flex flex-col justify-between overflow-hidden rounded-xl border"
               >
                 {/* Thumbnail / Image */}
-                <div className="bg-secondary/50 relative aspect-video w-full overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={file.publicUrl}
-                    alt={file.name}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                    <a
-                      href={file.publicUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-card/80 text-foreground hover:text-primary rounded-lg p-2 transition-colors"
-                      title="Open in new tab"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </div>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setPreviewFile(file)}
+                  className="bg-secondary/50 group/preview relative aspect-video w-full cursor-pointer overflow-hidden text-left"
+                  aria-label={`Preview ${file.name}`}
+                >
+                  {file.mimeType?.startsWith("image/") ||
+                  /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(file.name) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={file.publicUrl}
+                      alt={file.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover/preview:scale-105"
+                    />
+                  ) : (
+                    <ImageIcon className="text-muted-foreground absolute top-1/2 left-1/2 size-8 -translate-x-1/2 -translate-y-1/2" />
+                  )}
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/40 text-white opacity-0 transition-opacity group-hover/preview:opacity-100 group-focus-visible/preview:opacity-100">
+                    <Eye className="size-5" />
+                  </span>
+                </button>
 
                 {/* Info & Actions */}
                 <div className="space-y-2 p-3">
-                  <p className="text-foreground truncate text-xs font-semibold" title={file.name}>
+                  <p className="text-foreground truncate text-xs font-semibold" title={file.path}>
                     {file.name}
+                  </p>
+                  <p className="text-muted-foreground truncate text-[11px]" title={file.path}>
+                    {file.path}
                   </p>
 
                   <div className="border-border/50 flex items-center justify-between border-t pt-1">
@@ -241,6 +256,46 @@ export default function MediaManagerPage() {
           </div>
         )}
       </div>
+
+      <Dialog open={Boolean(previewFile)} onOpenChange={(open) => !open && setPreviewFile(null)}>
+        <DialogContent className="max-h-[90vh] max-w-5xl overflow-y-auto p-5 sm:p-6">
+          <DialogHeader className="pr-8">
+            <DialogTitle className="truncate text-base" title={previewFile?.name}>
+              {previewFile?.name}
+            </DialogTitle>
+            <DialogDescription className="truncate" title={previewFile?.path}>
+              {previewFile?.path}
+            </DialogDescription>
+          </DialogHeader>
+          {previewFile && (
+            <>
+              <div className="bg-secondary/50 flex min-h-48 items-center justify-center overflow-hidden rounded-xl">
+                {previewFile.mimeType?.startsWith("image/") ||
+                /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(previewFile.name) ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={previewFile.publicUrl}
+                    alt={previewFile.name}
+                    className="max-h-[65vh] max-w-full object-contain"
+                  />
+                ) : (
+                  <p className="text-muted-foreground p-8 text-sm">
+                    Preview unavailable for this file type.
+                  </p>
+                )}
+              </div>
+              <a
+                href={previewFile.publicUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary inline-flex w-fit items-center gap-2 text-sm font-medium hover:underline"
+              >
+                <ExternalLink className="size-4" /> Open public file
+              </a>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Supabase Bucket Setup Guide */}
       <div className="bg-card border-border space-y-3 rounded-2xl border p-6">
