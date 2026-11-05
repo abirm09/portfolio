@@ -59,8 +59,10 @@ export default function MediaManagerPage() {
         const file = selectedFiles[i];
         await uploadMutation.mutateAsync({ file, folder: folder || "uploads" });
       }
-    } catch (err: any) {
-      setErrorMessage(err.message || "Upload failed.");
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : "Upload failed.");
+    } finally {
+      e.target.value = "";
     }
   };
 
@@ -71,8 +73,8 @@ export default function MediaManagerPage() {
 
     try {
       await deleteMutation.mutateAsync({ filePath });
-    } catch (err: any) {
-      alert(err.message || "Failed to delete file.");
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : "Failed to delete file.");
     }
   };
 
