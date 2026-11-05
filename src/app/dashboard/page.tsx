@@ -14,7 +14,6 @@ import {
 import Link from "next/link";
 import { DashboardHeader } from "@/components/dashboard/Header";
 import { ProjectRowActions } from "@/components/dashboard/ProjectRowActions";
-import { SeedDatabaseButton } from "@/components/dashboard/SeedDatabaseButton";
 
 export const dynamic = "force-dynamic";
 
@@ -41,8 +40,8 @@ export default async function DashboardOverviewPage() {
         }}
       />
 
-      {/* Supabase Status Banner */}
-      {!isSupabaseConfigured ? (
+      {/* Supabase Status Banner (shown only when unconfigured) */}
+      {!isSupabaseConfigured && (
         <div className="flex flex-col justify-between gap-4 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-amber-600 sm:flex-row sm:items-center dark:text-amber-400">
           <div className="flex items-start gap-3">
             <Database className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
@@ -65,22 +64,6 @@ export default async function DashboardOverviewPage() {
           <Button size="sm" variant="outline" asChild className="shrink-0 text-xs">
             <Link href="/dashboard/media">Storage Guide</Link>
           </Button>
-        </div>
-      ) : (
-        <div className="flex items-center justify-between rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-600 dark:text-emerald-400">
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-            </span>
-            <div>
-              <p className="text-xs font-bold">Supabase Connected</p>
-              <p className="text-muted-foreground text-[11px]">
-                Live database synchronization and storage bucket active.
-              </p>
-            </div>
-          </div>
-          <SeedDatabaseButton />
         </div>
       )}
 
