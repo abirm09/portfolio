@@ -47,10 +47,11 @@ const EXTRA_TECH_STACKS = [
   { id: "docker", label: "Docker" },
   { id: "graphql", label: "GraphQL" },
   { id: "python", label: "Python" },
-  { id: "redis", label: "Redis" },
 ];
 
-const ALL_TECH_SUGGESTIONS = [...POPULAR_TECH_STACKS, ...EXTRA_TECH_STACKS];
+const ALL_TECH_SUGGESTIONS = Array.from(
+  new Map([...POPULAR_TECH_STACKS, ...EXTRA_TECH_STACKS].map((tech) => [tech.id, tech])).values(),
+);
 
 type ProjectFormProps = {
   initialData?: TProject;
