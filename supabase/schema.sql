@@ -63,14 +63,14 @@ CREATE POLICY "Authenticated users can delete projects"
   USING (true);
 
 -- ==============================================================================
--- 6. Supabase Storage Bucket Setup: 'projects'
+-- 6. Supabase Storage Bucket Setup: 'project-images'
 -- ==============================================================================
 
--- Create 'projects' public storage bucket
+-- Public image reads; uploads and deletes require a signed-in dashboard user.
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES (
-  'projects',
-  'projects',
+  'project-images',
+  'project-images',
   true,
   10485760, -- 10MB limit per file
   ARRAY['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml', 'image/gif']
@@ -79,38 +79,35 @@ ON CONFLICT (id) DO UPDATE SET
   public = true,
   file_size_limit = 10485760;
 
--- Storage RLS Policies
+-- Remove the older policies that granted anonymous visitors write access.
 DROP POLICY IF EXISTS "Public can view project bucket files" ON storage.objects;
-CREATE POLICY "Public can view project bucket files"
+DROP POLICY IF EXISTS "Authenticated users can upload to project bucket" ON storage.objects;
+DROP POLICY IF EXISTS "Allow uploads to project bucket" ON storage.objects;
+DROP POLICY IF EXISTS "Authenticated users can update project bucket files" ON storage.objects;
+DROP POLICY IF EXISTS "Allow updates to project bucket files" ON storage.objects;
+DROP POLICY IF EXISTS "Authenticated users can delete project bucket files" ON storage.objects;
+DROP POLICY IF EXISTS "Allow delete from project bucket" ON storage.objects;
+-- Read access is needed for the dashboard's file list; public images are served by the bucket.
+DROP POLICY IF EXISTS "Public can read project images" ON storage.objects;
+CREATE POLICY "Public can read project images"
   ON storage.objects
   FOR SELECT
   TO public
-  USING (bucket_id = 'projects');
+  USING (bucket_id = 'project-images');
 
-DROP POLICY IF EXISTS "Authenticated users can upload to project bucket" ON storage.objects;
-DROP POLICY IF EXISTS "Allow uploads to project bucket" ON storage.objects;
-CREATE POLICY "Allow uploads to project bucket"
+DROP POLICY IF EXISTS "Authenticated users can upload project images" ON storage.objects;
+CREATE POLICY "Authenticated users can upload project images"
   ON storage.objects
   FOR INSERT
-  TO public
-  WITH CHECK (bucket_id = 'projects');
+  TO authenticated
+  WITH CHECK (bucket_id = 'project-images');
 
-DROP POLICY IF EXISTS "Authenticated users can update project bucket files" ON storage.objects;
-DROP POLICY IF EXISTS "Allow updates to project bucket files" ON storage.objects;
-CREATE POLICY "Allow updates to project bucket files"
-  ON storage.objects
-  FOR UPDATE
-  TO public
-  USING (bucket_id = 'projects')
-  WITH CHECK (bucket_id = 'projects');
-
-DROP POLICY IF EXISTS "Authenticated users can delete project bucket files" ON storage.objects;
-DROP POLICY IF EXISTS "Allow delete from project bucket" ON storage.objects;
-CREATE POLICY "Allow delete from project bucket"
+DROP POLICY IF EXISTS "Authenticated users can delete project images" ON storage.objects;
+CREATE POLICY "Authenticated users can delete project images"
   ON storage.objects
   FOR DELETE
-  TO public
-  USING (bucket_id = 'projects');
+  TO authenticated
+  USING (bucket_id = 'project-images');
 
 -- ==============================================================================
 -- 7. Seed Initial Projects Data
@@ -130,98 +127,50 @@ INSERT INTO public.projects (
 )
 VALUES
 (
+  'Pixlcart',
+  'pixlcart',
+  'An omnichannel e-commerce tenant platform with a storefront, merchant dashboard, point-of-sale interface, and an Express API. Built as a Turborepo monorepo with Next.js, PostgreSQL, Prisma, and Redis.',
+  '["nextjs", "typescript", "express", "postgresql", "prisma", "redis", "redux", "turborepo"]'::jsonb,
+  '{"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "Pixlcart preview"}'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  true
+),
+(
+  'Zenpixl CPA',
+  'zenpixl-cpa',
+  'An affiliate network platform for managing offers, advertisers, affiliates, tracking links, conversions, and reporting. Built with Next.js, TypeScript, Express, Prisma, PostgreSQL, and Redis.',
+  '["nextjs", "typescript", "express", "postgresql", "prisma", "redis", "turborepo"]'::jsonb,
+  '{"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "Zenpixl CPA preview"}'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  true
+),
+(
+  'Enterprise E-commerce',
+  'enterprise-ecommerce',
+  'A modular omnichannel commerce platform with a Next.js storefront, NestJS API, background workers, inventory and logistics workflows, and an immutable double-entry ledger.',
+  '["nextjs", "typescript", "nestjs", "postgresql", "prisma", "redis", "bullmq", "zod", "turborepo"]'::jsonb,
+  '{"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Enterprise E-commerce preview"}'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  '[]'::jsonb,
+  true
+),
+(
   'SkillOxygen',
   'skill-oxygen',
-  'SkillOxygen is an interview platform where experienced professionals can conduct mock interviews for fresh graduates and job seekers. It includes features like interview scheduling, online payments, feedback collection, secure dashboards, and a monetization system.',
-  '["nextjs", "tailwindcss", "shadcn", "typescript", "nodejs", "express", "mongodb", "postgresql", "prisma"]'::jsonb,
-  '{"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "SkillOxygen dashboard"}'::jsonb,
-  '[
-    {"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "Interview scheduling dashboard"},
-    {"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "Mock interview room"},
-    {"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Payments & feedback view"}
-  ]'::jsonb,
+  'An interview platform for mock interviews, scheduling, payments, feedback, and secure dashboards for professionals and job seekers.',
+  '["nextjs", "typescript", "nodejs", "express", "mongodb", "postgresql", "prisma"]'::jsonb,
+  '{"id": 4, "url": "/images/projects/project-placeholder.svg", "title": "SkillOxygen preview"}'::jsonb,
+  '[]'::jsonb,
   '[{"id": 1, "name": "skilloxgen.com", "url": "https://skilloxgen.com"}]'::jsonb,
-  '[{"id": 1, "title": "SkillOxygen", "url": "https://github.com/skilloxgen"}]'::jsonb,
-  '[{"id": 1, "title": "SkillOxygen Case Study", "url": "https://github.com/skilloxgen"}]'::jsonb,
-  true
-),
-(
-  'E-Commerce Management System',
-  'ecommerce-management-system',
-  'A complete e-commerce platform with inventory management and accounting features, including product management, sales, customer management, dashboards, and reports.',
-  '["react", "nodejs", "express", "mongodb", "postgresql", "prisma", "typescript"]'::jsonb,
-  '{"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "E-Commerce admin dashboard"}'::jsonb,
-  '[
-    {"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "Inventory management dashboard"},
-    {"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "Sales & accounting reports"},
-    {"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Customer management view"}
-  ]'::jsonb,
-  '[{"id": 1, "name": "Live Demo", "url": "#"}]'::jsonb,
-  '[{"id": 1, "title": "Source Code", "url": "#"}]'::jsonb,
   '[]'::jsonb,
-  true
-),
-(
-  'Fingerprint Authentication API',
-  'fingerprint-authentication-api',
-  'A backend authentication system integrating Futronic fingerprint devices with FastAPI. Provides biometric verification, SDK integration, secure APIs, and template matching.',
-  '["fastApi", "typescript"]'::jsonb,
-  '{"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Fingerprint API architecture"}'::jsonb,
-  '[
-    {"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "API documentation"},
-    {"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "Device enrollment flow"},
-    {"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Template matching results"}
-  ]'::jsonb,
-  '[]'::jsonb,
-  '[{"id": 1, "title": "Source Code", "url": "#"}]'::jsonb,
-  '[{"id": 1, "title": "Case Study", "url": "#"}]'::jsonb,
-  true
-),
-(
-  'Portfolio Website',
-  'portfolio-website',
-  'A personal portfolio site built with Next.js and Tailwind CSS, featuring animated sections, dark mode, and a fully responsive layout to showcase projects and experience.',
-  '["nextjs", "tailwindcss", "typescript"]'::jsonb,
-  '{"id": 4, "url": "/images/projects/project-placeholder.svg", "title": "Portfolio homepage"}'::jsonb,
-  '[
-    {"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "Hero section"},
-    {"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "Projects section"},
-    {"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Dark mode view"}
-  ]'::jsonb,
-  '[{"id": 1, "name": "Live Demo", "url": "#"}]'::jsonb,
-  '[{"id": 1, "title": "Source Code", "url": "#"}]'::jsonb,
-  '[]'::jsonb,
-  false
-),
-(
-  'Task Management App',
-  'task-management-app',
-  'A collaborative task management application with boards, real-time updates, and team workspaces, built with React, Redux, and a Node.js/Express API.',
-  '["react", "redux", "nodejs", "express", "mongodb", "typescript"]'::jsonb,
-  '{"id": 5, "url": "/images/projects/project-placeholder.svg", "title": "Task board view"}'::jsonb,
-  '[
-    {"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "Kanban board"},
-    {"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "Team workspace"},
-    {"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Task detail modal"}
-  ]'::jsonb,
-  '[{"id": 1, "name": "Live Demo", "url": "#"}]'::jsonb,
-  '[{"id": 1, "title": "Source Code", "url": "#"}]'::jsonb,
-  '[{"id": 1, "title": "Case Study", "url": "#"}]'::jsonb,
-  false
-),
-(
-  'Blog CMS',
-  'blog-cms',
-  'A headless-style content management system for blogs with a markdown editor, tag-based filtering, and an admin panel, powered by Next.js, Prisma, and PostgreSQL.',
-  '["nextjs", "prisma", "postgresql", "tailwindcss", "typescript", "react-query"]'::jsonb,
-  '{"id": 6, "url": "/images/projects/project-placeholder.svg", "title": "Blog CMS admin panel"}'::jsonb,
-  '[
-    {"id": 1, "url": "/images/projects/project-placeholder.svg", "title": "Markdown editor"},
-    {"id": 2, "url": "/images/projects/project-placeholder.svg", "title": "Post list & filters"},
-    {"id": 3, "url": "/images/projects/project-placeholder.svg", "title": "Public blog view"}
-  ]'::jsonb,
-  '[{"id": 1, "name": "Live Demo", "url": "#"}]'::jsonb,
-  '[{"id": 1, "title": "Source Code", "url": "#"}]'::jsonb,
   '[]'::jsonb,
   false
 )
