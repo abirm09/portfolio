@@ -17,6 +17,10 @@ export * from "./ui/Textarea";
 export * from "./projects/ProjectCard";
 export * from "./projects/ProjectImage";
 
+// Blog components
+export * from "./blog/BlogCard";
+export * from "./blog/BlogShareBar";
+
 // Page sections
 export * from "./sections/About";
 export * from "./sections/Contact";

@@ -10,6 +10,7 @@ const navigationLinks = [
   { name: "About", href: "/#about" },
   { name: "Skills", href: "/#skills" },
   { name: "Projects", href: "/#projects" },
+  { name: "Blog", href: "/blog" },
   { name: "Experience", href: "/#experience" },
   { name: "Contact", href: "/#contact" },
 ];
