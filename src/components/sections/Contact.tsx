@@ -98,10 +98,10 @@ export const Contact = () => {
               <div>
                 <p className="text-muted-foreground text-sm">Email</p>
                 <a
-                  href="mailto:hello@abirmahmud.dev"
+                  href="mailto:contact@abirmahmud.dev"
                   className="text-foreground hover:text-primary transition-colors"
                 >
-                  hello@abirmahmud.dev
+                  contact@abirmahmud.dev
                 </a>
               </div>
             </div>

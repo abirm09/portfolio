@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Abir Mahmud is a full-stack web developer building modern, scalable, and user-focused web applications using React, Next.js, Node.js, TypeScript, PostgreSQL, and MongoDB.",
+    "Abir Mahmud is a full-stack developer building commerce and SaaS platforms with Next.js, TypeScript, NestJS, and PostgreSQL.",
 
   applicationName: "Abir Mahmud Portfolio",
 
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     title: "Abir Mahmud | Full-Stack Web Developer",
 
     description:
-      "I build modern, scalable, and user-focused web applications that solve real problems.",
+      "I build commerce and SaaS platforms, from customer-facing experiences to dependable backend systems.",
 
     images: [
       {
@@ -116,7 +116,7 @@ export const metadata: Metadata = {
     title: "Abir Mahmud | Full-Stack Web Developer",
 
     description:
-      "I build modern, scalable, and user-focused web applications that solve real problems.",
+      "I build commerce and SaaS platforms, from customer-facing experiences to dependable backend systems.",
 
     images: ["/og.png"],
 
